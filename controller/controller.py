@@ -1,8 +1,14 @@
 # YA FATEMEH
 from csv import reader
 from model.Candle import Candle
-from model.strategy import trade, decisions
-from model.Position import Position
+from model.Moment import Moment
+from model.strategy import Dummy_Strategy
+
+
+dollar_balance = 1000   # lock
+bitcoin_balance = 0     # lock
+this_moment = Moment(0, 0, '', 0)
+strategy_results = []
 
 
 def data_converter(csv_file_name: str) -> list:
@@ -10,7 +16,7 @@ def data_converter(csv_file_name: str) -> list:
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
         next(csv_reader)    # skip field names
-        line_count = 0
+        line_count = 1
         for row in csv_reader:
             fields = [f for f in row]
             candles.append(
@@ -19,16 +25,38 @@ def data_converter(csv_file_name: str) -> list:
     return candles
 
 
-def analyze_data(candles: list) -> list:
-    results = []
+def analyze_data(candles: list) -> tuple:
+    global this_moment
+    balance = []
     for c in candles:
-        decision = trade(c)
-        # last element of decisios always is 'do_nothing'
-        if decision != decisions[-1]:
-            result = Position(decision, c)
-            results.append(result)
-    return _wrap_data_for_view(results)
+        for i in range(59):
+            price = c.minute_price(i)
+            this_moment.update_moment(i, c.hour, c.date, price)
+            try_strategies(this_moment)
+            balance.append((dollar_balance, bitcoin_balance))
+    return balance, strategy_results
 
 
-def _wrap_data_for_view(results: list) -> list:
-    return results
+def try_strategies(moment: Moment):
+    # notify all
+    Dummy_Strategy(moment)
+
+
+def buy(bitcoin: int, price: int):
+    global bitcoin_balance, dollar_balance
+    bitcoin_balance += bitcoin
+    dollar_balance -= (bitcoin * price)
+
+
+def sell(bitcoin: int, price: int):
+    global bitcoin_balance, dollar_balance
+    bitcoin_balance -= bitcoin
+    dollar_balance += (bitcoin * price)
+
+
+def get_this_moment() -> Moment:
+    return this_moment
+
+
+def set_report(r: str):
+    strategy_results.append(r)
