@@ -11,3 +11,9 @@ class Moment:
         self.date = date
         self.price = price
         self.hour = hour
+
+    def __str__(self) -> str:
+        return f'minute: {self.minute}, hour: {self.hour}, date: {self.date}, price: {self.price}'
+
+    def __repr__(self) -> str:
+        return self.__str__()
