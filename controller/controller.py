@@ -30,7 +30,7 @@ def data_converter(csv_file_name: str) -> list:
 def analyze_data(candles: list):
     global this_moment, bitcoin_balance, dollar_balance
     for c in candles:
-        for i in range(60):
+        for i in range(60):  # the i th minute of hour
             price = c.minute_price(i)
             this_moment.update_moment(i, c.hour, c.date, price)
             try_strategies(this_moment)
@@ -53,7 +53,8 @@ def buy(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
     bitcoin_balance += bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
-    dollar_balance -= (bitcoin * price)
+    dollar_balance -= (bitcoin * price * 1.001)
+    # dollar_balance -= (bitcoin * price)
     dollar_balance = round(dollar_balance, 4)
     if dollar_balance < 0:
         raise RuntimeError('dollar balance is negative')
@@ -65,7 +66,8 @@ def sell(bitcoin: int, price: int):
     bitcoin_balance = round(bitcoin_balance, 4)
     if bitcoin_balance < 0:
         raise RuntimeError('bitcoin balance is negative')
-    dollar_balance += (bitcoin * price)
+    dollar_balance += (bitcoin * price * 0.999)
+    # dollar_balance += (bitcoin * price)
     dollar_balance = round(dollar_balance, 4)
 
 

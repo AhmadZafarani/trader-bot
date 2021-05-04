@@ -26,9 +26,6 @@ def daily(moment: Moment, bitcoin_balance: float, dollar_balance: float):
         if start_of_day_balance is not None:
             e = dollar_balance + bitcoin_balance * moment.price
             p = round(e - start_of_day_balance, 4)
-            if p < 0:
-                s = f'{round((-p * 100) / start_of_day_balance, 4)} % Loss'
-            else:
-                s = f'{round(p * 100 / start_of_day_balance, 4)} % Profit'
-            daily_results.append((start_of_day_balance, e, p, s))
+            s = f'{round(p * 100 / start_of_day_balance, 4)}'
+            daily_results.append((moment.date, start_of_day_balance, e, p, s))
             start_of_day_balance = None

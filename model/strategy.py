@@ -76,7 +76,7 @@ class Dummy_Strategy(Strategy):
         if not (controller.get_this_moment().hour == 15 and controller.get_this_moment().minute == 0):
             return
         controller.sell(self.sell_volume, controller.get_this_moment().price)
-        self.finish_strategy()
+        self.finish_strategy(f'date: {self.moment.date}')
 
 
 strategies = {'Dummy': Dummy_Strategy}
