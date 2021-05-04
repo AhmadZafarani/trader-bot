@@ -3,6 +3,7 @@ from csv import reader
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
+from controller.view_controller import control_views, check_view_essentials
 
 
 dollar_balance = 1000
@@ -26,16 +27,15 @@ def data_converter(csv_file_name: str) -> list:
     return candles
 
 
-def analyze_data(candles: list) -> tuple:
+def analyze_data(candles: list):
     global this_moment, bitcoin_balance, dollar_balance
-    balance = []
     for c in candles:
         for i in range(60):
             price = c.minute_price(i)
             this_moment.update_moment(i, c.hour, c.date, price)
             try_strategies(this_moment)
-            balance.append((dollar_balance, bitcoin_balance))
-    return balance, strategy_results
+            check_view_essentials(this_moment, bitcoin_balance, dollar_balance)
+    control_views(strategy_results)
 
 
 def try_strategies(moment: Moment):
@@ -43,21 +43,30 @@ def try_strategies(moment: Moment):
     for ws in working_strategies:
         ws.continue_strategy()
     working_strategies = [ws for ws in working_strategies if ws.working]
-    s1 = strategies.Dummy_Strategy(moment)
-    if s1.working:
-        working_strategies.append(s1)    
+    for s in strategies.strategies.values():
+        strtg = s(moment)
+        if strtg.working:
+            working_strategies.append(strtg)
 
 
 def buy(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
     bitcoin_balance += bitcoin
+    bitcoin_balance = round(bitcoin_balance, 4)
     dollar_balance -= (bitcoin * price)
+    dollar_balance = round(dollar_balance, 4)
+    if dollar_balance < 0:
+        raise RuntimeError('dollar balance is negative')
 
 
 def sell(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
     bitcoin_balance -= bitcoin
+    bitcoin_balance = round(bitcoin_balance, 4)
+    if bitcoin_balance < 0:
+        raise RuntimeError('bitcoin balance is negative')
     dollar_balance += (bitcoin * price)
+    dollar_balance = round(dollar_balance, 4)
 
 
 def get_this_moment() -> Moment:
