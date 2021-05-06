@@ -27,29 +27,30 @@ def moving_avrage(len : int , price_list:list):
     return(ma)
 
 close_price = []
-with open('close.csv') as csv_file:
+with open('/Internal/Projects/Crypto/trader-bot/data/onehour.csv') as csv_file:
     csv_reader = csv.reader(csv_file)
+    next(csv_reader)
     for row in csv_reader:
-        close_price.append(float(row[0]))
+        close_price.append(float(row[4]))
         # print(row[0])
-# print(close_price)
+print(close_price)
 
 moving_12 = moving_avrage(12 , close_price)
-moving_26 = moving_avrage(300 , close_price)
-with open('ma_12.csv', mode='w') as ma_12file:
+moving_26 = moving_avrage(26 , close_price)
+with open('ma_16_1h.csv', mode='w') as ma_12file:
     ma12 = csv.writer(ma_12file)
-    for m in moving_12:
+    for m in moving_26:
         ma12.writerow([str(m)])
         
     # employee_writer.writerow(['Erica Meyers', 'IT', 'March'])
 
-x = range(1 , 8939)
-xpoints = np.array(x)
-y1 = np.array(moving_26)
-y2 = np.array(moving_12)
+# x = range(1 , 5601)
+# xpoints = np.array(x)
+# y1 = np.array(moving_26)
+# y2 = np.array(moving_12)
 
-plt.plot(x , y1,  x , y2)
-plt.show()
+# plt.plot(x , y1,  x , y2)
+# plt.show()
 
 
 
