@@ -2,7 +2,7 @@
 from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller
-
+# from main import candles
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
@@ -26,12 +26,16 @@ import controller.controller as controller
 
 
 class Strategy(ABC):
-    def __init__(self, moment: Moment):
+    def __init__(self, moment: Moment , btc : float , dollar : float , candles : list ):
         self.moment = moment
+        self.candles = candles
         self.working = False
         self.buy_price = 0
         self.buy_volume = 0
         self.sell_volume = 0
+        self.dollar_balance = dollar 
+        # print(dollar)
+        self.btc_balance = btc
         if self.strategy_works():
             self.working = True
             self.start_strategy()
@@ -64,6 +68,7 @@ class Strategy(ABC):
 
 class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
+        # print('strategy worked')
         return self.moment.hour == 13 and self.moment.minute == 0
 
     def start_strategy(self):
@@ -78,5 +83,50 @@ class Dummy_Strategy(Strategy):
         controller.sell(self.sell_volume, controller.get_this_moment().price)
         self.finish_strategy(f'date: {self.moment.date}')
 
+lock_strategies= {'Dummy': Dummy_Strategy}
+# strategies1 = {'Dummy': Dummy_Strategy , 'Moving':MovingAvrage}
 
-strategies = {'Dummy': Dummy_Strategy}
+# def lock_strategy(name):
+#     lock_strategies[name] = strategies[name]
+# def unlock_strategy(name):
+#     lock_strategies.pop(name)
+"""
+moving avrage base strategy 
+[*] check if last more of 50% of previous candle is upper than the moving avrage 
+[*] check if current candle is green and more than 0.3 % long 
+[*] lock strategy in buy
+[*] sell in +1% and -0.5%
+[*] unlock strategy in sell 
+"""
+class MovingAvrage(Strategy):
+        def strategy_works(self) -> bool:
+            if self.candles[self.moment.candleid-2].high_price - (self.candles[self.moment.candleid-2].high_price - self.candles[self.moment.candleid-2].low_price)*(50/100) >=self.candles[self.moment.candleid-2].moving12:
+                if self.moment.price > 1.003 * self.candles[self.moment.candleid-1].open_price:
+                    # print('strategy worked')
+                    return True 
+        def start_strategy(self):
+            global lock_strategies
+            self.buy_time_date = self.moment.date
+            self.buy_time_hour = self.moment.hour
+            self.buy_time_minute = self.moment.minute
+            self.buy_volume = (self.dollar_balance / self.moment.price) / 1.01
+            # print(self.dollar_balance)
+            controller.buy(self.buy_volume, self.moment.price)
+            self.buy_price = self.moment.price
+            lock_strategies["Moving"] = MovingAvrage
+        
+        def continue_strategy(self):
+            global lock_strategies
+            if controller.get_this_moment().price >=1.1 * self.buy_price or controller.get_this_moment().price <= 0.9 * self.buy_price:
+                controller.sell(self.buy_volume, controller.get_this_moment().price)
+                self.finish_strategy(f"""buy time: {self.moment.date} {self.moment.hour}:{self.moment.minute}
+                sell time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
+                profit(%): {round(-1 * (controller.get_this_moment().price - self.buy_price) * self.buy_volume , 3)}({round(-100 * (controller.get_this_moment().price - self.buy_price)/self.buy_price , 3)})
+                fee : {0.001*(self.buy_price * self.buy_volume) + 0.001 * (controller.get_this_moment().price  * self.buy_volume ) } $
+                {id(controller.get_this_moment())}
+                {id(self.moment)}
+
+                """)
+                lock_strategies.pop("Moving") 
+
+strategies = {'Dummy': Dummy_Strategy , 'Moving':MovingAvrage}
