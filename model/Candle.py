@@ -6,7 +6,8 @@ from datetime import datetime
     extra_fields is a dictionary like:
     INDICATOR_NAME: INDICATOR_VALUE_IN_THAT_CANDLE
 
-    all values of this dictionary are of float type.
+    all values of this dictionary are of str type. so you are responsible for casting them to other types 
+    in the Strategies.
 """
 class Candle:
     def __init__(self, identifier: int, time: int, high_price: float, low_price: float, open_price: float, 
