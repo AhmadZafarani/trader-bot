@@ -3,5 +3,8 @@ controller/__pycache__
 view/__pycache__
 model/__pycache__
 *.txt
-balance report.csv
-daily report.csv
+balance_report.csv
+daily_report.csv
+balance_report.csv
+__pycache__/
+view/daily_report.csv
