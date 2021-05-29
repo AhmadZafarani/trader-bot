@@ -5,7 +5,7 @@ from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import control_views, check_view_essentials
 from scenario import fee, start_of_work_dollar_balance, start_of_work_crypto_balance, \
-    number_of_moments_in_a_candle
+    number_of_moments_in_a_candle , lock_hour , lock_method
 
 
 dollar_balance = start_of_work_dollar_balance
@@ -76,7 +76,11 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_data: dict):
 
 
 def try_strategies(moment: Moment, candles: list):
-    global working_strategies,  bitcoin_balance, dollar_balance
+    global working_strategies,  bitcoin_balance, dollar_balance , lock_method , lock_hour 
+    if(lock_method.__eq__('lock_to_hour')):
+        for locked in strategies.lock_strategies :
+            if(strategies.lock_strategies[locked][1] == moment.candleid ):
+                strategies.lock_strategies.pop(locked)
     for ws in working_strategies:
         ws.continue_strategy()
     working_strategies = [ws for ws in working_strategies if ws.working]

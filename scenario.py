@@ -27,3 +27,23 @@ start_of_work_crypto_balance = 0
 
 
 number_of_moments_in_a_candle = 60
+
+
+# locking strategy 
+# for locking strategy you have two meyhods 
+# set lock hour 
+# lock to finish strategy 
+
+# 'lock_hour' : you can adjust lock hour 
+# values : N 
+# default  : 1
+lock_hour = 3
+
+
+
+# 'lock_method' 
+# values : 
+# "lock_to_fin"
+# "lock_to_hour"
+# default: "lock_to_fin"
+lock_method: "lock_to_fin"

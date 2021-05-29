@@ -82,7 +82,7 @@ class Dummy_Strategy(Strategy):
         self.finish_strategy(f'date: {self.moment.date}')
 
 
-lock_strategies = {'Dummy': Dummy_Strategy}
+lock_strategies = {'Dummy': [Dummy_Strategy , 0]}
 
 # def lock_strategy(name):
 #     lock_strategies[name] = strategies[name]
@@ -97,40 +97,6 @@ moving avrage base strategy
 [*] unlock strategy in sell 
 """
 
-
-class MovingAvrage(Strategy):
-    def strategy_works(self) -> bool:
-        if self.candles[self.moment.candleid - 2].high_price - (self.candles[self.moment.candleid - 2].
-                                                                high_price -
-                                                                self.candles[self.moment.candleid - 2].low_price) * (50 / 100) >= \
-                self.candles[self.moment.candleid - 2].moving12:
-            if self.moment.price > 1.003 * self.candles[self.moment.candleid - 1].open_price:
-                return True
-
-    def start_strategy(self):
-        global lock_strategies
-        self.buy_time_date = self.moment.date
-        self.buy_time_hour = self.moment.hour
-        self.buy_time_minute = self.moment.minute
-        self.buy_volume = (self.dollar_balance / self.moment.price) / 1.01
-        controller.buy(self.buy_volume, self.moment.price)
-        self.buy_price = self.moment.price
-        lock_strategies["Moving"] = MovingAvrage
-
-    def continue_strategy(self):
-        global lock_strategies
-        if controller.get_this_moment().price >= 1.1 * self.buy_price or controller.get_this_moment().price <= \
-                0.9 * self.buy_price:
-            controller.sell(self.buy_volume,
-                            controller.get_this_moment().price)
-            self.finish_strategy(f"""buy time: {self.moment.date} {self.moment.hour}:{self.moment.minute}
-                sell time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
-                profit(%): {round(-1 * (controller.get_this_moment().price - self.buy_price) * self.buy_volume , 3)}({round(-100 * (controller.get_this_moment().price - self.buy_price)/self.buy_price , 3)})
-                fee : {0.001*(self.buy_price * self.buy_volume) + 0.001 * (controller.get_this_moment().price  * self.buy_volume ) } $
-                {id(controller.get_this_moment())}
-                {id(self.moment)}
-                """)
-            lock_strategies.pop("Moving")
 
 
 strategies = {'Dummy': Dummy_Strategy, 'Moving': MovingAvrage}
