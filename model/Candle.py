@@ -9,8 +9,10 @@ from datetime import datetime
     all values of this dictionary are of str type. so you are responsible for casting them to other types 
     in the Strategies.
 """
+
+
 class Candle:
-    def __init__(self, identifier: int, time: int, high_price: float, low_price: float, open_price: float, 
+    def __init__(self, identifier: int, time: int, high_price: float, low_price: float, open_price: float,
                  close_price: float, traded_volume: float, extra_fields: dict):
         self.identifier = identifier
         self.date, self.hour = self.extract_time(time)

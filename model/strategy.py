@@ -82,21 +82,12 @@ class Dummy_Strategy(Strategy):
         self.finish_strategy(f'date: {self.moment.date}')
 
 
-lock_strategies = {'Dummy': [Dummy_Strategy , 0]}
+lock_strategies = {'Dummy': [Dummy_Strategy, 0]}
 
 # def lock_strategy(name):
 #     lock_strategies[name] = strategies[name]
 # def unlock_strategy(name):
 #     lock_strategies.pop(name)
-"""
-moving avrage base strategy 
-[*] check if last more of 50% of previous candle is upper than the moving avrage 
-[*] check if current candle is green and more than 0.3 % long 
-[*] lock strategy in buy
-[*] sell in +1% and -0.5%
-[*] unlock strategy in sell 
-"""
 
 
-
-strategies = {'Dummy': Dummy_Strategy, 'Moving': MovingAvrage}
+strategies = {'Dummy': Dummy_Strategy}
