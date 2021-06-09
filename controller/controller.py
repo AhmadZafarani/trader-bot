@@ -11,7 +11,7 @@ from scenario import fee, start_of_work_dollar_balance, start_of_work_crypto_bal
 dollar_balance = start_of_work_dollar_balance
 bitcoin_balance = start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
-this_moment = Moment(0, 0, '', 0, 0, {}, {})
+this_moment = Moment(0, 0, 0, {}, {})
 strategy_results = []
 working_strategies = []
 
@@ -45,9 +45,8 @@ def data_converter(candles_file: str, extra_candle_files: dict, extra_moment_fil
             for data in extra_data:
                 extra_fields[data] = extra_data[data][line_count - 1]
 
-            c = Candle(line_count, int(fields[0]) // 1000, float(fields[1]),
-                       float(fields[2]), float(fields[3]), float(fields[4]),
-                       float(fields[5]), extra_fields)
+            c = Candle(line_count, float(fields[1]), float(fields[2]),
+                       float(fields[3]), float(fields[4]), float(fields[5]), extra_fields)
             candles.append(c)
             line_count += 1
 
@@ -57,8 +56,9 @@ def data_converter(candles_file: str, extra_candle_files: dict, extra_moment_fil
 
 def analyze_each_moment(csv_reader, moment_index: int, moments_extra_data: list, minute: int, candle: Candle,
                         candles: list):
-    price, volume = next(csv_reader)        # volume MAY be used!
+    time, price, volume = next(csv_reader)        # volume MAY be used!
     price = float(price)
+    time = int(time) // 1000
 
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
 
@@ -66,7 +66,7 @@ def analyze_each_moment(csv_reader, moment_index: int, moments_extra_data: list,
     for data in moments_extra_data:
         extra_fields[data] = moments_extra_data[data][moment_index]
 
-    this_moment.update_moment(minute, candle.hour, candle.date, price, candle.identifier,
+    this_moment.update_moment(minute, time, price, candle.identifier,
                               profit_loss_percentage, candle.extra_fields, extra_fields)
 
     try_strategies(this_moment, candles)
