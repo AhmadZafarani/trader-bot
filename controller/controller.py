@@ -11,78 +11,82 @@ from scenario import fee, start_of_work_dollar_balance, start_of_work_crypto_bal
 dollar_balance = start_of_work_dollar_balance
 bitcoin_balance = start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
-this_moment = Moment(0, 0, 0, {}, {})
+this_moment = Moment(0, 0, 0)
 strategy_results = []
 working_strategies = []
 
 
-def extra_data_converter(extra_files: dict) -> dict:
-    extra_data = {}     # dictionary of lists.
+def open_extra_files(extra_files: dict) -> list:
+    files = []
     for file in extra_files:
-        file_data = []
-        with open(extra_files[file]) as csvfile:
-            csv_reader = reader(csvfile, delimiter=',')
-            next(csv_reader)        # skip field names
-            for row in csv_reader:
-                fields = [f for f in row]
-                file_data.append(fields)        # list of fields(lists)
-        extra_data[file] = file_data
-    return extra_data
+        csv_file = open(extra_files[file])
+        files.append(list(reader(csv_file)))
+    return files
 
 
-def data_converter(candles_file: str, extra_candle_files: dict, extra_moment_files: dict) -> tuple:
-    extra_data = extra_data_converter(extra_candle_files)
+def candle_maker(candles_data: list, i: int, files: list) -> Candle:
+    fields = [f for f in candles_data[i]]
+    c = Candle(i, float(fields[0]), float(fields[1]), float(
+        fields[2]), float(fields[3]), float(fields[4]))
+
+    for file in files:
+        field_names = file[0]
+        field_length = len(field_names)
+        fields = [f for f in file[i]]
+
+        for j in range(field_length):
+            c.__setattr__(field_names[j], float(fields[j]))
+    return c
+
+
+def data_converter(candles_file: str, extra_candle_files: dict) -> list:
+    files = open_extra_files(extra_candle_files)
 
     candles = []
     with open(candles_file) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
         next(csv_reader)        # skip field names
-
-        line_count = 1
-        for row in csv_reader:
-            fields = [f for f in row]
-            extra_fields = {}
-            for data in extra_data:
-                extra_fields[data] = extra_data[data][line_count - 1]
-
-            c = Candle(line_count, float(fields[1]), float(fields[2]),
-                       float(fields[3]), float(fields[4]), float(fields[5]), extra_fields)
+        candles_data = list(csv_reader)
+        candles_number = len(candles_data)
+        for i in range(1, candles_number):
+            c = candle_maker(candles_data, i, files)
             candles.append(c)
-            line_count += 1
-
-    extra_data = extra_data_converter(extra_moment_files)
-    return candles, extra_data
+    return candles
 
 
-def analyze_each_moment(csv_reader, moment_index: int, moments_extra_data: list, minute: int, candle: Candle,
-                        candles: list):
-    time, price, volume = next(csv_reader)        # volume MAY be used!
+def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files: list, candle: Candle, candles: list):
+    time, price, volume = csv_reader[moment_index]        # volume MAY be used!
     price = float(price)
     time = int(time) // 1000
 
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
+    this_moment.update_moment(
+        time, price, candle.identifier, profit_loss_percentage)
+    for file in moments_extra_files:
+        field_names = file[0]
+        field_length = len(field_names)
+        fields = [f for f in file[moment_index]]
 
-    extra_fields = {}       # moments extra fields
-    for data in moments_extra_data:
-        extra_fields[data] = moments_extra_data[data][moment_index]
-
-    this_moment.update_moment(minute, time, price, candle.identifier,
-                              profit_loss_percentage, candle.extra_fields, extra_fields)
+        for j in range(field_length):
+            this_moment.__setattr__(field_names[j], float(fields[j]))
 
     try_strategies(this_moment, candles)
-    check_view_essentials(this_moment, bitcoin_balance, dollar_balance)
+    check_view_essentials(this_moment, moment_index,
+                              bitcoin_balance, dollar_balance)
 
 
-def analyze_data(candles: list, csv_file_name: str, moments_extra_data: dict):
+def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
+    files = open_extra_files(moments_extra_files)
+
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
         next(csv_reader)        # skip field names
-
-        moment_index = 0     # zero based
+        moments_data = list(csv_reader)
+        moment_index = 1
         for c in candles:
             for i in range(number_of_moments_in_a_candle):     # the i th moment of candle
-                analyze_each_moment(csv_reader, moment_index,
-                                    moments_extra_data, i, c, candles)
+                analyze_each_moment(
+                    moments_data, moment_index, files, c, candles)
                 moment_index += 1
 
             print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
@@ -92,7 +96,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_data: dict):
 def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float:
     global start_of_profit_loss_period_balance
     x = dollar_balance + bitcoin_balance * this_moment_price
-    if moment_index % profit_loss_period_step == 0:
+    if (moment_index - 1) % profit_loss_period_step == 0:
         start_of_profit_loss_period_balance = x
         return 0
     else:

@@ -4,7 +4,7 @@ view/__pycache__
 model/__pycache__
 *.txt
 balance_report.csv
-daily_report.csv
+periodical_report.csv
 balance_report.csv
 __pycache__/
-view/daily_report.csv
+.vscode/

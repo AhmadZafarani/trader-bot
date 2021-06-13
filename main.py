@@ -21,10 +21,9 @@ extra_moment_files = {}
 for emdf in extra_moments_data_files:
     extra_moment_files[emdf] = data_folder / extra_moments_data_files[emdf]
 
-candles, moments_extra_data = data_converter(
-    candles_file, extra_candle_files, extra_moment_files)
+candles = data_converter(candles_file, extra_candle_files)
 print('data loaded in : ', time() - start_time)
 
-analyze_data(candles, moments_file, moments_extra_data)
+analyze_data(candles, moments_file, extra_moment_files)
 
 print('total runtime : ', time() - start_time)
