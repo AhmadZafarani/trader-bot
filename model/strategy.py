@@ -2,7 +2,7 @@
 from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller
-from scenario import *
+from scenario import scenario
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
@@ -40,7 +40,6 @@ class Strategy(ABC):
         self.sell_time_hour = 0
         self.sell_time_minute = 0
 
-        # print(dollar)
         self.btc_balance = btc
         if self.strategy_works():
             self.working = True
@@ -94,7 +93,7 @@ lock_strategies = {'Dummy': [Dummy_Strategy, 0]}
 
 class ADX12(Strategy):
     def strategy_works(self) -> bool:
-        if opening_con1_num_of_candles == 3:
+        if scenario.opening_con1_num_of_candles == 3:
             if self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].moving12 and \
                self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].moving12 and \
                self.candles[self.moment.candle_id - 3].open_price > self.candles[self.moment.candle_id - 3].moving12 and \
@@ -102,45 +101,45 @@ class ADX12(Strategy):
                self.candles[self.moment.candle_id - 4].close_price > self.candles[self.moment.candle_id - 4].open_price and \
                ((self.candles[self.moment.candle_id - 4].close_price - self.candles[self.moment.candle_id - 4].moving12) / (
                    self.candles[self.moment.candle_id - 4].close_price - self.candles[self.moment.candle_id - 4].open_price)) \
-               * 100 > opening_con1_min_first:
-                if opening_con2_di_method == "positive":
+               * 100 > scenario.opening_con1_min_first:
+                if scenario.opening_con2_di_method == "positive":
                     if self.candles[self.moment.candle_id - 2].DI_plus > self.candles[self.moment.candle_id - 2].DI_minus and \
-                       self.candles[self.moment.candle_id - 2].adx > opening_con2_min_adx:
+                       self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:
                         return True
-                elif opening_con2_di_method == "increasing":
+                elif scenario.opening_con2_di_method == "increasing":
                     if self.candles[self.moment.candle_id - 2].DI_plus - self.candles[self.moment.candle_id - 2].DI_minus > \
                             self.candles[self.moment.candle_id - 3].DI_plus - self.candles[self.moment.candle_id - 3].DI_minus and \
-                       self.candles[self.moment.candle_id - 2].adx > opening_con2_min_adx:
+                       self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:
                         return True
-        elif opening_con1_num_of_candles == 2:
+        elif scenario.opening_con1_num_of_candles == 2:
             if self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].moving12 and \
                self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].open_price and \
                self.candles[self.moment.candle_id - 3].close_price > self.candles[self.moment.candle_id - 3].open_price and \
                ((self.candles[self.moment.candle_id - 3].close_price - self.candles[self.moment.candle_id - 3].moving12) / (
                    self.candles[self.moment.candle_id - 3].close_price - self.candles[self.moment.candle_id - 3].open_price)) \
-               * 100 > opening_con1_min_first:
-                if opening_con2_di_method == "positive":
+               * 100 > scenario.opening_con1_min_first:
+                if scenario.opening_con2_di_method == "positive":
                     if self.candles[self.moment.candle_id - 2].DI_plus > self.candles[self.moment.candle_id - 2].DI_minus and \
-                       self.candles[self.moment.candle_id - 2].adx > opening_con2_min_adx:
+                       self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:
                         return True
-                elif opening_con2_di_method == "increasing":
+                elif scenario.opening_con2_di_method == "increasing":
                     if self.candles[self.moment.candle_id - 2].DI_plus - self.candles[self.moment.candle_id - 2].DI_minus > \
                         self.candles[self.moment.candle_id - 3].DI_plus - self.candles[self.moment.candle_id - 3].DI_minus and \
-                            self.candles[self.moment.candle_id - 2].adx > opening_con2_min_adx:
+                            self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:
                         return True
-        elif opening_con1_num_of_candles == 1:
+        elif scenario.opening_con1_num_of_candles == 1:
             if self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].open_price and \
                 ((self.candles[self.moment.candle_id - 2].close_price - self.candles[self.moment.candle_id - 2].moving12) / (
                     self.candles[self.moment.candle_id - 2].close_price - self.candles[self.moment.candle_id - 2].open_price)) \
-                    * 100 > opening_con1_min_first:
-                if opening_con2_di_method == "positive":
+                    * 100 > scenario.opening_con1_min_first:
+                if scenario.opening_con2_di_method == "positive":
                     if self.candles[self.moment.candle_id-2].DI_plus > self.candles[self.moment.candle_id-2].DI_minus and \
-                            self.candles[self.moment.candle_id - 2].adx > opening_con2_min_adx:
+                            self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:
                         return True
-                elif opening_con2_di_method == "increasing":
+                elif scenario.opening_con2_di_method == "increasing":
                     if self.candles[self.moment.candle_id - 2].DI_plus - self.candles[self.moment.candle_id - 2].DI_minus > \
                         self.candles[self.moment.candle_id - 3].DI_plus - self.candles[self.moment.candle_id - 3].DI_minus and \
-                            self.candles[self.moment.candle_id - 2].adx > opening_con2_min_adx:
+                            self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:
                         return True
 
     def start_strategy(self):
@@ -149,7 +148,7 @@ class ADX12(Strategy):
         self.buy_time_hour = self.moment.hour
         self.buy_time_minute = self.moment.minute
         self.buy_volume = (self.dollar_balance /
-                           self.moment.price) * (volume_buy / 100)
+                           self.moment.price) * (scenario.volume_buy / 100)
 
         self.ADX = [self.candles[self.moment.candle_id - 2].adx, self.candles[self.moment.candle_id - 2].DI_plus,
                     self.candles[self.moment.candle_id - 2].DI_minus]
@@ -160,13 +159,14 @@ class ADX12(Strategy):
                    self.candles[self.moment.candle_id - 3].moving12, self.candles[self.moment.candle_id - 4].moving12]
         controller.buy(self.buy_volume, self.moment.price)
         self.buy_price = self.moment.price
-        if lock_method == 'lock_to_hour':
-            lock_strategies["adx"] = [ADX12, self.moment.candle_id + lock_hour]
-        elif lock_method == "lock_to_fin":
+        if scenario.lock_method == 'lock_to_hour':
+            lock_strategies["adx"] = [
+                ADX12, self.moment.candle_id + scenario.lock_hour]
+        elif scenario.lock_method == "lock_to_fin":
             lock_strategies["adx"] = [ADX12, 0]
 
     def sell_method1(self, candle_id: int) -> bool:
-        if closing_meth1_num_of_candles == 3:
+        if scenario.closing_meth1_num_of_candles == 3:
             if self.candles[candle_id - 2].open_price < self.candles[candle_id - 2].moving12 and \
                self.candles[candle_id - 2].close_price < self.candles[candle_id - 2].moving12 and \
                     self.candles[candle_id - 3].open_price < self.candles[candle_id - 3].moving12 and \
@@ -174,30 +174,33 @@ class ADX12(Strategy):
                     self.candles[candle_id - 4].close_price < self.candles[candle_id - 4].open_price and \
                     ((self.candles[candle_id - 4].moving12 - self.candles[candle_id - 4].close_price) / (
                         self.candles[candle_id - 4].open_price - self.candles[candle_id - 4].close_price)) \
-               * 100 > closing_met1_min_first:
+               * 100 > scenario.closing_met1_min_first:
                 return True
-        elif closing_meth1_num_of_candles == 2:
+        elif scenario.closing_meth1_num_of_candles == 2:
             if self.candles[candle_id - 2].open_price < self.candles[candle_id-2].moving12 and \
                self.candles[candle_id - 2].close_price < self.candles[candle_id-2].moving12 and \
                self.candles[candle_id - 3].close_price < self.candles[candle_id-3].open_price and \
                ((self.candles[candle_id - 3].moving12 - self.candles[candle_id-3].close_price) / (
-                   self.candles[candle_id - 3].open_price - self.candles[candle_id-3].close_price)) * 100 > closing_met1_min_first:
+                   self.candles[candle_id - 3].open_price - self.candles[candle_id-3].close_price)) * \
+               100 > scenario.closing_met1_min_first:
                 return True
-        elif closing_meth1_num_of_candles == 1:
+        elif scenario.closing_meth1_num_of_candles == 1:
             if self.candles[candle_id-2].close_price < self.candles[candle_id-2].open_price and \
                ((self.candles[candle_id-2].moving12 - self.candles[candle_id-2].close_price) / (
-                   self.candles[candle_id-2].open_price - self.candles[candle_id-2].close_price)) * 100 > closing_met1_min_first:
+                   self.candles[candle_id-2].open_price - self.candles[candle_id-2].close_price)) * \
+               100 > scenario.closing_met1_min_first:
                 return True
         return False
 
     def sell_method2(self) -> bool:
         return self.candles[self.moment.candle_id - 2].DI_plus < self.candles[self.moment.candle_id - 2].DI_minus and \
-            self.candles[self.moment.candle_id - 2].adx > closing_met2_max_adx
+            self.candles[self.moment.candle_id -
+                         2].adx > scenario.closing_met2_max_adx
 
     def sell_method3(self) -> bool:
-        return ((self.moment.price - self.buy_price) / self.buy_price) * 100 > profit_limit or \
+        return ((self.moment.price - self.buy_price) / self.buy_price) * 100 > scenario.profit_limit or \
             ((self.moment.price - self.buy_price) /
-             self.buy_price) * 100 < loss_limit
+             self.buy_price) * 100 < scenario.loss_limit
 
     def fin_and_before(self):
         global lock_strategies
@@ -217,30 +220,30 @@ class ADX12(Strategy):
         Moment : {self.Mom_str}
         ID : {self.id}
         """)
-        if lock_method == "lock_to_fin":
+        if scenario.lock_method == "lock_to_fin":
             lock_strategies.pop("adx")
 
     def continue_strategy(self):
         global lock_strategies
-        if intraction == 1:
+        if scenario.intraction == 1:
             if self.sell_method3():
                 self.fin_and_before()
-        elif intraction == 2:
+        elif scenario.intraction == 2:
             if self.sell_method2():
                 self.fin_and_before()
-        elif intraction == 3:
+        elif scenario.intraction == 3:
             if self.sell_method2() or self.sell_method3():
                 self.fin_and_before()
-        elif intraction == 4:
+        elif scenario.intraction == 4:
             if self.sell_method1(self.moment.candle_id):
                 self.fin_and_before()
-        elif intraction == 5:
+        elif scenario.intraction == 5:
             if self.sell_method3() or self.sell_method1(self.moment.candle_id):
                 self.fin_and_before()
-        elif intraction == 6:
+        elif scenario.intraction == 6:
             if self.sell_method2() or self.sell_method1(self.moment.candle_id):
                 self.fin_and_before()
-        elif intraction == 7:
+        elif scenario.intraction == 7:
             if self.sell_method3() or self.sell_method2() or self.sell_method1(self.moment.candle_id):
                 self.fin_and_before()
 

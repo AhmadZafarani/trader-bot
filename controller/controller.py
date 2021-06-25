@@ -4,12 +4,11 @@ from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import control_views, check_view_essentials
-from scenario import fee, start_of_work_dollar_balance, start_of_work_crypto_balance, \
-    number_of_moments_in_a_candle, lock_hour, lock_method, profit_loss_period_step
+from scenario import scenario
 
 
-dollar_balance = start_of_work_dollar_balance
-bitcoin_balance = start_of_work_crypto_balance
+dollar_balance = scenario.start_of_work_dollar_balance
+bitcoin_balance = scenario.start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
 this_moment = Moment(0, 0, 0)
 strategy_results = []
@@ -72,7 +71,7 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
     try_strategies(this_moment, candles)
     check_view_essentials(this_moment, moment_index,
-                              bitcoin_balance, dollar_balance)
+                          bitcoin_balance, dollar_balance)
 
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
@@ -84,7 +83,8 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
         moments_data = list(csv_reader)
         moment_index = 1
         for c in candles:
-            for i in range(number_of_moments_in_a_candle):     # the i th moment of candle
+            # the i th moment of candle
+            for i in range(scenario.number_of_moments_in_a_candle):
                 analyze_each_moment(
                     moments_data, moment_index, files, c, candles)
                 moment_index += 1
@@ -96,7 +96,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
 def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float:
     global start_of_profit_loss_period_balance
     x = dollar_balance + bitcoin_balance * this_moment_price
-    if (moment_index - 1) % profit_loss_period_step == 0:
+    if (moment_index - 1) % scenario.profit_loss_period_step == 0:
         start_of_profit_loss_period_balance = x
         return 0
     else:
@@ -104,8 +104,8 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
 
 
 def try_strategies(moment: Moment, candles: list):
-    global working_strategies, bitcoin_balance, dollar_balance, lock_method, lock_hour
-    if lock_method == 'lock_to_hour':
+    global working_strategies, bitcoin_balance, dollar_balance
+    if scenario.lock_method == 'lock_to_hour':
         for locked in strategies.lock_strategies:       # unlock strategies
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
@@ -127,7 +127,7 @@ def buy(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
     bitcoin_balance += bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
-    dollar_balance -= (bitcoin * price * (1 + fee))
+    dollar_balance -= (bitcoin * price * (1 + scenario.fee))
     dollar_balance = round(dollar_balance, 4)
     if dollar_balance < 0:
         raise RuntimeError('dollar balance is negative')
@@ -139,7 +139,7 @@ def sell(bitcoin: int, price: int):
     bitcoin_balance = round(bitcoin_balance, 4)
     if bitcoin_balance < 0:
         raise RuntimeError('bitcoin balance is negative')
-    dollar_balance += (bitcoin * price * (1 - fee))
+    dollar_balance += (bitcoin * price * (1 - scenario.fee))
     dollar_balance = round(dollar_balance, 4)
 
 

@@ -1,7 +1,7 @@
 # YA ZEYNAB
 from view.views import *
 from model.Moment import Moment
-from scenario import profit_loss_period_step
+from scenario import scenario
 
 start_of_period_balance = 0
 periodical_results = []
@@ -20,13 +20,13 @@ def check_view_essentials(moment: Moment, moment_index: int, bitcoin_balance: fl
 
 
 def periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float):
-    global start_of_period_balance
+    global start_of_period_balance, scenario
     e = dollar_balance + bitcoin_balance * moment.price
 
-    if (moment_index - 1) % profit_loss_period_step == 0:
+    if (moment_index - 1) % scenario.profit_loss_period_step == 0:
         start_of_period_balance = e
-    elif (moment_index - 1) % (profit_loss_period_step - 1) == 0:
+    elif (moment_index - 1) % (scenario.profit_loss_period_step - 1) == 0:
         p = round(e - start_of_period_balance, 4)
-        s = f'{round(p * 100 / start_of_period_balance, 4)}'
+        sa = f'{round(p * 100 / start_of_period_balance, 4)}'
         periodical_results.append(
-            (moment.date, start_of_period_balance, e, p, s))
+            (moment.date, start_of_period_balance, e, p, sa))
