@@ -3,6 +3,8 @@ from controller.controller import data_converter, analyze_data
 from pathlib import Path
 from time import time
 from scenario import scenario, set_value
+from analyzeOutput.analyze import open_output_and_calculate_variance_expected
+from csv import writer
 
 """
     modify below list in order to test different scenarios.
@@ -11,10 +13,10 @@ from scenario import scenario, set_value
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
-    ("volume_buy", list(range(23, 100, 1))),
-    ("loss_limit", [round(-1.5 - 0.1 * x, 1) for x in range(15)]),
-    ("opening_con2_di_method", ["positive", "negative"]),
-    ("profit_limit", [round(3 + 0.1 * x, 1) for x in range(15)])
+    ("volume_buy", list(range(23, 50, 1))),
+    # ("loss_limit", [round(-1.5 - 0.1 * x, 1) for x in range(15)]),
+    # ("opening_con2_di_method", ["positive", "negative"]),
+    # ("profit_limit", [round(3 + 0.1 * x, 1) for x in range(15)])
 ]
 
 
@@ -50,19 +52,32 @@ def test():
     for i in range(test_variables_size - 1, -1, -1):
         number_of_tests *= len(test_variables_list[i][1])
 
+    file = open("test-output-analyzed.csv", "w")
+    file_writer = writer(file)
+    headers = [h[0] for h in test_variables_list]
+    headers.extend(["variance", "expected"])
+    file_writer.writerow(headers)
     i = 0
     test_variables_index = [0] * test_variables_size
     while i < number_of_tests:
+        out = []
         for j in range(test_variables_size):
-            set_value(
-                test_variables_list[j][0], test_variables_list[j][1][test_variables_index[j]])
+            v = test_variables_list[j][1][test_variables_index[j]]
+            out.append(v)
+            set_value(test_variables_list[j][0], v)
+
         main()
+        v_e = open_output_and_calculate_variance_expected()
+        out.extend(v_e)
+        file_writer.writerow(out)
+
         for j in range(test_variables_size - 1, -1, -1):
             test_variables_index[j] = (
                 test_variables_index[j] + 1) % len(test_variables_list[j][1])
             if test_variables_index[j] != 0:
                 break
         i += 1
+    file.close()
 
 
 inp = input(

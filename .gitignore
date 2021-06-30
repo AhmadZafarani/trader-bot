@@ -8,3 +8,4 @@ periodical_report.csv
 balance_report.csv
 __pycache__/
 .vscode/
+test*
