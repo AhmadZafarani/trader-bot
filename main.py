@@ -13,10 +13,10 @@ from csv import writer
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
-    ("volume_buy", list(range(23, 50, 1))),
-    # ("loss_limit", [round(-1.5 - 0.1 * x, 1) for x in range(15)]),
-    # ("opening_con2_di_method", ["positive", "negative"]),
-    # ("profit_limit", [round(3 + 0.1 * x, 1) for x in range(15)])
+    ("volume_buy", list(range(23, 25, 1))),
+    ("loss_limit", [round(-1.5 - 0.1 * x, 1) for x in range(15)]),
+    ("opening_con2_di_method", ["positive", "negative"]),
+    ("profit_limit", [round(3 + 0.1 * x, 1) for x in range(15)])
 ]
 
 
