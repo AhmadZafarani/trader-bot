@@ -16,7 +16,7 @@ def max_finder(data: list):
     return maximum
 
 
-fd = pd.read_csv("btc1h.csv")
+fd = pd.read_csv("/Internal/Projects/Crypto/trader-bot/data/BTC_FULL_1h.csv")
 data = fd.values
 low_values = []
 high_values = []
@@ -25,10 +25,10 @@ for i in range(len(data)):
     low_values.append(data[i][2])
     high_values.append(data[i][1])
 
-cll = int(input("Conversion line len: "))
-bsl = int(input("Base line len: "))
-lsl = int(input("Leading Span B len: "))
-lag = int(input("Lagging len: "))
+cll =  9 # int(input("Conversion line len: "))
+bsl = 26 # int(input("Base line len: "))
+lsl = 52 # int(input("Leading Span B len: "))
+lag = 26 # int(input("Lagging len: "))
 
 base_line = []
 conversion_line = []
@@ -72,22 +72,22 @@ for i in range(len(data) + lag - 1):
         maximum = max_finder(high_values[i - lsl + 1 - k:i + 1 - k])
     leading_line2.append((maximum + minimum) / 2.0)
 
-with open('ichimoku.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['conversion_line', 'base_line', 'lagging_span', 'leading_line1', 'leading_line2'])
-    for i in range(lag):
-        writer.writerow([0, 0, round(lagging_span[i], 3), 0, 0])
-    for i in range(len(data) + lag - 1):
-        if i < len(data) - lag + 1:
-            writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), round(lagging_span[i + lag - 1], 3),
-                             round(leading_line1[i], 3), round(leading_line2[i], 3)])
-        elif i < len(data):
-            writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), 0,
-                             round(leading_line1[i], 3), round(leading_line2[i], 3)])
-        else:
-            writer.writerow([0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
+# with open('/Internal/Projects/Crypto/trader-bot/data/BTC_FULL_1h_ichi1.csv', 'w', newline='') as file:
+#     writer = csv.writer(file)
+#     writer.writerow(['conversion_line', 'base_line', 'lagging_span', 'leading_line1', 'leading_line2'])
+#     for i in range(lag):
+#         writer.writerow([0, 0, round(lagging_span[i], 3), 0, 0])
+#     for i in range(len(data) + lag - 1):
+#         if i < len(data) - lag + 1:
+#             writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), round(lagging_span[i + lag - 1], 3),
+#                              round(leading_line1[i], 3), round(leading_line2[i], 3)])
+#         elif i < len(data):
+#             writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), 0,
+#                              round(leading_line1[i], 3), round(leading_line2[i], 3)])
+#         else:
+#             writer.writerow([0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
 
-with open('ichimoku2.csv', 'w', newline='') as file:
+with open('/Internal/Projects/Crypto/trader-bot/data/BTC_FULL_1h_ichi.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['conversion_line', 'base_line', 'lagging_span', 'leading_line1', 'leading_line2'])
     for i in range(len(data) + lag - 1):

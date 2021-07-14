@@ -1,7 +1,7 @@
 import pandas as pd
 import csv
 
-fd = pd.read_csv("data/btc1h.csv")
+fd = pd.read_csv("data/BTC_FULL_1h.csv")
 data = fd.values
 
 DMp = []
@@ -66,7 +66,7 @@ for i in range(14, len(DX)):
     sum_ADX = sum_ADX - DX[i - 14] + DX[i]
     ADX.append(sum_ADX / 14.0)
 
-with open('data/adx.csv', 'w', newline='') as file:
+with open('data/BTC_FULL_ADX.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['adx', 'DI+', 'DI-'])
     for i in range(len(data)):
