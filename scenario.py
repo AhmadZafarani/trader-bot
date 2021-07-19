@@ -12,13 +12,13 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ichimoku": "BTC_FULL_1h_ichi.csv" , "ADX" : "BTC_FULL_1h_ADX.csv"}
+        "ichimoku": "BTC_FULL_1h_ichi.csv", "ADX": "BTC_FULL_1h_ADX.csv"}
 
     extra_moments_data_files = {}
 
     fee = 0.001
 
-    start_of_work_dollar_balance = 10
+    start_of_work_dollar_balance = 1000000000000
 
     start_of_work_crypto_balance = 0
 
@@ -44,25 +44,23 @@ class Scenario:
     # in moments
     profit_loss_period_step = 24
 # =======================================================================
-    # strategy configuration 
+    # strategy configuration
     # name : ichi_cross
     # opening_conditions :
 
-
-    # adx_min 
+    # adx_min
     # values : 0 - 100
-    # default : 15 
+    # default : 15
     adx_min = 15
 
+    # min_slope_dif
+    # default :
+    min_slope_dif = 0
 
-    # min_slope_dif  
-    # default : 
-    min_slope_dif = 0 
-
-    # under_cloud_condition1 
-    # values : 0 ,1 
-    # default : 1  
-    under_cloud_condition1 = 1 
+    # under_cloud_condition1
+    # values : 0 ,1
+    # default : 1
+    under_cloud_condition1 = 1
 
     # under_cloud_condition2
     # values : 0 - 100 (percentage)
@@ -71,65 +69,60 @@ class Scenario:
 
     # next_candle_lenght_min
     # values : -5 , 5
-    # default : 1  
-    next_candle_lenght_min = 1 
-
-
+    # default : 1
+    next_candle_lenght_min = 1
 
     # opening conditions intractions :
     # {CHECK_ADX , CHECK_SLOPE , CHECK_UNDERCLOUD_CON1, CHECK_UNDERCLOUD_CON2, CHECK_NEXT_CANDLE}
     opening_intractions = [0, 1, 1, 1, 1]
 
-
-
-
-    # closing_conditions: 
-    # methods : 
+    # closing_conditions:
+    # methods :
     # method1: Price and T||K Cross
-    # closing_con1_min 
+    # closing_con1_min
     # values : percentage
-    # default : 50 
-    closing_con1_min = 50 
-    # ten_kij_dif_max_then_kij 
+    # default : 50
+    closing_con1_min = 50
+    # ten_kij_dif_max_then_kij
     # values: percentage
-    ten_kij_dif_max_then_kij : 5
-    # ten_kij_dif_max_then_kij 
+    ten_kij_dif_max_then_kij: 5
+    # ten_kij_dif_max_then_kij
     # values: 1 , 0
     closing_con1_red_candle = 1
-    # method_2: bearish_tk_cross 
-    # no variable 
-    
-    # method3: adx 
-    # met3_min_adx 
+    # method_2: bearish_tk_cross
+    # no variable
+
+    # method3: adx
+    # met3_min_adx
     # value:0 - 100
     # default : 15
     closing_met3_min_adx = 15
 
     # method4 : loss_imit , profit_limit
-    # profit limit 
+    # profit limit
     # values : (0 , 100]
-    # default : 10  
+    # default : 10
     profit_limit = 3
 
-    # loss limit 
+    # loss limit
     # values : (0 , 100]
-    # default : 10  
+    # default : 10
     loss_limit = -1.5
 
     # method5 : profit,loss limit on period
-    # profit limit 
+    # profit limit
     # values : (0 , 100]
-    # default : 10  
+    # default : 10
     profit_limit_per = 3
 
-    # loss limit 
+    # loss limit
     # values : (0 , 100]
-    # default : 10  
+    # default : 10
     loss_limit_per = -1.5
 
     # 'intraction'
 
-    # intraction is a 5 bit binary number 
+    # intraction is a 5 bit binary number
     # example
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}

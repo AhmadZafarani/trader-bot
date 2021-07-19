@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 
+
 def sma(len: int, price_list: list):
     ma = []
     i = 0
@@ -24,6 +25,7 @@ def sma(len: int, price_list: list):
         i += 1
     return (ma)
 
+
 def ema(l: int, price: list):
     out = []
     k = 2.0 / (l + 1)
@@ -32,6 +34,7 @@ def ema(l: int, price: list):
         current_ema = k * price[i] + (1 - k) * out[i - 1]
         out.append(current_ema)
     return out
+
 
 fd = pd.read_csv("data/BTC_FULL_1h.csv")
 data0 = fd.values
@@ -57,5 +60,5 @@ with open('/Internal/Projects/Crypto/trader-bot/data/BTC_FULL_MACD.csv', 'w', ne
     writer = csv.writer(file)
     writer.writerow(['madc', 'signal', 'histogram'])
     for i in range(len(data)):
-        writer.writerow([round(macd[i] , 2), round(signal_ema[i] , 2), round(macd[i] - signal_ema[i] , 2)])
-
+        writer.writerow([round(macd[i], 2), round(
+            signal_ema[i], 2), round(macd[i] - signal_ema[i], 2)])

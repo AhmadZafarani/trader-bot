@@ -13,6 +13,8 @@ def view_balance(balance: list):
 
 def view_periodical_results(periodical_results: list):
     with open('periodical_report.csv', 'w') as file:
-        file.write('Date, Start Of Period Balance, End Of Period Balance, Delta Balance, delta percentage\n')
+        file.write(
+            'Date, Start Of Period Balance, End Of Period Balance, Delta Balance, delta percentage\n')
         for pr in periodical_results:
-            file.write(f'{pr[0]}, {pr[1]}, {pr[2]}, {pr[3]} , {round(float(100 * pr[3] / pr[1]) , 4)}\n')
+            file.write(
+                f'{pr[0]}, {pr[1]}, {pr[2]}, {pr[3]} , {round(float(100 * pr[3] / pr[1]) , 4)}\n')

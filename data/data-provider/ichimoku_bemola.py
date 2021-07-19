@@ -25,10 +25,10 @@ for i in range(len(data)):
     low_values.append(data[i][2])
     high_values.append(data[i][1])
 
-cll =  9 # int(input("Conversion line len: "))
-bsl = 26 # int(input("Base line len: "))
-lsl = 52 # int(input("Leading Span B len: "))
-lag = 26 # int(input("Lagging len: "))
+cll = 9  # int(input("Conversion line len: "))
+bsl = 26  # int(input("Base line len: "))
+lsl = 52  # int(input("Leading Span B len: "))
+lag = 26  # int(input("Lagging len: "))
 
 base_line = []
 conversion_line = []
@@ -89,7 +89,8 @@ for i in range(len(data) + lag - 1):
 
 with open('/Internal/Projects/Crypto/trader-bot/data/BTC_FULL_1h_ichi.csv', 'w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['conversion_line', 'base_line', 'lagging_span', 'leading_line1', 'leading_line2'])
+    writer.writerow(['conversion_line', 'base_line',
+                     'lagging_span', 'leading_line1', 'leading_line2'])
     for i in range(len(data) + lag - 1):
         if i < len(data) - lag + 1:
             writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), round(lagging_span[i + lag - 1], 3),
@@ -98,4 +99,5 @@ with open('/Internal/Projects/Crypto/trader-bot/data/BTC_FULL_1h_ichi.csv', 'w',
             writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), 0,
                              round(leading_line1[i], 3), round(leading_line2[i], 3)])
         else:
-            writer.writerow([0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
+            writer.writerow(
+                [0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])

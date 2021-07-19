@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 
+
 def sma(len: int, price_list: list):
     ma = []
     i = 0
@@ -24,6 +25,7 @@ def sma(len: int, price_list: list):
         i += 1
     return (ma)
 
+
 def ema(l: int, price: list):
     out = []
     k = 2.0 / (l + 1)
@@ -32,6 +34,7 @@ def ema(l: int, price: list):
         current_ema = k * price[i] + (1 - k) * out[i - 1]
         out.append(current_ema)
     return out
+
 
 l = int(input("enter len: "))
 
@@ -48,4 +51,3 @@ with open('ema.csv', 'w', newline='') as file:
     writer.writerow(['ema'])
     for line in ema_data:
         writer.writerow([line])
-

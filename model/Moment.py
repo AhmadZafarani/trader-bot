@@ -1,5 +1,6 @@
 # YA ALI
 from datetime import datetime
+from pytz import timezone
 
 
 class Moment:
@@ -17,7 +18,7 @@ class Moment:
         self.profit_loss_percentage = profit_loss_percentage
 
     def extract_time(self, time: int) -> tuple:
-        t = datetime.fromtimestamp(time)
+        t = datetime.fromtimestamp(time, timezone('GMT'))
         return t.date().strftime('%x'), t.hour, t.minute
 
     def __str__(self) -> str:

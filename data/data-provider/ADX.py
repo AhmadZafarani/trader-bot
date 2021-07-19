@@ -51,7 +51,8 @@ for i in range(1, len(DMp)):
 for i in range(1, len(Smoothed_DMp)):
     Current_DIp = (Smoothed_DMp[i] / Smoothed_TR[i]) * 100
     Current_DIn = (Smoothed_DMn[i] / Smoothed_TR[i]) * 100
-    Current_DX = (abs(Current_DIp - Current_DIn) / abs(Current_DIp + Current_DIn)) * 100
+    Current_DX = (abs(Current_DIp - Current_DIn) /
+                  abs(Current_DIp + Current_DIn)) * 100
     DIp.append(Current_DIp)
     DIn.append(Current_DIn)
     DX.append(Current_DX)
@@ -74,6 +75,8 @@ with open('data/BTC_FULL_ADX.csv', 'w', newline='') as file:
             writer.writerow([0, 0, 0])
         else:
             if i < 16:
-                writer.writerow([0.0, round(DIp[i - 2] , 2), round(DIn[i - 2] , 2)])
+                writer.writerow(
+                    [0.0, round(DIp[i - 2], 2), round(DIn[i - 2], 2)])
             else:
-                writer.writerow([round(ADX[i - 15] , 2), round(DIp[i - 2] , 2), round(DIn[i - 2] , 2)])
+                writer.writerow(
+                    [round(ADX[i - 15], 2), round(DIp[i - 2], 2), round(DIn[i - 2], 2)])

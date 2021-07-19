@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 
+
 def sma(len: int, price_list: list):
     ma = []
     i = 0
@@ -24,6 +25,7 @@ def sma(len: int, price_list: list):
         i += 1
     return (ma)
 
+
 def rma(l: int, price: list):
     out = []
     k = 1.0 / l
@@ -32,6 +34,7 @@ def rma(l: int, price: list):
         current_ema = k * price[i] + (1 - k) * out[i - 1]
         out.append(current_ema)
     return out
+
 
 fd = pd.read_csv("btc1h.csv")
 data0 = fd.values
@@ -50,7 +53,7 @@ for i in range(1, len(data)):
     up_data.append(max(data[i] - data[i - 1], 0.0))
     down_data.append(-min(data[i] - data[i - 1], 0.0))
 
-up = rma(l ,up_data)
+up = rma(l, up_data)
 down = rma(l, down_data)
 
 rsi = []
@@ -68,17 +71,3 @@ with open('rsi.csv', 'w', newline='') as file:
     writer.writerow(['rsi'])
     for i in range(len(data)):
         writer.writerow([round(rsi[i], 3)])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
