@@ -128,7 +128,7 @@ class ADX12(Strategy):
                self.candles[self.moment.candle_id - 3].close_price > self.candles[self.moment.candle_id - 3].open_price and \
                ((self.candles[self.moment.candle_id - 3].close_price - self.candles[self.moment.candle_id - 3].moving12) / (
                    self.candles[self.moment.candle_id - 3].close_price - self.candles[self.moment.candle_id - 3].open_price)) \
-               * 100 > scenario.opening_con1_min_first: 
+               * 100 > scenario.opening_con1_min_first:
                 if scenario.opening_con2_di_method == "positive":
                     if self.candles[self.moment.candle_id - 2].DI_plus > self.candles[self.moment.candle_id - 2].DI_minus and \
                        self.candles[self.moment.candle_id - 2].adx > scenario.opening_con2_min_adx:

@@ -2,9 +2,7 @@
 class Scenario:
     candles_data_csv_file_name = 'ETH_FULL_1h.csv'
 
-
     moment_data_csv_file_name = 'ETH_FULL_1h_moment.csv'
-
 
     """
         these are dictionaries like this:
@@ -16,21 +14,15 @@ class Scenario:
     extra_candles_data_files = {
         "moving12": "ETH_FULL_1h_MA12.csv", "ADX": "ETH_FULL_ADX.csv"}
 
-
     extra_moments_data_files = {}
-
 
     fee = 0.001
 
-
     start_of_work_dollar_balance = 100000
-
 
     start_of_work_crypto_balance = 0
 
-
     number_of_moments_in_a_candle = 1
-
 
     # locking strategy
     # for locking strategy you have two methods
@@ -42,7 +34,6 @@ class Scenario:
     # default  : 1
     lock_hour = 3
 
-
     # 'lock_method'
     # values :
     # "lock_to_fin"
@@ -50,10 +41,8 @@ class Scenario:
     # default: "lock_to_fin"
     lock_method = "lock_to_fin"
 
-
     # in moments
     profit_loss_period_step = 24
-
 
     # Opening Conditiotions
     # in this section you can configuire when this strategy will open
@@ -69,12 +58,10 @@ class Scenario:
     # default : 3
     opening_con1_num_of_candles = 2
 
-
     # using 'opening_con1_min_first' property you can determine the minimum percentage of 'close_price' of the firts candle to be more than the moving12
     # values can be : [1 , 99]
     # default : 30 %
     opening_con1_min_first = 1
-
 
     # condition 2
     # condition 2 is based on ADX , DI+ , DI-
@@ -84,7 +71,6 @@ class Scenario:
     # default: 25
     opening_con2_min_adx = 12.5
 
-
     # 'opening_con2_di_method'
     # for inspectiong DI+ and DI- you have two methods (for more details check strategy docs)
     # values:
@@ -92,7 +78,6 @@ class Scenario:
     # "increasing" => (DI+(-1) -  DI-(-1)) - (DI+(-2) -  DI-(-2)) > 0
     # default : "positive"
     opening_con2_di_method = "positive"
-
 
     # Closing condtitions
     # for closing we have 3 methods
@@ -112,7 +97,6 @@ class Scenario:
     # default : 70 %
     closing_met1_min_first = 1
 
-
     # method 2
     # this method and condition 2 are the same
 
@@ -120,7 +104,6 @@ class Scenario:
     # values can be : [25-10]
     # default: 25
     closing_met2_max_adx = 12.5
-
 
     # method3
     # this method is just based on profit and loss limit
@@ -135,7 +118,6 @@ class Scenario:
     # default : 10
     loss_limit = -1.5
 
-
     # 'intraction'
 
     # intraction is a 3 bit binary number
@@ -149,14 +131,14 @@ class Scenario:
 
     intraction = int('110', 2)
 
-
     # volume_buy
     # value (percent) : ( 0  , 100]
     # default : 50
     volume_buy = 80
+
+
 scenario = Scenario()
 
 
 def set_value(variable_name: str, value):
     scenario.__setattr__(variable_name, value)
-

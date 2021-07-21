@@ -14,16 +14,17 @@ from csv import writer
 """
 test_variables_list = [
     ("volume_buy", list(range(20, 80, 5))),
-    ("lock_method" , ["lock_to_fin" , "lock_to_houre"]),
-    ("lock_hour" , list(range(3 , 10 ,2 ))),
-    ("opening_con1_num_of_candles" , [1 , 2 , 3]),
+    ("lock_method", ["lock_to_fin", "lock_to_houre"]),
+    ("lock_hour", list(range(3, 10, 2))),
+    ("opening_con1_num_of_candles", [1, 2, 3]),
     ("opening_con1_min_first", list(range(1, 90, 20))),
-    ("opening_con2_min_adx" , list(range(10,25 , 2))),
-    ("closing_meth1_num_of_candles" , [1 ,2]),
-    ("closing_met2_max_adx" , list(range(10,25 , 3))),
-    ("profit_limit" , list(range(2,15 , 2))),
-    ("loss_limit" , [-1 , -2 , -3 , -4 , -5]),
-    ("intraction" , [int('100', 2) , int('110', 2) , int('101', 2) , int('111', 2) , int('010', 2),int('011', 2),int('001', 2)])
+    ("opening_con2_min_adx", list(range(10, 25, 2))),
+    ("closing_meth1_num_of_candles", [1, 2]),
+    ("closing_met2_max_adx", list(range(10, 25, 3))),
+    ("profit_limit", list(range(2, 15, 2))),
+    ("loss_limit", [-1, -2, -3, -4, -5]),
+    ("intraction", [int('100', 2), int('110', 2), int('101', 2),
+                    int('111', 2), int('010', 2), int('011', 2), int('001', 2)])
 ]
 
 
@@ -76,7 +77,6 @@ def test():
         v_e = open_output_and_calculate_variance_expected()
         out.extend(v_e)
         file_writer.writerow(out)
-        # print(number_of_tests)
         print('Analyzing :', round(100 * i / number_of_tests, 4), '%')
 
         for j in range(test_variables_size - 1, -1, -1):
