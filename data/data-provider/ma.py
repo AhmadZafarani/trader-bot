@@ -21,16 +21,17 @@ def moving_avrage(len: int, price_list: list):
 
 
 close_price = []
-with open('/Internal/Projects/Crypto/trader-bot/data/onehour.csv') as csv_file:
+with open('data/ETH_FULL_1h-time.csv') as csv_file:
     csv_reader = csv.reader(csv_file)
     next(csv_reader)
     for row in csv_reader:
         close_price.append(float(row[4]))
-print(close_price)
+# print(close_price)
 
 moving_12 = moving_avrage(12, close_price)
 moving_26 = moving_avrage(26, close_price)
-with open('ma_16_1h.csv', mode='w') as ma_12file:
+with open('data/ETH_FULL_1h_MA12.csv', mode='w') as ma_12file:
     ma12 = csv.writer(ma_12file)
-    for m in moving_26:
+    ma12.writerow('moving12')
+    for m in moving_12:
         ma12.writerow([str(m)])

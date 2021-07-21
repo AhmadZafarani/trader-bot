@@ -13,16 +13,23 @@ from csv import writer
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
-    ("volume_buy", list(range(23, 25, 1))),
-    ("loss_limit", [round(-1.5 - 0.1 * x, 1) for x in range(15)]),
-    ("opening_con2_di_method", ["positive", "negative"]),
-    ("profit_limit", [round(3 + 0.1 * x, 1) for x in range(15)])
+    ("volume_buy", list(range(20, 80, 5))),
+    ("lock_method" , ["lock_to_fin" , "lock_to_houre"]),
+    ("lock_hour" , list(range(3 , 10 ,2 ))),
+    ("opening_con1_num_of_candles" , [1 , 2 , 3]),
+    ("opening_con1_min_first", list(range(1, 90, 20))),
+    ("opening_con2_min_adx" , list(range(10,25 , 2))),
+    ("closing_meth1_num_of_candles" , [1 ,2]),
+    ("closing_met2_max_adx" , list(range(10,25 , 3))),
+    ("profit_limit" , list(range(2,15 , 2))),
+    ("loss_limit" , [-1 , -2 , -3 , -4 , -5]),
+    ("intraction" , [int('100', 2) , int('110', 2) , int('101', 2) , int('111', 2) , int('010', 2),int('011', 2),int('001', 2)])
 ]
 
 
 def main():
     start_time = time()
-    print('loading data...')
+    # print('loading data...')
 
     data_folder = Path("data")
     candles_file = data_folder / scenario.candles_data_csv_file_name
@@ -39,7 +46,7 @@ def main():
             scenario.extra_moments_data_files[emdf]
 
     candles = data_converter(candles_file, extra_candle_files)
-    print('data loaded in : ', time() - start_time)
+    # print('data loaded in : ', time() - start_time)
 
     analyze_data(candles, moments_file, extra_moment_files)
 
@@ -51,11 +58,10 @@ def test():
     number_of_tests = 1
     for i in range(test_variables_size - 1, -1, -1):
         number_of_tests *= len(test_variables_list[i][1])
-
     file = open("test-output-analyzed.csv", "w")
     file_writer = writer(file)
     headers = [h[0] for h in test_variables_list]
-    headers.extend(["variance", "expected"])
+    headers.extend(["expected", "variance"])
     file_writer.writerow(headers)
     i = 0
     test_variables_index = [0] * test_variables_size
@@ -70,6 +76,8 @@ def test():
         v_e = open_output_and_calculate_variance_expected()
         out.extend(v_e)
         file_writer.writerow(out)
+        # print(number_of_tests)
+        print('Analyzing :', round(100 * i / number_of_tests, 4), '%')
 
         for j in range(test_variables_size - 1, -1, -1):
             test_variables_index[j] = (
@@ -80,8 +88,9 @@ def test():
     file.close()
 
 
-inp = input(
-    "insert 1 for run the program in normal mode\nor insert 2 for run in test mode:\n")
+# inp = input(
+#     "insert 1 for run the program in normal mode\nor insert 2 for run in test mode:\n")
+inp = '2'
 if inp == '1':
     main()
 elif inp == '2':

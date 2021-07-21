@@ -22,7 +22,7 @@ class Moment:
         return t.date().strftime('%x'), t.hour, t.minute
 
     def __str__(self) -> str:
-        return f'minute: {self.minute}, hour: {self.hour}, date: {self.date}, price: {self.price}'
+        return f'minute: {self.minute}, hour: {self.hour}, date: {self.date}, price: {self.price} , Candle-ID : {self.candle_id}'
 
     def __repr__(self) -> str:
         return self.__str__()
