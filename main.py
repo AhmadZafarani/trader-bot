@@ -29,7 +29,7 @@ test_variables_list = [
 
 def main():
     start_time = time()
-    # print('loading data...')
+    print('loading data...')
 
     data_folder = Path("data")
     candles_file = data_folder / scenario.candles_data_csv_file_name
@@ -46,7 +46,7 @@ def main():
             scenario.extra_moments_data_files[emdf]
 
     candles = data_converter(candles_file, extra_candle_files)
-    # print('data loaded in : ', time() - start_time)
+    print('data loaded in : ', time() - start_time)
 
     analyze_data(candles, moments_file, extra_moment_files)
 
@@ -90,7 +90,7 @@ def test():
 
 # inp = input(
 #     "insert 1 for run the program in normal mode\nor insert 2 for run in test mode:\n")
-inp = '2'
+inp = '1'
 if inp == '1':
     main()
 elif inp == '2':

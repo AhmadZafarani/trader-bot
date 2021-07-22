@@ -45,12 +45,12 @@ def data_converter(candles_file: str, extra_candle_files: dict) -> list:
     candles = []
     with open(candles_file) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
-        next(csv_reader)        # skip field names
+        # next(csv_reader)        # skip field names
         candles_data = list(csv_reader)
         candles_number = len(candles_data)
         for i in range(1, candles_number):
             c = candle_maker(candles_data, i, files)
-            # print("Candle:" , c)
+            print("Candle:" , c)
             candles.append(c)
     return candles
 
@@ -63,7 +63,7 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
     this_moment.update_moment(
         time, price, candle.identifier, profit_loss_percentage)
-    # print(" Moment:" , this_moment)
+    print(" Moment:" , this_moment)
     for file in moments_extra_files:
         field_names = file[0]
         field_length = len(field_names)
@@ -82,7 +82,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
 
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
-        next(csv_reader)        # skip field names
+        # next(csv_reader)        # skip field names
         moments_data = list(csv_reader)
         moment_index = 1
         for c in candles:
@@ -109,10 +109,9 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
 def try_strategies(moment: Moment, candles: list):
     global working_strategies, bitcoin_balance, dollar_balance
     if scenario.lock_method == 'lock_to_hour':
-        for locked in strategies.lock_strategies:       # unlock strategies
+        for locked in list(strategies.lock_strategies):       # unlock strategies
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
-
     for ws in working_strategies:
         ws.continue_strategy()
     # remove finished strategies from working_strategies
