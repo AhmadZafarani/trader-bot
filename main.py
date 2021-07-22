@@ -73,11 +73,14 @@ def test():
             out.append(v)
             set_value(test_variables_list[j][0], v)
 
-        main()
-        v_e = open_output_and_calculate_variance_expected()
-        out.extend(v_e)
-        file_writer.writerow(out)
-        print('Analyzing :', round(100 * i / number_of_tests, 4), '%')
+        try:
+            main()
+            v_e = open_output_and_calculate_variance_expected()
+            out.extend(v_e)
+            file_writer.writerow(out)
+            print('Analyzing :', round(100 * i / number_of_tests, 4), '%')
+        except RuntimeError as e:
+            print(e.args)
 
         for j in range(test_variables_size - 1, -1, -1):
             test_variables_index[j] = (
