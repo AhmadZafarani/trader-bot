@@ -105,13 +105,19 @@ class ICHI_CROSS(Strategy):
             else:
                 return False
         if i == 1:
-            if self.candles[self.moment.candle_id - 2].conversion_line - self.candles[self.moment.candle_id - 3].conversion_line \
-                    - self.candles[self.moment.candle_id - 2].base_line + self.candles[self.moment.candle_id - 3].base_line > scenario.min_slope_dif:
+            if 100 * (self.candles[self.moment.candle_id - 2].conversion_line - self.candles[self.moment.candle_id - 3].conversion_line) / self.candles[self.moment.candle_id - 3].conversion_line \
+                    - 100 * (self.candles[self.moment.candle_id - 2].base_line - self.candles[self.moment.candle_id - 3].base_line )/self.candles[self.moment.candle_id - 3].base_line > scenario.min_slope_dif:
                 return True
             else:
                 return False
         if i == 2:
-            return True
+            if ((self.candles[self.moment.candle_id - 2].conversion_line >  self.candles[self.moment.candle_id - 2].leading_line1 and\
+                    self.candles[self.moment.candle_id - 2].conversion_line >  self.candles[self.moment.candle_id - 2].leading_line2 and \
+                        self.candles[self.moment.candle_id - 2].base_line >  self.candles[self.moment.candle_id - 2].leading_line1 and \
+                            self.candles[self.moment.candle_id - 2].base_line >  self.candles[self.moment.candle_id - 2].leading_line2)) : 
+                            return True
+            if self.candles[self.moment.candle_id - 2].leading_line1 > self.candles[self.moment.candle_id - 2].leading_line2 :
+                return False
         if i == 3:
             return True
         if i == 4:
@@ -123,17 +129,38 @@ class ICHI_CROSS(Strategy):
                 return False
 
     def cross_happend(self):
-        if self.candles[self.moment.candle_id - 2].conversion_line > \
- self.candles[self.moment.candle_id - 2].base_line and \
+        if self.moment.candle_id < 4 :
+            return False
+        if self.candles[self.moment.candle_id - 2].conversion_line > self.candles[self.moment.candle_id - 2].base_line and \
                 self.candles[self.moment.candle_id - 3].conversion_line <= self.candles[self.moment.candle_id - 3].base_line:
             return True
 
     def strategy_works(self) -> bool:
         if self.cross_happend():
-            for i in range(len(scenario.opening_intractions)):
-                if scenario.opening_intractions[i] == 1:
-                    if not self.check_open_con(i):
-                        return False
+            if scenario.opening_intractions[2] == 1 :
+                for i in range(len(scenario.opening_intractions)):  
+                    if scenario.opening_intractions[i] == 1:
+                        if not self.check_open_con(i):
+                            return False
+            else :
+                
+                if not  ((self.candles[self.moment.candle_id - 2].conversion_line >  self.candles[self.moment.candle_id - 2].leading_line1 and\
+                    self.candles[self.moment.candle_id - 2].conversion_line >  self.candles[self.moment.candle_id - 2].leading_line2 and \
+                        self.candles[self.moment.candle_id - 2].base_line >  self.candles[self.moment.candle_id - 2].leading_line1 and \
+                            self.candles[self.moment.candle_id - 2].base_line >  self.candles[self.moment.candle_id - 2].leading_line2)) : 
+                            return False
+                for i in range(len(scenario.opening_intractions)):  
+                    if scenario.opening_intractions[i] == 1:
+                        if not self.check_open_con(i):
+                            return False
+            slop = 100 * (self.candles[self.moment.candle_id - 2].conversion_line - self.candles[self.moment.candle_id - 3].conversion_line) / self.candles[self.moment.candle_id - 3].conversion_line \
+                    - 100 * (self.candles[self.moment.candle_id - 2].base_line - self.candles[self.moment.candle_id - 3].base_line )/self.candles[self.moment.candle_id - 3].base_line 
+            print(f''' Candle curent : {self.candles[self.moment.candle_id - 1]}
+            ADX prev : {[self.candles[self.moment.candle_id - 2].adx , self.candles[self.moment.candle_id - 1].DI_plus , self.candles[self.moment.candle_id - 1].DI_minus ]}
+            ICHI prev : conv : {self.candles[self.moment.candle_id - 2].conversion_line} , base:{self.candles[self.moment.candle_id - 2].base_line}
+            ICHI prev prev : conv : {self.candles[self.moment.candle_id - 3].conversion_line} , base:{self.candles[self.moment.candle_id - 3].base_line}
+            slope : {slop}
+             ''')
             return True
 
     def start_strategy(self):
@@ -193,7 +220,7 @@ class ICHI_CROSS(Strategy):
                     if self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].close_price \
                             and self.candles[self.moment.candle_id - 2].conversion_line > \
                         self.candles[self.moment.candle_id - 2].open_price \
-                            - ((self.candles[self.moment.candle_id - 2].open_price - self.candles[self.moment.candle_id - 2].close) * (scenario.closing_con1_min/100)):
+                            - ((self.candles[self.moment.candle_id - 2].open_price - self.candles[self.moment.candle_id - 2].close_price) * (scenario.closing_con1_min/100)):
                         return True
                     else:
                         return False
@@ -231,4 +258,4 @@ class ICHI_CROSS(Strategy):
                 self.fin_and_before()
 
 
-strategies = {'dummy': Dummy_Strategy}
+strategies = {'ichi_cross': ICHI_CROSS}

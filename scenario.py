@@ -1,8 +1,8 @@
 # YA BAGHER
 class Scenario:
-    candles_data_csv_file_name = 'test/BTC_TEST_1h.csv'
+    candles_data_csv_file_name = 'BTC_FULL_1h.csv'
 
-    moment_data_csv_file_name = 'test/BTC_TEST_1h_moment.csv'
+    moment_data_csv_file_name = 'BTC_FULL_1h_moment.csv'
 
     """
         these are dictionaries like this:
@@ -11,14 +11,14 @@ class Scenario:
         ** we assumed that the files are located some where in data/ directory. **
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
-    extra_candles_data_files = {}
-        # "ichimoku": "BTC_FULL_1h_ichi.csv", "ADX": "BTC_FULL_1h_ADX.csv"}
+    extra_candles_data_files = {
+        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv"}
 
     extra_moments_data_files = {}
 
     fee = 0.001
 
-    start_of_work_dollar_balance = 1000000000000
+    start_of_work_dollar_balance = 100000
 
     start_of_work_crypto_balance = 0
 
@@ -55,12 +55,8 @@ class Scenario:
 
     # min_slope_dif
     # default :
-    min_slope_dif = 0
+    min_slope_dif = 0.15
 
-    # under_cloud_condition1
-    # values : 0 ,1
-    # default : 1
-    under_cloud_condition1 = 1
 
     # under_cloud_condition2
     # values : 0 - 100 (percentage)
@@ -73,8 +69,8 @@ class Scenario:
     next_candle_lenght_min = 1
 
     # opening conditions intractions :
-    # {CHECK_ADX , CHECK_SLOPE , CHECK_UNDERCLOUD_CON1, CHECK_UNDERCLOUD_CON2, CHECK_NEXT_CANDLE}
-    opening_intractions = [0, 1, 1, 1, 1]
+    # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
+    opening_intractions = [0, 0, 0, 0]
 
     # closing_conditions:
     # methods :
@@ -85,7 +81,7 @@ class Scenario:
     closing_con1_min = 50
     # ten_kij_dif_max_then_kij
     # values: percentage
-    ten_kij_dif_max_then_kij: 5
+    ten_kij_dif_max_then_kij=  5
     # ten_kij_dif_max_then_kij
     # values: 1 , 0
     closing_con1_red_candle = 1
@@ -131,7 +127,7 @@ class Scenario:
     # volume_buy
     # value (percent) : ( 0  , 100]
     # default : 50
-    volume_buy = 80
+    volume_buy = 50
 
 
 scenario = Scenario()
