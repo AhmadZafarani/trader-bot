@@ -136,9 +136,12 @@ def buy(bitcoin: int, price: int):
 
 
 def sell(bitcoin: int, price: int):
+    print("sell")
     global bitcoin_balance, dollar_balance
+    # print('A ' ,bitcoin_balance)
     bitcoin_balance -= bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
+    # print('B ' ,bitcoin_balance)
     if bitcoin_balance < 0:
         raise RuntimeError('bitcoin balance is negative')
     dollar_balance += (bitcoin * price * (1 - scenario.fee))

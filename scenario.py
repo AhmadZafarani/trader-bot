@@ -12,7 +12,7 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv"}
+        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv" , "span_iscross":"BTC_SPAN_ISCROSS.csv"}
 
     extra_moments_data_files = {}
 
@@ -42,7 +42,7 @@ class Scenario:
     lock_method = "lock_to_fin"
 
     # in moments
-    profit_loss_period_step = 24
+    profit_loss_period_step = 48
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
@@ -61,16 +61,16 @@ class Scenario:
     # under_cloud_condition2
     # values : 0 - 100 (percentage)
     # default : 4
-    under_cloud_condition2 = 4
+    under_cloud_condition2 = 0.05
 
     # next_candle_lenght_min
     # values : -5 , 5
     # default : 1
-    next_candle_lenght_min = 1
+    next_candle_lenght_min = 0.2
 
     # opening conditions intractions :
     # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
-    opening_intractions = [0, 0, 0, 0]
+    opening_intractions = [0, 0, 1, 0]
 
     # closing_conditions:
     # methods :
@@ -98,23 +98,23 @@ class Scenario:
     # profit limit
     # values : (0 , 100]
     # default : 10
-    profit_limit = 3
+    profit_limit = 10
 
     # loss limit
     # values : (0 , 100]
     # default : 10
-    loss_limit = -1.5
+    loss_limit = -5
 
     # method5 : profit,loss limit on period
     # profit limit
     # values : (0 , 100]
     # default : 10
-    profit_limit_per = 3
+    profit_limit_per = 10
 
     # loss limit
     # values : (0 , 100]
     # default : 10
-    loss_limit_per = -1.5
+    loss_limit_per = -5
 
     # 'intraction'
 
@@ -122,12 +122,12 @@ class Scenario:
     # example
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}
-    close_intraction = [1, 1, 0, 1, 1]
+    close_intraction = [1, 0, 0, 0, 0]
 
     # volume_buy
     # value (percent) : ( 0  , 100]
     # default : 50
-    volume_buy = 50
+    volume_buy = 90
 
 
 scenario = Scenario()
