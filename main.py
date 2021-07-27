@@ -13,17 +13,18 @@ from csv import writer
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
-    ("volume_buy", list(range(20, 80, 5))),
-    ("lock_method" , ["lock_to_fin" , "lock_to_houre"]),
-    ("lock_hour" , list(range(3 , 10 ,2 ))),
-    ("opening_con1_num_of_candles" , [1 , 2 , 3]),
-    ("opening_con1_min_first", list(range(1, 90, 20))),
-    ("opening_con2_min_adx" , list(range(10,25 , 2))),
-    ("closing_meth1_num_of_candles" , [1 ,2]),
-    ("closing_met2_max_adx" , list(range(10,25 , 3))),
-    ("profit_limit" , list(range(2,15 , 2))),
-    ("loss_limit" , [-1 , -2 , -3 , -4 , -5]),
-    ("intraction" , [int('100', 2) , int('110', 2) , int('101', 2) , int('111', 2) , int('010', 2),int('011', 2),int('001', 2)])
+    ("volume_buy", list(range(20, 80, 10))),
+    ("lock_method", ["lock_to_fin", "lock_to_hour"]),
+    ("lock_hour", list(range(3, 10, 3))),
+    ("opening_con1_num_of_candles", [1, 2, 3]),
+    ("opening_con1_min_first", list(range(1, 90, 25))),
+    ("opening_con2_min_adx", list(range(10, 25, 5))),
+    ("closing_meth1_num_of_candles", [1, 2]),
+    ("closing_met2_max_adx", list(range(10, 25, 5))),
+    ("profit_limit", list(range(2, 15, 3))),
+    ("loss_limit", [-1, -2, -3, -4, -5]),
+    ("intraction", [int('100', 2), int('110', 2), int('101', 2),
+                    int('111', 2), int('010', 2), int('011', 2), int('001', 2)])
 ]
 
 
@@ -72,12 +73,14 @@ def test():
             out.append(v)
             set_value(test_variables_list[j][0], v)
 
-        main()
-        v_e = open_output_and_calculate_variance_expected()
-        out.extend(v_e)
-        file_writer.writerow(out)
-        # print(number_of_tests)
-        print('Analyzing :', round(100 * i / number_of_tests, 4), '%')
+        try:
+            main()
+            v_e = open_output_and_calculate_variance_expected()
+            out.extend(v_e)
+            file_writer.writerow(out)
+            print('Analyzing :', round(100 * i / number_of_tests, 4), '%')
+        except RuntimeError as e:
+            print(e.args)
 
         for j in range(test_variables_size - 1, -1, -1):
             test_variables_index[j] = (
