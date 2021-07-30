@@ -25,16 +25,23 @@ with open('data/BTC_FULL_1h_moment.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['time' , 'open', 'volume'])
     for line in data:
+        if line.get('volumeto') == 0:
+            continue
         # writer.writerow([line.get('time'), line.get('high'), line.get('low'), line.get('open'), line.get('close'), line.get('volumeto')])
         writer.writerow([line.get('time')*1000, line.get('open'), line.get('volumeto')])
 with open('data/BTC_FULL_1h.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow([ 'high', 'low', 'open', 'close', 'volume'])
     for line in data:
+        if line.get('volumeto') == 0:
+            continue
+        
         writer.writerow([line.get('high'), line.get('low'), line.get('open'), line.get('close'), line.get('volumeto')])
         # writer.writerow([line.get('time'), line.get('close'), line.get('volumeto')])
 with open('data/BTC_FULL_1h-time.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['time' ,  'high', 'low', 'open', 'close', 'volume'])
     for line in data:
+        if line.get('volumeto') == 0:
+            continue
         writer.writerow([line.get('time')*1000 , line.get('high'), line.get('low'), line.get('open'), line.get('close'), line.get('volumeto')])
