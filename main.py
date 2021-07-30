@@ -89,7 +89,7 @@ def test():
 
 # inp = input(
 #     "insert 1 for run the program in normal mode\nor insert 2 for run in test mode:\n")
-inp = '2'
+inp = '1'
 if inp == '1':
     main()
 elif inp == '2':

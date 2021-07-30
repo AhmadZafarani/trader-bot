@@ -185,10 +185,10 @@ class ICHI_CROSS(Strategy):
                             return False
             else:
 
-                if not ((self.candles[self.moment.candle_id - 2].conversion_line > self.candles[self.moment.candle_id - 2].leading_line1 and
-                         self.candles[self.moment.candle_id - 2].conversion_line > self.candles[self.moment.candle_id - 2].leading_line2 and
-                         self.candles[self.moment.candle_id - 2].base_line > self.candles[self.moment.candle_id - 2].leading_line1 and
-                         self.candles[self.moment.candle_id - 2].base_line > self.candles[self.moment.candle_id - 2].leading_line2)):
+                if not ((self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].leading_line1 and
+                         self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].leading_line2 and
+                         self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].leading_line1 and
+                         self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].leading_line2)):
                     return False
                 for i in range(len(scenario.opening_intractions)):
                     if scenario.opening_intractions[i] == 1:
