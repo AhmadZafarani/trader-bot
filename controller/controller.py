@@ -43,7 +43,6 @@ def data_converter(candles_file: str, extra_candle_files: dict) -> list:
     candles = []
     with open(candles_file) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
-        # next(csv_reader)        # skip field names
         candles_data = list(csv_reader)
         candles_number = len(candles_data)
         for i in range(1, candles_number):
@@ -78,7 +77,6 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
 
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
-        # next(csv_reader)        # skip field names
         moments_data = list(csv_reader)
         moment_index = 1
         for c in candles:
@@ -134,10 +132,8 @@ def buy(bitcoin: int, price: int):
 def sell(bitcoin: int, price: int):
     print("sell")
     global bitcoin_balance, dollar_balance
-    # print('A ' ,bitcoin_balance)
     bitcoin_balance -= bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
-    # print('B ' ,bitcoin_balance)
     if bitcoin_balance < 0:
         raise RuntimeError('bitcoin balance is negative')
     dollar_balance += (bitcoin * price * (1 - scenario.fee))
