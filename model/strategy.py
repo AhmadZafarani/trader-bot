@@ -150,11 +150,9 @@ class ICHI_CROSS(Strategy):
             maxwidth = max(width)
 
             if maxwidth / distance >= scenario.under_cloud_condition2:
-                print(f'M/D = {maxwidth / distance} ')
                 return True
             return False
 
-            ####
         if i == 3:
             sgn = 0
             lenght = 100 * (max(self.candles[self.moment.candle_id - 1].open_price, self.candles[self.moment.candle_id - 1].close_price) -
@@ -191,7 +189,6 @@ class ICHI_CROSS(Strategy):
                          self.candles[self.moment.candle_id - 2].conversion_line > self.candles[self.moment.candle_id - 2].leading_line2 and
                          self.candles[self.moment.candle_id - 2].base_line > self.candles[self.moment.candle_id - 2].leading_line1 and
                          self.candles[self.moment.candle_id - 2].base_line > self.candles[self.moment.candle_id - 2].leading_line2)):
-                    # print("l")
                     return False
                 for i in range(len(scenario.opening_intractions)):
                     if scenario.opening_intractions[i] == 1:
@@ -256,7 +253,6 @@ class ICHI_CROSS(Strategy):
         # sell ADX prev : {self.ADXX}
         # sell ICHI prev : conv : {self.ICHII}
         # sell ICHI prev prev : conv : {self.ICHHII}
-
         # """)
         if scenario.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_cross")
@@ -272,7 +268,6 @@ class ICHI_CROSS(Strategy):
                             and self.candles[self.moment.candle_id - 2].base_line > \
                         self.candles[self.moment.candle_id - 2].open_price \
                             - ((self.candles[self.moment.candle_id - 2].open_price - self.candles[self.moment.candle_id - 2].close_price) * (scenario.closing_con1_min/100)):
-                        print("1st")
                         return True
                     else:
                         print("false here")

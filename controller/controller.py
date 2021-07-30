@@ -27,10 +27,8 @@ def candle_maker(candles_data: list, i: int, files: list) -> Candle:
     fields = [f for f in candles_data[i]]
     c = Candle(i, float(fields[0]), float(fields[1]), float(
         fields[2]), float(fields[3]), float(fields[4]))
-    # print(c)
     for file in files:
         field_names = file[0]
-        # print(field_names)
         field_length = len(field_names)
         fields = [f for f in file[i]]
 
@@ -45,12 +43,10 @@ def data_converter(candles_file: str, extra_candle_files: dict) -> list:
     candles = []
     with open(candles_file) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
-        # next(csv_reader)        # skip field names
         candles_data = list(csv_reader)
         candles_number = len(candles_data)
         for i in range(1, candles_number):
             c = candle_maker(candles_data, i, files)
-            # print("Candle:" , c)
             candles.append(c)
     return candles
 
@@ -63,7 +59,6 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
     this_moment.update_moment(
         time, price, candle.identifier, profit_loss_percentage)
-    # print(" Moment:" , this_moment)
     for file in moments_extra_files:
         field_names = file[0]
         field_length = len(field_names)
@@ -82,7 +77,6 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
 
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
-        # next(csv_reader)        # skip field names
         moments_data = list(csv_reader)
         moment_index = 1
         for c in candles:
@@ -92,7 +86,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
                     moments_data, moment_index, files, c, candles)
                 moment_index += 1
 
-            print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
+            # print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
         control_views(strategy_results)
 
 

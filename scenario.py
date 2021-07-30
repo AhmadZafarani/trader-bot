@@ -12,7 +12,7 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv" , "span_iscross":"BTC_SPAN_ISCROSS.csv"}
+        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv", "span_iscross": "BTC_SPAN_ISCROSS.csv"}
 
     extra_moments_data_files = {}
 
@@ -58,7 +58,6 @@ class Scenario:
     # default :
     min_slope_dif = 0.15
 
-
     # under_cloud_condition2
     # values : 0 - 100 (percentage)
     # default : 4
@@ -82,7 +81,7 @@ class Scenario:
     closing_con1_min = 50
     # ten_kij_dif_max_then_kij
     # values: percentage
-    ten_kij_dif_max_then_kij=  5
+    ten_kij_dif_max_then_kij = 5
     # ten_kij_dif_max_then_kij
     # values: 1 , 0
     closing_con1_red_candle = 1
