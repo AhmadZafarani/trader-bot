@@ -1,6 +1,5 @@
-
 import csv
-import matplotlib.pyplot as plt 
+# import matplotlib.pyplot as plt
 lead1 = []
 lead2 = []
 

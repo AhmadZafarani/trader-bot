@@ -85,7 +85,7 @@ class Dummy_Strategy(Strategy):
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
         self.buy_time = [self.moment.hour, self.moment.minute]
-        print(self.moment.candle_id)
+        # print(self.moment.candle_id)
 
     def continue_strategy(self):
         if not (controller.get_this_moment().hour == 15 and controller.get_this_moment().minute == 0):

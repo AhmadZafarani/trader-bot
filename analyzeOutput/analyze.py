@@ -2,9 +2,12 @@ import csv
 import math
 import matplotlib.pyplot as plt
 import numpy as np
+from sys import argv
 
 
 percent = []
+
+inp = argv[1] if len(argv) > 1 else ""
 
 
 def variance_expected(datas: list) -> list:
@@ -32,7 +35,7 @@ def open_output_and_calculate_variance_expected():
         return [0, 0]
 
 
-if __name__ == "__main__":
+if inp != "only-print":
     v_e = open_output_and_calculate_variance_expected()
     print(v_e)
     xpoints = np.array(range(0, len(percent)))
