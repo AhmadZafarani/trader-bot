@@ -148,7 +148,6 @@ class ICHI_CROSS(Strategy):
             maxwidth = max(width)
 
             if maxwidth / distance >= scenario.under_cloud_condition2:
-                print(f'M/D = {maxwidth / distance} ')
                 return True
             return False
 

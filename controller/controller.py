@@ -86,7 +86,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
                     moments_data, moment_index, files, c, candles)
                 moment_index += 1
 
-            print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
+            # print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
         control_views(strategy_results)
 
 
@@ -130,7 +130,6 @@ def buy(bitcoin: int, price: int):
 
 
 def sell(bitcoin: int, price: int):
-    print("sell")
     global bitcoin_balance, dollar_balance
     bitcoin_balance -= bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
