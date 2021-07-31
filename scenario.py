@@ -69,7 +69,7 @@ class Scenario:
 
     # opening conditions intractions :
     # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
-    opening_intractions = [0, 0, 0, 0]
+    opening_intractions = [0, 0, 1, 0]
 
     # closing_conditions:
     # methods :
@@ -77,7 +77,7 @@ class Scenario:
     # closing_con1_min
     # values : percentage
     # default : 50
-    closing_con1_min = 99
+    closing_con1_min = 50
     # ten_kij_dif_max_then_kij
     # values: percentage
     ten_kij_dif_max_then_kij = 5
@@ -97,12 +97,12 @@ class Scenario:
     # profit limit
     # values : (0 , 100]
     # default : 10
-    profit_limit = 2
+    profit_limit = 5
 
     # loss limit
     # values : (0 , 100]
     # default : 10
-    loss_limit = -1
+    loss_limit = -2
 
     # method5 : profit,loss limit on period
     # profit limit
@@ -121,12 +121,12 @@ class Scenario:
     # example
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}
-    close_intraction = [0, 0, 0, 0, 0]
+    close_intraction = [1, 1, 0, 0]
 
     # volume_buy
     # value (percent) : ( 0  , 100]
     # default : 50
-    volume_buy = 20
+    volume_buy = 80
 
 
 scenario = Scenario()

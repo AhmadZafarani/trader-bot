@@ -14,10 +14,17 @@ test_variables_list = [
     ("lock_hour", list(range(3, 10, 3))),
     ("profit_limit", list(range(2, 15, 3))),
     ("loss_limit", [-1, -2, -3, -4, -5]),
-    ("opening_intractions", [[int(x) for x in list(
-        bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
+    ("opening_intractions", [[0] + [int(x) for x in list(
+        bin(m).replace("0b", "").zfill(3))] for m in range(8)]),
     ("close_intraction", [[int(x) for x in list(
-        bin(m).replace("0b", "").zfill(5))] for m in range(32)]),
+        bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
+    ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
+    ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
+    ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
+    ("closing_con1_min", [x*10+9 for x in range(10)]),
+    ("ten_kij_dif_max_then_kij", [x*1+1 for x in range(5)]),
+    ("closing_con1_red_candle", [0, 1])
+
 ]
 
 test_variables_size = len(test_variables_list)
@@ -44,10 +51,10 @@ while i < number_of_tests:
     for j in range(len(out)):       # construct sed commands regarding to 'out'
         if isinstance(out[j], str):
             string = string + \
-                f'sed -i "s/\({headers[j]} = \).*/\\1\"{out[j]}\"/" scenario.py' + ';'
+                f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1\\\\\"{out[j]}\\\\\"/" scenario.py' + ';'
         else:
             string = string + \
-                f'sed -i "s/\({headers[j]} = \).*/\\1{out[j]}/" scenario.py' + ';'
+                f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1{out[j]}/" scenario.py' + ';'
     file.write(string + '\n')
 
     for j in range(test_variables_size - 1, -1, -1):        # indecies of next jaygasht
