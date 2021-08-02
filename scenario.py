@@ -121,7 +121,7 @@ class Scenario:
     # example
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}
-    close_intraction = [1, 1, 0, 0]
+    close_intraction = [1, 1, 0, 0, 0]
 
     # volume_buy
     # value (percent) : ( 0  , 100]
