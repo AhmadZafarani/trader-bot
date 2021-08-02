@@ -23,14 +23,14 @@ test_variables_list = [
     ("loss_limit", [-1, -2, -3, -4, -5]),
     ("opening_intractions", [[0] + [int(x) for x in list(
         bin(m).replace("0b", "").zfill(3))] for m in range(8)]),
-    # ("close_intraction", [[int(x) for x in list(
-    #     bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
-    # ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
-    # ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
-    # ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
-    # ("closing_con1_min", [x*10+9 for x in range(10)]),
-    # ("ten_kij_dif_max_then_kij", list(range(1, 6))),
-    # ("closing_con1_red_candle", [0, 1])
+    ("close_intraction", [[int(x) for x in list(
+        bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
+    ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
+    ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
+    ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
+    ("closing_con1_min", [x*10+9 for x in range(10)]),
+    ("ten_kij_dif_max_then_kij", list(range(1, 6))),
+    ("closing_con1_red_candle", [0, 1])
 ]
 
 
