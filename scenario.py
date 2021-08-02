@@ -32,14 +32,14 @@ class Scenario:
     # 'lock_hour' : you can adjust lock hour
     # values : N
     # default  : 1
-    lock_hour = 3
+    lock_hour = 9
 
     # 'lock_method'
     # values :
     # "lock_to_fin"
     # "lock_to_hour"
     # default: "lock_to_fin"
-    lock_method = "lock_to_fin"
+    lock_method = "lock_to_hour"
 
     # in moments
     profit_loss_period_step = 24
@@ -126,7 +126,7 @@ class Scenario:
     # volume_buy
     # value (percent) : ( 0  , 100]
     # default : 50
-    volume_buy = 80
+    volume_buy = 70
 
 
 scenario = Scenario()

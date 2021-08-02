@@ -1,13 +1,20 @@
 # YA HEYDAR
 from csv import writer
+
+
+"""
+    change this variable corresponding to how much it tooks to run the main.py on your machine (calculate its ceil)
+"""
+run_time = 0.2
+num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
+
+
 """
     modify below list in order to test different scenarios.
     it is a list of tuples: (VARIABLE NAME, LIST OF VALUES OF THAT VARIABLE)
     note that the variable name should be de defined in scenario.py
     and the values should all be generated and placed in a list
 """
-
-
 test_variables_list = [
     ("volume_buy", list(range(20, 80, 10))),
     ("lock_method", ["lock_to_fin", "lock_to_hour"]),
@@ -16,27 +23,35 @@ test_variables_list = [
     ("loss_limit", [-1, -2, -3, -4, -5]),
     ("opening_intractions", [[0] + [int(x) for x in list(
         bin(m).replace("0b", "").zfill(3))] for m in range(8)]),
-    ("close_intraction", [[int(x) for x in list(
-        bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
-    ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
-    ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
-    ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
-    ("closing_con1_min", [x*10+9 for x in range(10)]),
-    ("ten_kij_dif_max_then_kij", [x*1+1 for x in range(5)]),
-    ("closing_con1_red_candle", [0, 1])
-
+    # ("close_intraction", [[int(x) for x in list(
+    #     bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
+    # ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
+    # ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
+    # ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
+    # ("closing_con1_min", [x*10+9 for x in range(10)]),
+    # ("ten_kij_dif_max_then_kij", list(range(1, 6))),
+    # ("closing_con1_red_candle", [0, 1])
 ]
+
 
 test_variables_size = len(test_variables_list)
 number_of_tests = 1
 for i in range(test_variables_size - 1, -1, -1):
     number_of_tests *= len(test_variables_list[i][1])
+files_num = number_of_tests // num_of_runs_in_colab + 1
 
-file = open("sed-commands.txt", "w")
-csv_file = open("test-output-analyzed.csv", "w")
+
+files = iter(
+    [open(f"all-parameters-test/sed-commands-{i}.txt", "w") for i in range(1, files_num + 1)])
+csv_files = iter(
+    [open(f"all-parameters-test/test-inputs-{i}.csv", "w") for i in range(1, files_num + 1)])
+file = next(files)
+csv_file = next(csv_files)
+
+
 csv_writer = writer(csv_file)
 headers = [h[0] for h in test_variables_list]
-csv_writer.writerow(headers + ["expected", "variance"])
+csv_writer.writerow(headers)
 
 i = 0
 test_variables_index = [0] * test_variables_size
@@ -64,6 +79,14 @@ while i < number_of_tests:
             break
 
     i += 1
+
+    if i % num_of_runs_in_colab == 0:
+        file.close()
+        csv_file.close()
+        file = next(files)
+        csv_file = next(csv_files)
+        csv_writer = writer(csv_file)
+        csv_writer.writerow(headers)
 
 file.close()
 csv_file.close()
