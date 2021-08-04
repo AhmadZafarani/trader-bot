@@ -193,13 +193,7 @@ class ICHI_CROSS(Strategy):
                 for i in range(len(scenario.opening_intractions)):
                     if scenario.opening_intractions[i] == 1:
                         if not self.check_open_con(i):
-                            # print("2")
                             return False
-            # print(f''' Candle curent : {self.candles[self.moment.candle_id - 1]}
-            # ADX prev : {[self.candles[self.moment.candle_id - 2].adx , self.candles[self.moment.candle_id - 1].DI_plus , self.candles[self.moment.candle_id - 1].DI_minus ]}
-            # ICHI prev : conv : {self.candles[self.moment.candle_id - 2].conversion_line} , base:{self.candles[self.moment.candle_id - 2].base_line}
-            # ICHI prev prev : conv : {self.candles[self.moment.candle_id - 3].conversion_line} , base:{self.candles[self.moment.candle_id - 3].base_line}
-            #  ''')
             return True
 
     def start_strategy(self):
@@ -326,4 +320,90 @@ class ICHI_CROSS(Strategy):
                     break
 
 
-strategies = {'ichi_cross': ICHI_CROSS}
+class HDR(Strategy):
+
+    def change_SAR_phase(self) -> bool:
+        if self.candles[self.moment.candle_id - 2].low_price >= self.candles[self.moment.candle_id - 2].SAR:
+            for i in range(scenario.num_of_dots_openning):
+                if not self.candles[self.moment.candle_id - 3 - i].high_price > self.candles[self.moment.candle_id - 3 - i].SAR:
+                    return False
+            return True
+        return False
+
+    def check_additional_conditions(self, con: str) -> bool:
+        if con == "adx" and scenario.opening_conditions[con]["use"] == 1:
+            return True
+        if con == "rsi" and scenario.opening_conditions[con]["use"] == 1:
+            if self.candles[self.moment.candle_id - 2].rsi <= scenario.opening_conditions["rsi"]["rsi_min"]:
+                return True
+            else:
+                return False
+        return True
+
+    def strategy_works(self) -> bool:
+        if self.change_SAR_phase():
+            for con in scenario.opening_conditions:
+                if not self.check_additional_conditions(con):
+                    return False
+            return True
+        return False
+
+    def start_strategy(self):
+        global lock_strategies
+        self.buy_time_date = self.moment.date
+        self.buy_time_hour = self.moment.hour
+        self.buy_time_minute = self.moment.minute
+        self.buy_volume = (self.dollar_balance /
+                           self.moment.price) * (scenario.volume_buy / 100)
+        self.C = self.candles[self.moment.candle_id - 1]
+        self.buy_price = self.moment.price
+        controller.buy(self.buy_volume, self.moment.price)
+        if scenario.lock_method == 'lock_to_hour':
+            lock_strategies["hdr"] = [
+                HDR, self.moment.candle_id + scenario.lock_hour]
+        elif scenario.lock_method == "lock_to_fin":
+            lock_strategies["hdr"] = [HDR, 0]
+
+    def fin_and_before(self):
+        # print(self.moment)
+        global lock_strategies
+        self.sell_price = controller.get_this_moment().price
+        self.sell_time_date = self.moment.date
+        self.sell_time_hour = self.moment.hour
+        self.sell_time_minute = self.moment.minute
+        self.CC = self.candles[self.moment.candle_id - 1]
+        controller.sell(self.buy_volume, self.sell_price)
+        self.finish_strategy(args=f"""
+        # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
+        # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
+        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume, 3)}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
+        # fee : {0.001 * (self.buy_price * self.buy_volume) + 0.001 * (self.sell_price * self.buy_volume)} $
+        # buy Candle : {self.C}
+        # """)
+        if scenario.lock_method == "lock_to_fin":
+            lock_strategies.pop("hdr")
+
+    def price_cross_bolling(self):
+        if self.candles[self.moment.candle_id - 2].BUP <= self.candles[self.moment.candle_id - 2].high_price:
+            return True
+        else:
+            return False
+
+    def check_close_conditions(self,con :str):
+        if con == "bolling" : 
+            return self.price_cross_bolling()
+        if con == "limit" and scenario.closing_conditions[con]["use"] == 1:
+            if ((self.moment.price - self.buy_price) / self.buy_price) * 100 >= scenario.closing_conditions["limit"]["profit_limit"] or \
+                    ((self.moment.price - self.buy_price) / self.buy_price) * 100 <= scenario.closing_conditions["limit"]["loss_limit"] :
+                print(((self.moment.price - self.buy_price) / self.buy_price) * 100)
+                return True
+            else:
+                return False
+
+    def continue_strategy(self):
+        for con in scenario.closing_conditions : 
+            if self.check_close_conditions(con):
+                self.fin_and_before()
+                break 
+strategies = {'hdr': HDR}
+

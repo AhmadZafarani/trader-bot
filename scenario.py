@@ -12,7 +12,7 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv", "span_iscross": "BTC_SPAN_ISCROSS.csv"}
+        "BB": "BTC_FULL_BB.csv", "ADX": "BTC_FULL_ADX.csv", "SAR": "BTC_FULL_P_SAR.csv" , "RSI":"BTC_FULL_RSI.csv"}
 
     extra_moments_data_files = {}
 
@@ -26,13 +26,13 @@ class Scenario:
 
     # locking strategy
     # for locking strategy you have two methods
-    # set lock hour
+    # set lock candle
     # lock to finish strategy
 
     # 'lock_hour' : you can adjust lock hour
     # values : N
     # default  : 1
-    lock_hour = 3
+    lock_hour = 5
 
     # 'lock_method'
     # values :
@@ -43,6 +43,38 @@ class Scenario:
 
     # in moments
     profit_loss_period_step = 24
+
+# =======================================================================
+    # strategy configuration 
+    # name : HDR  
+
+    # opening_conditions : 
+
+    # Condition 1 : SAR Change in state   @ always check
+    # Variables : 
+        # number of dots below candles : 7  
+    # 
+    num_of_dots_openning = 7 
+    # Condition2 : ADX 
+        # DI_plus - DI_minus (%)   
+
+    # condition 3 : rsi 
+        # rsi_min : 70
+
+
+    # {ADX , RSI}
+    opening_conditions = {"adx" : {"use":0 , "DI_Diff":0.2} , "rsi" : {"use" : 1 , "rsi_min" : 70}}
+
+
+    # closing condirions : 
+    # method 1 : 
+    # price cross bolling 
+
+
+    # method 2 : 
+    # loss_limit 
+    closing_conditions = {"bolling": {"use" : 0} ,"limit":{"use":1 , "profit_limit":7 , "loss_limit" : -2}}   
+    # HDR Strategy : 
 
 # =======================================================================
     # strategy configuration
