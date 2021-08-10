@@ -75,18 +75,17 @@ class Strategy(ABC):
 
 lock_strategies = {}
 
-setup_logger('mmnt-extra', r'logs/mmnt-extra.log')   
-log3 = logging.getLogger('mmnt-extra')
+setup_logger('cndl-extra', r'logs/cndl-extra.log')   
+log2 = logging.getLogger('cndl-extra')
 
 class Dummy_Strategy(Strategy):
 
     def strategy_works(self) -> bool:
-        global  log3
-        log3.warning(f'''Moment: {self.moment}
-        ADX: {self.moment.adx}, {self.moment.DI_plus}, {self.moment.DI_minus}
-        ICHI: {self.moment.conversion_line}, {self.moment.base_line}, {self.moment.lagging_span}, {self.moment.leading_line1}, {self.moment.leading_line2}
-
-         ''')
+        global log2
+        log2.error(f'''Candle => {self.candles[self.moment.candle_id - 1]}
+        ADX => {self.candles[self.moment.candle_id - 1].adx}, {self.candles[self.moment.candle_id - 1].DI_plus}, {self.candles[self.moment.candle_id - 1].DI_minus}
+        ICHI => {self.candles[self.moment.candle_id - 1].conversion_line}, {self.candles[self.moment.candle_id - 1].base_line}, {self.candles[self.moment.candle_id - 1].lagging_span}, {self.candles[self.moment.candle_id - 1].leading_line1}, {self.candles[self.moment.candle_id - 1].leading_line2}
+        ''')
         return self.moment.hour == 13 and self.moment.minute == 0
 
     def start_strategy(self):

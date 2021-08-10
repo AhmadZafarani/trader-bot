@@ -5,6 +5,10 @@ from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import control_views, check_view_essentials
 from scenario import scenario
+from controller.logs import setup_logger
+import logging
+
+
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -74,17 +78,21 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
     files = open_extra_files(moments_extra_files)
-
+    # setub logger 
+    setup_logger('log1', r'logs/cndl-mmnt.log')   
+    log1 = logging.getLogger('log1')
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
         moments_data = list(csv_reader)
         moment_index = 1
         for c in candles:
             # the i th moment of candle
+            log1.info(c)
             for i in range(scenario.number_of_moments_in_a_candle):
                 analyze_each_moment(
                     moments_data, moment_index, files, c, candles)
                 moment_index += 1
+                log1.info(f"    {this_moment}")
 
             # print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
         control_views(strategy_results)

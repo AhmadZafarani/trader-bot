@@ -12,11 +12,10 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
+        "ADC" : "BTC_100_1h_ADX.csv" , "IHCI" : "BTC_100_1h_ICHI.csv"
     }
 
-    extra_moments_data_files = {
-        "ADX" : "BTC_100_1h_ADX.csv" , "IHCI" : "BTC_100_1h_ICHI.csv"
-    }
+    extra_moments_data_files = {}
 
     fee = 0.001
 
