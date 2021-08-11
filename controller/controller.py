@@ -94,7 +94,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
                 moment_index += 1
                 log1.info(f"    {this_moment}")
 
-            # print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
+            print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
         control_views(strategy_results)
 
 
