@@ -29,4 +29,4 @@ def periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, d
         p = round(e - start_of_period_balance, 4)
         sa = f'{round(p * 100 / start_of_period_balance, 4)}'
         periodical_results.append(
-            (moment.date, start_of_period_balance, e, p, sa))
+            (f'{moment.date} {moment.hour}:{moment.minute}', start_of_period_balance, e, p, sa))

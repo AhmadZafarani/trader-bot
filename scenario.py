@@ -25,10 +25,10 @@ class Scenario:
 
     number_of_moments_in_a_candle = 15
 
-    profit_loss_period_step = 24
+    profit_loss_period_step = 15
 
-    lock_method = "lock_to_hour"
-    lock_hour = 16
+    lock_method = "lock_to_fin"
+    # lock_hour = 16
     
 scenario = Scenario()
 

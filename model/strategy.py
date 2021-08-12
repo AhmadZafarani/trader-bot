@@ -82,8 +82,8 @@ class Dummy_Strategy(Strategy):
         return True 
     def start_strategy(self):
         self.buy_id = self.moment.candle_id 
-        self.buy_volume = 1
-        self.sell_volume = 1
+        self.buy_volume = 0.999 * self.dollar_balance/self.moment.price
+        self.sell_volume = self.buy_volume
         controller.buy(self.buy_volume, self.moment.price)
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
@@ -96,9 +96,7 @@ class Dummy_Strategy(Strategy):
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
     def continue_strategy(self):
-        if not (self.moment.candle_id == self.buy_id + 12):
-            return
-        
+        return        
         controller.sell(self.sell_volume, controller.get_this_moment().price)
         self.finish_strategy(f'''date: {self.moment.date}
         Candle : {self.C}
