@@ -3,12 +3,10 @@ from csv import reader
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
-from controller.view_controller import control_views, check_view_essentials
+from controller.view_controller import control_views, check_view_essentials, view_before_trade
 from scenario import scenario
 from controller.logs import setup_logger
 import logging
-
-
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -71,22 +69,24 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
         for j in range(field_length):
             this_moment.__setattr__(field_names[j], float(fields[j]))
 
+    viewed = view_before_trade(this_moment, moment_index,
+                               bitcoin_balance, dollar_balance)
     try_strategies(this_moment, candles)
-    check_view_essentials(this_moment, moment_index,
-                          bitcoin_balance, dollar_balance)
+    if not viewed:
+        check_view_essentials(this_moment, moment_index,
+                              bitcoin_balance, dollar_balance)
 
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
+    # setub logger
     files = open_extra_files(moments_extra_files)
-    # setub logger 
-    setup_logger('log1', r'logs/cndl-mmnt.log')   
+    setup_logger('log1', r'logs/cndl-mmnt.log')
     log1 = logging.getLogger('log1')
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
         moments_data = list(csv_reader)
         moment_index = 1
         for c in candles:
-            # the i th moment of candle
             log1.info(c)
             for i in range(scenario.number_of_moments_in_a_candle):
                 analyze_each_moment(
@@ -129,6 +129,7 @@ def try_strategies(moment: Moment, candles: list):
 
 def buy(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
+    bitcoin = round(bitcoin, 4)
     bitcoin_balance += bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
     dollar_balance -= (bitcoin * price * (1 + scenario.fee))
@@ -139,6 +140,7 @@ def buy(bitcoin: int, price: int):
 
 def sell(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
+    bitcoin = round(bitcoin, 4)
     bitcoin_balance -= bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
     if bitcoin_balance < 0:

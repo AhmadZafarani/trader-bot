@@ -23,10 +23,16 @@ def periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, d
     global start_of_period_balance, scenario
     e = dollar_balance + bitcoin_balance * moment.price
 
-    if (moment_index - 1) % scenario.profit_loss_period_step == 0:
-        start_of_period_balance = e
-    elif (moment_index - 1) % (scenario.profit_loss_period_step - 1) == 0:
+    if (moment_index - 1) % scenario.profit_loss_period_step == scenario.profit_loss_period_step - 1:
         p = round(e - start_of_period_balance, 4)
         sa = f'{round(p * 100 / start_of_period_balance, 4)}'
         periodical_results.append(
             (f'{moment.date} {moment.hour}:{moment.minute}', start_of_period_balance, e, p, sa))
+
+
+def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float) -> bool:
+    global start_of_period_balance
+    if (moment_index - 1) % scenario.profit_loss_period_step != 0:
+        return False
+    start_of_period_balance = dollar_balance + bitcoin_balance * moment.price
+    return True
