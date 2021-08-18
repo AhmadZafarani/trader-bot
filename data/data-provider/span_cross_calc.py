@@ -3,8 +3,8 @@ import csv
 lead1 = []
 lead2 = []
 
-input_file = "data/BTC_FULL_ICHI.csv"
-output_file = "data/BTC_SPAN_ISCROSS.csv"
+input_file = "data/BTC_2021_15m_ICHI.csv"
+output_file = "data/BTC_2021_15m_SPAN_ISCROSS.csv"
 with open(input_file) as csv_file:
     csv_reader = csv.reader(csv_file)
     next(csv_reader)

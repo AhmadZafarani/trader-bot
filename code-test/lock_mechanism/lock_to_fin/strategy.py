@@ -81,6 +81,10 @@ class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
         return True 
     def start_strategy(self):
+        self.lock_method = "lock_to_fin"
+        self.lock_hour = 0 
+
+
         self.buy_volume = 1
         self.sell_volume = 1
         controller.buy(self.buy_volume, self.moment.price)
@@ -88,10 +92,10 @@ class Dummy_Strategy(Strategy):
         self.C = self.candles[self.moment.candle_id - 1]
         self.buy_time = [self.moment.hour, self.moment.minute]
         self.buy_date = self.moment.date
-        if scenario.lock_method == 'lock_to_hour':
+        if self.lock_method == 'lock_to_hour':
             lock_strategies["dummy"] = [
-                Dummy_Strategy, self.moment.candle_id + scenario.lock_hour]
-        elif scenario.lock_method == "lock_to_fin":
+                Dummy_Strategy, self.moment.candle_id + self.lock_hour]
+        elif self.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
     def continue_strategy(self):
@@ -105,7 +109,7 @@ class Dummy_Strategy(Strategy):
         sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
 
         ''')
-        if scenario.lock_method == "lock_to_fin":
+        if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy")
 
 

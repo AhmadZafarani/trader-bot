@@ -16,7 +16,7 @@ def max_finder(data: list):
     return maximum
 
 
-fd = pd.read_csv("/Internal/Projects/Crypto/trader-bot-up/trader-bot/data/BTC_FULL_1h-time.csv")
+fd = pd.read_csv("data/BTC_2021_15m_cndl.csv")
 data = fd.values
 low_values = []
 high_values = []
@@ -87,7 +87,7 @@ for i in range(len(data) + lag - 1):
 #         else:
 #             writer.writerow([0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
 
-with open('/Internal/Projects/Crypto/trader-bot-up/trader-bot/data/BTC_FULL_ICHI.csv', 'w', newline='') as file:
+with open('data/BTC_2021_15m_ICHI.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['conversion_line', 'base_line',
                      'lagging_span', 'leading_line1', 'leading_line2'])
