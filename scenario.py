@@ -11,7 +11,11 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ichimoku": "BTC_FULL_ICHI.csv", "ADX": "BTC_FULL_ADX.csv", "span_iscross": "BTC_SPAN_ISCROSS.csv"}
+        "ma12": "BTC_FULL_1h_MA12.csv", 
+        "ma26" : "BTC_FULL_1h_MA26.csv",
+        "ICHI" : "BTC_FULL_1h_ICHI.csv",
+        "iscross" : "BTC_FULL_1h_ISCROSS.csv"
+        }
     extra_moments_data_files = {
     }
 
@@ -25,8 +29,27 @@ class Scenario:
 
     profit_loss_period_step = 24 
 
-    lock_method = "lock_to_hour"
-    lock_hour = 4
+
+    # =====================================================================
+    # strategy configuration
+    # name : Moving_average 
+    # opening conditions 
+    
+    buy_method = {
+        "price_to_line" : {"enable" : 0 , "options" : {"line" : 12 , "min_percentage" : 50 , "green" : True}},
+        "line_to_line" : {"enable" : 1 , "options" : {"line" : [12 , 26]}}
+    }
+    sell_method = {
+        "price_to_line" : {"enable" : 0 , "options" : {"line" : 12 , "min_percentage" : 50 , "red" : True}},
+        "line_to_line" : {"enable" : 0 , "options" : {"line" : [12 , 26]}},
+        "profit_loss_limit" : {"enable": 0 , "options" : {"profit_limit":10 , "loss_limit" : -1}},
+        "peridical_profit_loss_limit" :  {"enable" : 1 , "options" : {"profit_limit":4 , "loss_limit" : -0.1}}
+    }
+    volume_buy = 90
+    per_profit_limit = 19
+    per_loss_limit = -2.0
+    sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit 
+    sell_method["peridical_profit_loss_limit"]["options"]["loss_limit"] = per_loss_limit 
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
@@ -81,23 +104,23 @@ class Scenario:
     # profit limit
     # values : (0 , 100]
     # default : 10
-    profit_limit = 90
+    profit_limit = 5
 
     # loss limit
     # values : (0 , 100]
     # default : 10
-    loss_limit = -60
+    loss_limit = -2
 
     # method5 : profit,loss limit on period
     # profit limit
     # values : (0 , 100]
     # default : 10
-    profit_limit_per = 50
+    profit_limit_per = 8
 
     # loss limit
     # values : (0 , 100]
     # default : 10
-    loss_limit_per = -1
+    loss_limit_per = -1.2
 
     # 'intraction'
 
@@ -105,12 +128,7 @@ class Scenario:
     # example
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}
-    close_intraction = [1, 1, 0, 0, 1]
-
-    # volume_buy
-    # value (percent) : ( 0  , 100]
-    # default : 50
-    volume_buy = 70
+    close_intraction = [0, 0, 0, 0, 1]
 
 
 scenario = Scenario()
@@ -120,8 +138,3 @@ def set_value(variable_name: str, value):
     scenario.__setattr__(variable_name, value)
 
 
-scenario = Scenario()
-
-
-def set_value(variable_name: str, value):
-    scenario.__setattr__(variable_name, value)

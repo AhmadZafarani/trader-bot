@@ -41,7 +41,6 @@ class Strategy(ABC):
         self.sell_time_date = "0/0/0"
         self.sell_time_hour = 0
         self.sell_time_minute = 0
-
         self.btc_balance = btc
         if self.strategy_works():
             self.working = True
@@ -56,7 +55,7 @@ class Strategy(ABC):
         pass
 
     @abstractmethod
-    def continue_strategy(self, working_strategies):
+    def continue_strategy(self, working_strategies, **kwargs):
         pass
 
     def finish_strategy(self, args=''):
@@ -77,10 +76,18 @@ lock_strategies = {}
 lock_all = False
 
 
-def lock_all_strategies(working_strategies: list, moment: Moment):
+def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
+    crypto1 = 0
+    for ws in working_strategies:
+        crypto1 += ws.sell_volume
+    # print("solved crypto : " , crypto1)
+
+    price = ((start_of_profit_loss_period_balance *
+             (1 + profit_loss/100)) - dollar) / crypto1
+    # print("solved price : " , price , " moment_price : " , moment.price)
     for ws in working_strategies:
         if not ws.selled:
-            controller.sell(ws.sell_volume, moment.price)
+            controller.sell(ws.sell_volume, price)
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
                 lock_strategies.pop(ws.short_name)
@@ -142,7 +149,7 @@ class ICHI_CROSS(Strategy):
                 break
             id1 -= 1
         while True:
-            if int(self.candles[id2 - 1].span_iscross) == 1 or id2 == self.moment.candle_id + 26 or id2 == len(self.candles) :
+            if int(self.candles[id2 - 1].span_iscross) == 1 or id2 == self.moment.candle_id + 26 or id2 == len(self.candles):
                 break
             id2 += 1
         return [id1, id2]
@@ -213,6 +220,8 @@ class ICHI_CROSS(Strategy):
             return True
 
     def strategy_works(self) -> bool:
+        if self.moment.candle_id <= 77:
+            return False
         if self.cross_happend():
             if scenario.opening_intractions[2] == 1:
                 for i in range(len(scenario.opening_intractions)):
@@ -250,8 +259,6 @@ class ICHI_CROSS(Strategy):
                            self.moment.price) * (scenario.volume_buy / 100)
         self.sell_volume = self.buy_volume
         self.C = self.candles[self.moment.candle_id-1]
-        self.ADX = [self.candles[self.moment.candle_id - 2].adx, self.candles[self.moment.candle_id -
-                                                                              1].DI_plus, self.candles[self.moment.candle_id - 1].DI_minus]
         self.ICHI = [self.candles[self.moment.candle_id - 2].conversion_line,
                      self.candles[self.moment.candle_id - 2].base_line]
         self.ICHHI = [self.candles[self.moment.candle_id - 3].conversion_line,
@@ -277,7 +284,7 @@ class ICHI_CROSS(Strategy):
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_cross")
 
-    def check_clese_con(self, i , working_strategies) -> bool:
+    def check_clese_con(self, i, working_strategies, start_of_profit_loss_period_balance: int, dollar_balance: int) -> bool:
         global lock_all
         if i == 1:
             if 100 * abs(self.candles[self.moment.candle_id - 2].conversion_line - self.candles[self.moment.candle_id - 2].base_line) / min(self.candles[self.moment.candle_id - 2].base_line, self.candles[self.moment.candle_id - 2].conversion_line) < \
@@ -334,19 +341,23 @@ class ICHI_CROSS(Strategy):
             else:
                 return False
         if i == 5:
-            if self.moment.profit_loss_percentage >= scenario.profit_limit_per or self.moment.profit_loss_percentage <= scenario.loss_limit_per :
+            if self.moment.profit_loss_percentage >= scenario.profit_limit_per:
                 lock_all = True
                 lock_all_strategies(
-                    working_strategies=working_strategies, moment=self.moment)
-
-    def continue_strategy(self , working_strategies ):
+                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.profit_limit_per)
+                return True
+            if self.moment.profit_loss_percentage <= scenario.loss_limit_per:
+                lock_all = True
+                lock_all_strategies(
+                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.loss_limit_per)
+                return True
+            return False
+    def continue_strategy(self, working_strategies, **kwargs):
         self.sell_price = controller.get_this_moment().price
         self.sell_time_date = self.moment.date
         self.sell_time_hour = self.moment.hour
         self.sell_time_minute = self.moment.minute
         self.CC = self.candles[self.moment.candle_id-1]
-        self.ADXX = [self.candles[self.moment.candle_id - 2].adx, self.candles[self.moment.candle_id -
-                                                                               1].DI_plus, self.candles[self.moment.candle_id - 1].DI_minus]
         self.ICHII = [self.candles[self.moment.candle_id - 2].conversion_line,
                       self.candles[self.moment.candle_id - 2].base_line]
         self.ICHHII = [self.candles[self.moment.candle_id - 3].conversion_line,
@@ -357,19 +368,205 @@ class ICHI_CROSS(Strategy):
         # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
         # fee : {0.001*(self.buy_price * self.buy_volume) + 0.001 * (self.sell_price  * self.buy_volume ) } $
         # buy Candle : {self.C}
-        # buy ADX prev : {self.ADX}
         # buy ICHI prev : conv : {self.ICHI}
         # buy ICHI prev prev : conv : {self.ICHHI}
         # sell Candle : {self.CC}
-        # sell ADX prev : {self.ADXX}
         # sell ICHI prev : conv : {self.ICHII}
         # sell ICHI prev prev : conv : {self.ICHHII}
         # """
-        for i in range(1, len(scenario.close_intraction) + 1):
+        if scenario.close_intraction[4] == 1 :
+                if self.check_clese_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
+                    return
+        for i in range(1, len(scenario.close_intraction)):
             if scenario.close_intraction[i-1] == 1:
-                if self.check_clese_con(i , working_strategies):
+                if self.check_clese_con(i=i, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
                     self.fin_and_before()
                     break
 
 
-strategies = {'ichi_cross': ICHI_CROSS}
+setup_logger('log5', r'logs/moving_average.log')
+log5 = logging.getLogger('log5')
+
+
+class Moving_average(Strategy):
+    def check_open_con(self, key: str, value: dict):
+        if key == 'price_to_line':
+            cndl = [self.candles[self.moment.candle_id-1],
+                    self.candles[self.moment.candle_id-2]]
+            moving_average = getattr(
+                self.candles[self.moment.candle_id-2], "ma"+str(value["options"]["line"]))
+            if moving_average == 0:
+                print("movin12 = 0 ")
+                return False
+            if value["options"]["green"]:
+                if cndl[-1].close_price > cndl[-1].open_price:
+                    if 100*(cndl[-1].close_price - moving_average) / (cndl[-1].close_price - cndl[-1].open_price) >= value["options"]["min_percentage"]:
+                        if cndl[0].open_price > moving_average:
+                            return True
+                return False
+            else:
+                maximum = max(cndl[-1].open_price, cndl[-1].close_price)
+                minimum = min(cndl[-1].open_price, cndl[-1].close_price)
+                if 100*(maximum - moving_average)/(maximum - minimum) > value["options"]["min_percentage"]:
+                    if cndl[0].open_price > moving_average:
+                        return True
+                return False
+        if key == 'line_to_line':
+
+            moving1 = [
+                getattr(self.candles[self.moment.candle_id-2],
+                        "ma"+str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id-3],
+                        "ma"+str(value["options"]["line"][0]))
+            ]
+            moving2 = [
+                getattr(self.candles[self.moment.candle_id-2],
+                        "ma"+str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id-3],
+                        "ma"+str(value["options"]["line"][1]))
+            ]
+            if 0 in moving1:
+                return False
+            if 0 in moving2:
+                return False
+            if moving1[0] > moving2[0] and moving1[1] <= moving2[1]:
+                return True
+
+    def strategy_works(self):
+        global log5
+        for key, value in scenario.buy_method.items():
+            if value['enable'] == 1:
+                if self.check_open_con(key=key, value=value):
+                    log5.info(self.candles[self.moment.candle_id-1])
+                    return True
+
+    def start_strategy(self):
+        global lock_strategies
+        self.short_name = 'moving_average'
+        self.selled = False
+        self.lock_hour = 0
+        self.lock_method = "lock_to_fin"
+        self.buy_time_date = self.moment.date
+        self.buy_time_hour = self.moment.hour
+        self.buy_time_minute = self.moment.minute
+        self.buy_volume = (self.dollar_balance /
+                           self.moment.price) * (scenario.volume_buy / 100)
+        self.sell_volume = self.buy_volume
+        self.C = self.candles[self.moment.candle_id-1]
+        self.buy_price = self.moment.price
+        controller.buy(self.buy_volume, self.moment.price)
+        if self.lock_method == 'lock_to_hour':
+            lock_strategies[self.short_name] = [
+                Moving_average, self.moment.candle_id + self.lock_hour]
+        elif self.lock_method == "lock_to_fin":
+            lock_strategies[self.short_name] = [Moving_average, 0]
+
+    def fin_and_before(self):
+        global lock_strategies
+        self.sell_price = controller.get_this_moment().price
+        self.sell_time_date = self.moment.date
+        self.sell_time_hour = self.moment.hour
+        self.sell_time_minute = self.moment.minute
+
+        controller.sell(self.buy_volume, self.sell_price)
+        self.selled = True
+        self.finish_strategy(self.finish_txt)
+        if self.lock_method == "lock_to_fin":
+            lock_strategies.pop(self.short_name)
+
+    def check_clese_con(self, key: str, value: dict, working_strategies: list, start_of_profit_loss_period_balance: int, dollar_balance: int):
+        global lock_all
+
+        if key == "price_to_line":
+            cndl = [self.candles[self.moment.candle_id-1],
+                    self.candles[self.moment.candle_id-2]]
+            moving_average = getattr(
+                self.candles[self.moment.candle_id-2], "ma"+str(value["options"]["line"]))
+            if value["options"]["red"]:
+                if cndl[-1].close_price < cndl[-1].open_price:
+                    if 100*(moving_average - cndl[-1].close_price) / (cndl[-1].open_price - cndl[-1].close_price) >= value["options"]["min_percentage"]:
+                        if cndl[0].open_price < moving_average:
+                            return True
+                return False
+            else:
+                maximum = max(cndl[-1].open_price, cndl[-1].close_price)
+                minimum = min(cndl[-1].open_price, cndl[-1].close_price)
+                if 100*(moving_average - minimum)/(maximum - minimum) > value["options"]["min_percentage"]:
+                    if cndl[0].open_price < moving_average:
+                        return True
+                return False
+        if key == "line_to_line":
+            moving1 = [
+                getattr(self.candles[self.moment.candle_id-2],
+                        "ma"+str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id-3],
+                        "ma"+str(value["options"]["line"][0]))
+            ]
+            moving2 = [
+                getattr(self.candles[self.moment.candle_id-2],
+                        "ma"+str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id-3],
+                        "ma"+str(value["options"]["line"][1]))
+            ]
+            if moving1[0] < moving2[0] and moving1[1] >= moving2[1]:
+                return True
+        if key == "profit_loss_limit":
+            profit_limit = self.buy_price * \
+                (1 + value["options"]["profit_limit"] / 100)
+            loss_limit = self.buy_price * \
+                (1 + value["options"]["loss_limit"] / 100)
+            if self.moment.price >= profit_limit:
+                self.sell_price = profit_limit
+                self.finish_txt = f"""
+                # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
+                # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
+                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+                # fee : {scenario.fee*(self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price  * self.buy_volume ) } $
+                # buy Candle : {self.C}
+                # sell Candle : {self.CC}
+                # """
+                return True
+            elif self.moment.price <= loss_limit:
+                self.sell_price = loss_limit
+                self.finish_txt = f"""
+                # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
+                # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
+                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+                # fee : {scenario.fee*(self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price  * self.buy_volume ) } $
+                # buy Candle : {self.C}
+                # sell Candle : {self.CC}
+                # """
+                return True
+            return False
+        if key == "peridical_profit_loss_limit":
+            if self.moment.profit_loss_percentage >= value['options']['profit_limit']:
+                lock_all = True
+                lock_all_strategies(
+                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=value['options']['profit_limit'])
+            elif self.moment.profit_loss_percentage <= value['options']['loss_limit']:
+                lock_all = True
+                lock_all_strategies(
+                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=value['options']['loss_limit'])
+
+    def continue_strategy(self, working_strategies, **kwargs):
+        self.sell_price = controller.get_this_moment().price
+        self.sell_time_date = self.moment.date
+        self.sell_time_hour = self.moment.hour
+        self.sell_time_minute = self.moment.minute
+        self.CC = self.candles[self.moment.candle_id-1]
+        self.finish_txt = f"""
+        # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
+        # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
+        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+        # fee : {scenario.fee*(self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price  * self.buy_volume ) } $
+        # buy Candle : {self.C}
+        # sell Candle : {self.CC}
+        # """
+        for key, value in scenario.sell_method.items():
+            if value['enable']:
+                if self.check_clese_con(key=key, value=value, working_strategies=working_strategies,  start_of_profit_loss_period_balance=kwargs["start_of_profit_loss_period_balance"], dollar_balance=kwargs['dollar_balance']):
+                    self.fin_and_before()
+                    break
+
+
+strategies = {'moving_average' : Moving_average}

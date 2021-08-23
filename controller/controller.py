@@ -94,7 +94,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
                 moment_index += 1
                 log1.info(f"    {this_moment}")
 
-            print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
+            # print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
         control_views(strategy_results)
 
 
@@ -115,7 +115,7 @@ def try_strategies(moment: Moment, candles: list):
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
     for ws in working_strategies:
-        ws.continue_strategy(working_strategies)
+        ws.continue_strategy(working_strategies , start_of_profit_loss_period_balance = start_of_profit_loss_period_balance , dollar_balance = dollar_balance )
 
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
@@ -127,7 +127,7 @@ def try_strategies(moment: Moment, candles: list):
                 if strtg.working:
                     working_strategies.append(strtg)
     if strategies.lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
-        print(f'all_unlocked in {moment}')
+        # print(f'all_unlocked in {moment}')
         strategies.lock_all = False
 
 
