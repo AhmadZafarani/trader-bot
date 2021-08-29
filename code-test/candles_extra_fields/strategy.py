@@ -75,39 +75,35 @@ class Strategy(ABC):
 
 lock_strategies = {}
 
+setup_logger('cndl-extra', r'logs/cndl-extra.log')   
+log2 = logging.getLogger('cndl-extra')
 
 class Dummy_Strategy(Strategy):
 
     def strategy_works(self) -> bool:
-        return True 
+        global log2
+        log2.error(f'''Candle => {self.candles[self.moment.candle_id - 1]}
+        ADX => {self.candles[self.moment.candle_id - 1].adx}, {self.candles[self.moment.candle_id - 1].DI_plus}, {self.candles[self.moment.candle_id - 1].DI_minus}
+        ICHI => {self.candles[self.moment.candle_id - 1].conversion_line}, {self.candles[self.moment.candle_id - 1].base_line}, {self.candles[self.moment.candle_id - 1].lagging_span}, {self.candles[self.moment.candle_id - 1].leading_line1}, {self.candles[self.moment.candle_id - 1].leading_line2}
+        ''')
+        return self.moment.hour == 13 and self.moment.minute == 0
+
     def start_strategy(self):
-        self.buy_id = self.moment.candle_id 
         self.buy_volume = 1
         self.sell_volume = 1
         controller.buy(self.buy_volume, self.moment.price)
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
         self.buy_time = [self.moment.hour, self.moment.minute]
-        self.buy_date = self.moment.date
-        if scenario.lock_method == 'lock_to_hour':
-            lock_strategies["dummy"] = [
-                Dummy_Strategy, self.moment.candle_id + scenario.lock_hour]
-        elif scenario.lock_method == "lock_to_fin":
-            lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
     def continue_strategy(self):
-        if not (self.moment.candle_id == self.buy_id + 12):
+        if not (controller.get_this_moment().hour == 15 and controller.get_this_moment().minute == 0):
             return
-        
         controller.sell(self.sell_volume, controller.get_this_moment().price)
         self.finish_strategy(f'''date: {self.moment.date}
         Candle : {self.C}
-        buy_time : {self.buy_date} {self.buy_time[0]}:{self.buy_time[1]} 
-        sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
-
+        buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
         ''')
-        if scenario.lock_method == "lock_to_fin":
-            lock_strategies.pop("dummy")
 
 
 

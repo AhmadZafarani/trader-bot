@@ -81,7 +81,6 @@ class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
         return True 
     def start_strategy(self):
-        self.buy_id = self.moment.candle_id 
         self.buy_volume = 1
         self.sell_volume = 1
         controller.buy(self.buy_volume, self.moment.price)
@@ -96,7 +95,7 @@ class Dummy_Strategy(Strategy):
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
     def continue_strategy(self):
-        if not (self.moment.candle_id == self.buy_id + 12):
+        if not (controller.get_this_moment().hour == 19 and controller.get_this_moment().minute == 30):
             return
         
         controller.sell(self.sell_volume, controller.get_this_moment().price)
