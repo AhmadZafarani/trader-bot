@@ -1,5 +1,6 @@
 import logging
 
+
 def setup_logger(logger_name, log_file, level=logging.INFO):
     l = logging.getLogger(logger_name)
     formatter = logging.Formatter('%(message)s')
@@ -10,5 +11,4 @@ def setup_logger(logger_name, log_file, level=logging.INFO):
 
     l.setLevel(level)
     l.addHandler(fileHandler)
-    # l.addHandler(streamHandler)    
-
+    # l.addHandler(streamHandler)

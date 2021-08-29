@@ -9,8 +9,6 @@ from controller.logs import setup_logger
 import logging
 
 
-
-
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
@@ -78,8 +76,8 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
     files = open_extra_files(moments_extra_files)
-    # setub logger 
-    setup_logger('log1', r'logs/cndl-mmnt.log')   
+    # setup logger
+    setup_logger('log1', r'logs/cndl-mmnt.log')
     log1 = logging.getLogger('log1')
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
