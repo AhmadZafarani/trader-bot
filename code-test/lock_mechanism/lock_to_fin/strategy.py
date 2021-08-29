@@ -3,8 +3,6 @@ from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller
 from scenario import scenario
-from controller.logs import setup_logger
-import logging
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
@@ -79,7 +77,8 @@ lock_strategies = {}
 class Dummy_Strategy(Strategy):
 
     def strategy_works(self) -> bool:
-        return True 
+        return True
+
     def start_strategy(self):
         self.buy_volume = 1
         self.sell_volume = 1
@@ -97,7 +96,7 @@ class Dummy_Strategy(Strategy):
     def continue_strategy(self):
         if not (controller.get_this_moment().hour == 19 and controller.get_this_moment().minute == 30):
             return
-        
+
         controller.sell(self.sell_volume, controller.get_this_moment().price)
         self.finish_strategy(f'''date: {self.moment.date}
         Candle : {self.C}
@@ -107,8 +106,6 @@ class Dummy_Strategy(Strategy):
         ''')
         if scenario.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy")
-
-
 
 
 strategies = {'dummy': Dummy_Strategy}

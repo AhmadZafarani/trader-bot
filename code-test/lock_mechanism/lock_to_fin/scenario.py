@@ -28,7 +28,8 @@ class Scenario:
     profit_loss_period_step = 24
 
     lock_method = "lock_to_fin"
-    
+
+
 scenario = Scenario()
 
 

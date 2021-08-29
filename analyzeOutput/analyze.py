@@ -37,6 +37,7 @@ def open_output_and_calculate_variance_expected():
 
 v_e = open_output_and_calculate_variance_expected()
 print(str(v_e)[1:-1])
+
 if inp != "only-print":
     xpoints = np.array(range(0, len(percent)))
     ypoints = np.array(percent)

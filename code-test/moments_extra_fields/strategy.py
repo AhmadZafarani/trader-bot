@@ -2,7 +2,6 @@
 from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller
-from scenario import scenario
 from controller.logs import setup_logger
 import logging
 """
@@ -75,13 +74,14 @@ class Strategy(ABC):
 
 lock_strategies = {}
 
-setup_logger('mmnt-extra', r'logs/mmnt-extra.log')   
+setup_logger('mmnt-extra', r'logs/mmnt-extra.log')
 log3 = logging.getLogger('mmnt-extra')
+
 
 class Dummy_Strategy(Strategy):
 
     def strategy_works(self) -> bool:
-        global  log3
+        global log3
         log3.warning(f'''Moment: {self.moment}
         ADX: {self.moment.adx}, {self.moment.DI_plus}, {self.moment.DI_minus}
         ICHI: {self.moment.conversion_line}, {self.moment.base_line}, {self.moment.lagging_span}, {self.moment.leading_line1}, {self.moment.leading_line2}
@@ -105,8 +105,6 @@ class Dummy_Strategy(Strategy):
         Candle : {self.C}
         buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
         ''')
-
-
 
 
 strategies = {'dummy': Dummy_Strategy}

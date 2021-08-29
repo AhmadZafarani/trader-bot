@@ -2,7 +2,6 @@
 from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller
-from scenario import scenario
 from controller.logs import setup_logger
 import logging
 """
@@ -75,8 +74,9 @@ class Strategy(ABC):
 
 lock_strategies = {}
 
-setup_logger('cndl-extra', r'logs/cndl-extra.log')   
+setup_logger('cndl-extra', r'logs/cndl-extra.log')
 log2 = logging.getLogger('cndl-extra')
+
 
 class Dummy_Strategy(Strategy):
 
@@ -104,8 +104,6 @@ class Dummy_Strategy(Strategy):
         Candle : {self.C}
         buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
         ''')
-
-
 
 
 strategies = {'dummy': Dummy_Strategy}

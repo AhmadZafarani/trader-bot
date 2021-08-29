@@ -12,7 +12,7 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ADC" : "BTC_100_1h_ADX.csv" , "IHCI" : "BTC_100_1h_ICHI.csv"
+        "ADC": "BTC_100_1h_ADX.csv", "IHCI": "BTC_100_1h_ICHI.csv"
     }
 
     extra_moments_data_files = {}
@@ -28,7 +28,8 @@ class Scenario:
     profit_loss_period_step = 24
 
     lock_method = "lock_to_fin"
-    
+
+
 scenario = Scenario()
 
 

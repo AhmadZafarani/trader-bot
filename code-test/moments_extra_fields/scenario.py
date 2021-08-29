@@ -15,7 +15,7 @@ class Scenario:
     }
 
     extra_moments_data_files = {
-        "ADX" : "BTC_100_1h_ADX.csv" , "IHCI" : "BTC_100_1h_ICHI.csv"
+        "ADX": "BTC_100_1h_ADX.csv", "IHCI": "BTC_100_1h_ICHI.csv"
     }
 
     fee = 0.001
@@ -29,7 +29,8 @@ class Scenario:
     profit_loss_period_step = 24
 
     lock_method = "lock_to_fin"
-    
+
+
 scenario = Scenario()
 
 
