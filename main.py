@@ -7,7 +7,6 @@ from scenario import scenario
 
 def main():
     start_time = time()
-    # print('loading data...')
 
     data_folder = Path("data")
     candles_file = data_folder / scenario.candles_data_csv_file_name
@@ -24,7 +23,6 @@ def main():
             scenario.extra_moments_data_files[emdf]
 
     candles = data_converter(candles_file, extra_candle_files)
-    # print('data loaded in : ', time() - start_time)
 
     analyze_data(candles, moments_file, extra_moment_files)
 
