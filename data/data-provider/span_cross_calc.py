@@ -14,7 +14,8 @@ with open(input_file) as csv_file:
 is_cross = [0]
 is_cross_id = [1]
 for k in range(len(lead1)):
-    if k <= 0 : continue
+    if k <= 0:
+        continue
     is_cross_id.append(k+1)
     if lead1[k] > lead2[k] and lead1[k-1] <= lead2[k-1]:
         is_cross.append(1)

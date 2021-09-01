@@ -10,3 +10,4 @@ __pycache__/
 .vscode/
 test*
 logs/*
+!requirements.txt
