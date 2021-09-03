@@ -1,10 +1,10 @@
 # YA HOSSEIN
+from pathlib import Path
+from time import time
+
 from controller.controller import data_converter, analyze_data
 from scenario import scenario
 from controller.exchange_controller import connect_to_exchange, get_n_past_candles
-
-from pathlib import Path
-from time import time
 
 
 def main():

@@ -1,13 +1,14 @@
 # YA REZA
-from model.Moment import Moment
 from abc import ABC, abstractmethod
+
+from model.Moment import Moment
 import controller.controller as controller
 from scenario import scenario
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
             this abstract class; Strategy
-        2. reguster class name into the dictionay 'strategies'; witch defined in last line of this file 
+        2. register class name into the dictionary 'strategies'; witch defined in last line of this file 
             (all the classes must implemented above this dictionary). dictionary is like: 
             'StrategyName': StrategyClass
 """

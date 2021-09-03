@@ -1,4 +1,6 @@
 # YA ZEYNAB
+import logging
+
 from view.views import *
 from model.Moment import Moment
 from scenario import scenario
@@ -16,10 +18,10 @@ def control_views(strategy_results: list):
 
 def check_view_essentials(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float):
     balance.append((dollar_balance, bitcoin_balance))
-    periodical_data(moment, moment_index, bitcoin_balance, dollar_balance)
+    __periodical_data(moment, moment_index, bitcoin_balance, dollar_balance)
 
 
-def periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float):
+def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float):
     global start_of_period_balance, scenario
     e = dollar_balance + bitcoin_balance * moment.price
 
@@ -30,3 +32,26 @@ def periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, d
         sa = f'{round(p * 100 / start_of_period_balance, 4)}'
         periodical_results.append(
             (moment.date, start_of_period_balance, e, p, sa))
+
+# ============= LOG CONTROL =========================================
+
+
+def control_logs():
+    logging.basicConfig(level=logging.DEBUG, filename=scenario.log_file_path,
+                        filemode='w', format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
+
+def log_debug(message: str):
+    logging.debug(message)
+
+
+def log_info(message: str):
+    logging.info(message)
+
+
+def log_warning(message: str):
+    logging.warning(message)
+
+
+def log_error(message: str):
+    logging.error(message)

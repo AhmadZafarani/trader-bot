@@ -10,9 +10,9 @@ percent = []
 inp = argv[1] if len(argv) > 1 else ""
 
 
-def variance_expected(datas: list) -> list:
-    mean = sum(datas) / len(datas)
-    res = sum((i - mean) ** 2 for i in datas) / len(datas)
+def variance_expected(data: list) -> list:
+    mean = sum(data) / len(data)
+    res = sum((i - mean) ** 2 for i in data) / len(data)
     eee = math.sqrt(res)
     return([round(mean, 4), round(eee, 4)])
 

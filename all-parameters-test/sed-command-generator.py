@@ -3,7 +3,7 @@ from csv import writer
 
 
 """
-    change this variable corresponding to how much it tooks to run the main.py on your machine (calculate its ceil)
+    change this variable corresponding to how much it took to run the main.py on your machine (calculate its ceil)
 """
 run_time = 0.2
 num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
@@ -27,7 +27,7 @@ test_variables_list = [
         bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
     ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
     ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
-    ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
+    ("next_candle_length_min", [x*0.2-2 for x in range(20)]),
     ("closing_con1_min", [x*10+9 for x in range(10)]),
     ("ten_kij_dif_max_then_kij", list(range(1, 6))),
     ("closing_con1_red_candle", [0, 1])
@@ -72,7 +72,7 @@ while i < number_of_tests:
                 f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1{out[j]}/" scenario.py' + ';'
     file.write(string + '\n')
 
-    for j in range(test_variables_size - 1, -1, -1):        # indecies of next jaygasht
+    for j in range(test_variables_size - 1, -1, -1):        # indices of next jaygasht
         test_variables_index[j] = (
             test_variables_index[j] + 1) % len(test_variables_list[j][1])
         if test_variables_index[j] != 0:

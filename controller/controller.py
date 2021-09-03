@@ -1,12 +1,11 @@
 # YA FATEMEH
 from csv import reader
+
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
-from controller.view_controller import control_views, check_view_essentials
+from controller.view_controller import *
 from scenario import scenario
-from controller.logs import setup_logger
-import logging
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -29,7 +28,8 @@ def candle_maker(candles_data: list, i: int, files: list) -> Candle:
     fields = [f for f in candles_data[i]]
     c = Candle(i, float(fields[0]), float(fields[1]), float(
         fields[2]), float(fields[3]), float(fields[4]))
-    for file in files:
+
+    for file in files:  # extract extra fields from extra files
         field_names = file[0]
         field_length = len(field_names)
         fields = [f for f in file[i]]
@@ -39,6 +39,7 @@ def candle_maker(candles_data: list, i: int, files: list) -> Candle:
     return c
 
 
+# read data from candles csv file and make candles list
 def data_converter(candles_file: str, extra_candle_files: dict) -> list:
     files = open_extra_files(extra_candle_files)
 
@@ -61,6 +62,8 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
     this_moment.update_moment(
         time, price, candle.identifier, profit_loss_percentage)
+
+    # exract extra fields from extra files
     for file in moments_extra_files:
         field_names = file[0]
         field_length = len(field_names)
@@ -77,23 +80,24 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
     files = open_extra_files(moments_extra_files)
 
-    # setup logger
-    setup_logger('log1', r'logs/cndl-mmnt.log')
-    log1 = logging.getLogger('log1')
+    control_logs()
+
     with open(csv_file_name) as csvfile:
         csv_reader = reader(csvfile, delimiter=',')
         moments_data = list(csv_reader)
         moment_index = 1
-        for c in candles:
-            # the i th moment of candle
-            log1.info(c)
+        for c in candles:   # the i th moment of candle
+            log_info(c)
+
             for _ in range(scenario.number_of_moments_in_a_candle):
                 analyze_each_moment(
                     moments_data, moment_index, files, c, candles)
                 moment_index += 1
-                log1.info(f"    {this_moment}")
+
+                log_info(f"    {this_moment}")
 
             print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
+
         control_views(strategy_results)
 
 
@@ -113,12 +117,14 @@ def try_strategies(moment: Moment, candles: list):
         for locked in list(strategies.lock_strategies):       # unlock strategies
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
-    for ws in working_strategies:
+
+    for ws in working_strategies:   # continue the work of opened strategies
         ws.continue_strategy()
+
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
 
-    for s in strategies.strategies:     # trying to start not locked strategies
+    for s in strategies.strategies:     # try to start not locked strategies
         if not s in strategies.lock_strategies:
             strtg = strategies.strategies[s](
                 moment, bitcoin_balance, dollar_balance, candles)

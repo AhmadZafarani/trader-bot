@@ -1,5 +1,7 @@
 # YA BAGHER
 class Scenario:
+    log_file_path = 'logs/cndl-mmnt.log'
+
     candles_data_csv_file_name = 'BTC_2021_15m_cndl.csv'
 
     moment_data_csv_file_name = 'BTC_2021_1m_mmnt.csv'
