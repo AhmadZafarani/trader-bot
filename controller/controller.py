@@ -204,7 +204,8 @@ def sync_bot_data_with_exchange(candles: list, moment_index: int):
     global this_moment
     candle = get_last_candle()
     t, p, cid = get_current_data_from_exchange()
-    this_moment.update_moment(t, p, cid, profit_loss_calculator(moment_index, p))
+    this_moment.update_moment(
+        t, p, cid, profit_loss_calculator(moment_index, p))
     calculate_indicators_and_bundle_into_this_moment()
 
     if is_same_as(candle, candles[-1]):

@@ -1,4 +1,6 @@
 # YA SAJJAD
+from time import time
+
 from model.Candle import Candle
 
 
@@ -24,3 +26,7 @@ def exchange_buy(crypto: float, price: float):
 
 def exchange_sell(crypto: float, price: float):
     pass
+
+
+def get_time_from_exchange() -> int:
+    return int(time())

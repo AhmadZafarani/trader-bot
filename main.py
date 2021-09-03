@@ -5,8 +5,10 @@ from time import time
 from controller.controller import data_converter, analyze_data, calculate_indicators_and_bundle_into_candles, \
     set_this_moment, analyze_live_data
 from scenario import scenario
-from controller.exchange_controller import connect_to_exchange, get_n_past_candles, get_current_data_from_exchange
+from controller.exchange_controller import connect_to_exchange, get_n_past_candles, get_current_data_from_exchange, \
+    get_time_from_exchange
 from model.Moment import Moment
+from controller.view_controller import *
 
 
 def main():
@@ -34,7 +36,9 @@ def main():
 
 
 def live_main():
-    start_time = time()
+    start_time = get_time_from_exchange()
+    log_debug(f"live trading started at time: {start_time}" )
+
     connect_to_exchange()
     candles = get_n_past_candles(scenario.live_start_of_work_needed_candles)
     calculate_indicators_and_bundle_into_candles(candles)
@@ -44,6 +48,7 @@ def live_main():
     analyze_live_data(candles, start_time)
 
 
+control_logs()
 n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
 if n == 1:
     main()
