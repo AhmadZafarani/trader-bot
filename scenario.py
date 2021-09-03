@@ -36,6 +36,8 @@ class Scenario:
 
     live_start_of_work_needed_candles = 10
 
+    live_trading_mode = False
+
 
 scenario = Scenario()
 

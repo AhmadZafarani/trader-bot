@@ -2,9 +2,11 @@
 from pathlib import Path
 from time import time
 
-from controller.controller import data_converter, analyze_data
+from controller.controller import data_converter, analyze_data, calculate_indicators_and_bundle_into_candles, \
+    set_this_moment, analyze_live_data
 from scenario import scenario
-from controller.exchange_controller import connect_to_exchange, get_n_past_candles
+from controller.exchange_controller import connect_to_exchange, get_n_past_candles, get_current_data_from_exchange
+from model.Moment import Moment
 
 
 def main():
@@ -35,21 +37,18 @@ def live_main():
     start_time = time()
     connect_to_exchange()
     candles = get_n_past_candles(scenario.live_start_of_work_needed_candles)
-    indicators = calculate_indicators(candles)
-    try_strategies()
-    while True:
-        sleep_till_end_of_moment(start_time)
-
-        start_time = time()
-        get_last_candle()
-        calculate_indicators()
-        try_strategies()
+    calculate_indicators_and_bundle_into_candles(candles)
+    t, p, cid = get_current_data_from_exchange()
+    this_moment = Moment(t, p, cid)
+    set_this_moment(this_moment)
+    analyze_live_data(candles, start_time)
 
 
 n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
 if n == 1:
     main()
 elif n == 2:
+    scenario.live_trading_mode = True
     live_main()
 else:
     raise Exception("only press 1 or 2 :|")

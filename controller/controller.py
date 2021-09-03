@@ -1,11 +1,13 @@
 # YA FATEMEH
 from csv import reader
+from time import time
 
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import *
 from scenario import scenario
+from controller.exchange_controller import get_last_candle, get_current_data_from_exchange, exchange_sell, exchange_buy
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -133,6 +135,10 @@ def try_strategies(moment: Moment, candles: list):
 
 
 def buy(bitcoin: int, price: int):
+    if scenario.live_trading_mode:
+        exchange_buy(bitcoin, price)
+        return
+
     global bitcoin_balance, dollar_balance
     bitcoin_balance += bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
@@ -143,6 +149,10 @@ def buy(bitcoin: int, price: int):
 
 
 def sell(bitcoin: int, price: int):
+    if scenario.live_trading_mode:
+        exchange_sell(bitcoin, price)
+        return
+
     global bitcoin_balance, dollar_balance
     bitcoin_balance -= bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
@@ -158,3 +168,57 @@ def get_this_moment() -> Moment:
 
 def set_report(r: str):
     strategy_results.append(r)
+
+
+# ================= LIVE TRADING =======================
+def calculate_indicators_and_bundle_into_candles(candles: list):
+    pass
+
+
+def set_this_moment(moment: Moment):
+    global this_moment
+    this_moment = moment
+
+
+def analyze_live_data(candles: list, start_time: int):
+    global this_moment
+    moment_index = 1
+
+    calculate_indicators_and_bundle_into_this_moment()
+    try_strategies(this_moment, candles)
+    while True:
+        sleep_till_end_of_moment(start_time)
+
+        start_time = time()
+        moment_index += 1
+        sync_bot_data_with_exchange(candles)
+
+        try_strategies(this_moment, candles)
+
+
+def sleep_till_end_of_moment(last_wake_time: int):
+    pass
+
+
+def sync_bot_data_with_exchange(candles: list, moment_index: int):
+    global this_moment
+    candle = get_last_candle()
+    t, p, cid = get_current_data_from_exchange()
+    this_moment.update_moment(t, p, cid, profit_loss_calculator(moment_index, p))
+    calculate_indicators_and_bundle_into_this_moment()
+
+    if is_same_as(candle, candles[-1]):
+        new_candle = [candle]
+        calculate_indicators_and_bundle_into_candles(new_candle)
+
+        # for compatibility with first moment
+        candles.pop(0)
+        candles.append(candle)
+
+
+def is_same_as(c1: Candle, c2: Candle) -> bool:
+    pass
+
+
+def calculate_indicators_and_bundle_into_this_moment():
+    pass
