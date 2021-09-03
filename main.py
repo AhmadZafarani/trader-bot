@@ -1,8 +1,10 @@
 # YA HOSSEIN
 from controller.controller import data_converter, analyze_data
+from scenario import scenario
+from controller.exchange_controller import connect_to_exchange, get_n_past_candles
+
 from pathlib import Path
 from time import time
-from scenario import scenario
 
 
 def main():
@@ -29,4 +31,25 @@ def main():
     print('total runtime : ', time() - start_time)
 
 
-main()
+def live_main():
+    start_time = time()
+    connect_to_exchange()
+    candles = get_n_past_candles(scenario.live_start_of_work_needed_candles)
+    indicators = calculate_indicators(candles)
+    try_strategies()
+    while True:
+        sleep_till_end_of_moment(start_time)
+
+        start_time = time()
+        get_last_candle()
+        calculate_indicators()
+        try_strategies()
+
+
+n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
+if n == 1:
+    main()
+elif n == 2:
+    live_main()
+else:
+    raise Exception("only press 1 or 2 :|")

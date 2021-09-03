@@ -30,6 +30,10 @@ class Scenario:
     lock_method = "lock_to_hour"
     lock_hour = 16
 
+    # ================ LIVE PARAMETERS ===============================
+
+    live_start_of_work_needed_candles = 10
+
 
 scenario = Scenario()
 

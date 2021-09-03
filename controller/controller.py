@@ -76,6 +76,7 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
     files = open_extra_files(moments_extra_files)
+
     # setup logger
     setup_logger('log1', r'logs/cndl-mmnt.log')
     log1 = logging.getLogger('log1')
@@ -86,7 +87,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
         for c in candles:
             # the i th moment of candle
             log1.info(c)
-            for i in range(scenario.number_of_moments_in_a_candle):
+            for _ in range(scenario.number_of_moments_in_a_candle):
                 analyze_each_moment(
                     moments_data, moment_index, files, c, candles)
                 moment_index += 1
