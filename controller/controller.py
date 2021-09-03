@@ -1,13 +1,13 @@
 # YA FATEMEH
 from csv import reader
-from time import time
+from time import time, sleep
 
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import *
 from scenario import scenario
-from controller.exchange_controller import get_last_candle, get_current_data_from_exchange, exchange_sell, exchange_buy
+from controller.exchange_controller import get_last_candle, get_current_data_from_exchange, exchange_sell, exchange_buy, get_time_from_exchange
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -172,7 +172,9 @@ def set_report(r: str):
 
 # ================= LIVE TRADING =======================
 def calculate_indicators_and_bundle_into_candles(candles: list):
-    pass
+    log_debug("constructed candles:")
+    for c in candles:
+        log_debug(f"\t{c}")
 
 
 def set_this_moment(moment: Moment):
@@ -197,7 +199,10 @@ def analyze_live_data(candles: list, start_time: int):
 
 
 def sleep_till_end_of_moment(last_wake_time: int):
-    pass
+    x = get_time_from_exchange() - last_wake_time + \
+        scenario.live_sleep_between_each_moment + scenario.live_calculations_threshold
+    x = x // 60 * 60    # round the sleep time into minutes
+    sleep(x)    # TODO: release system resources at this time
 
 
 def sync_bot_data_with_exchange(candles: list, moment_index: int):
@@ -222,4 +227,5 @@ def is_same_as(c1: Candle, c2: Candle) -> bool:
 
 
 def calculate_indicators_and_bundle_into_this_moment():
-    pass
+    global this_moment
+    log_debug(f"constructed this_moment: {this_moment}")
