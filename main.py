@@ -36,16 +36,16 @@ def main():
 
 
 def live_main():
-    start_time = get_time_from_exchange()
-    log_debug(f"live trading started at time: {start_time}" )
+    exchange = connect_to_exchange()
+    start_time = get_time_from_exchange(exchange)
+    log_debug(f"live trading started at time: {start_time}")
 
-    connect_to_exchange()
-    candles = get_n_past_candles(scenario.live_start_of_work_needed_candles)
-    calculate_indicators_and_bundle_into_candles(candles)
-    t, p, cid = get_current_data_from_exchange()
-    this_moment = Moment(t, p, cid)
-    set_this_moment(this_moment)
-    analyze_live_data(candles, start_time)
+    # candles = get_n_past_candles(scenario.live_start_of_work_needed_candles)
+    # calculate_indicators_and_bundle_into_candles(candles)
+    # t, p, cid = get_current_data_from_exchange()
+    # this_moment = Moment(t, p, cid)
+    # set_this_moment(this_moment)
+    # analyze_live_data(candles, start_time)
 
 
 control_logs()

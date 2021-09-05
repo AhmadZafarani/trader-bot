@@ -1,13 +1,30 @@
 # YA SAJJAD
-from time import time
 from random import randint
+import ccxt
 
 from model.Candle import Candle
 from controller.view_controller import *
 
 
-def connect_to_exchange():
+def read_api_key() -> tuple:
+    key = None
+    secret = None
+    with open("../api-key-kucoin.txt", "r") as file:
+        key = file.readline().split()[1][1:-2]
+        secret = file.readline().split()[1][1:-1]
+    return key, secret
+
+
+def connect_to_exchange() -> ccxt.Exchange:
+    key, secret = read_api_key()
+    exchange = ccxt.kucoin(config={
+        'key': key,
+        'secret': secret
+    })
+    exchange.set_sandbox_mode(True)
+    exchange.load_markets()
     print("connected to KUCOIN")
+    return exchange
 
 
 def get_n_past_candles(n: int) -> list:
@@ -36,6 +53,5 @@ def exchange_sell(crypto: float, price: float):
     pass
 
 
-def get_time_from_exchange() -> int:
-    log_debug("connection successfull to KUCOIN")
-    return int(time())
+def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
+    return exchange.fetch_time()
