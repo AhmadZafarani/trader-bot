@@ -1,12 +1,12 @@
 # YA HOSSEIN
 from pathlib import Path
-from time import time
+from time import sleep, time
 
 from controller.controller import data_converter, analyze_data, calculate_indicators_and_bundle_into_candles, \
     set_this_moment, analyze_live_data
 from scenario import scenario
 from controller.exchange_controller import connect_to_exchange, get_n_past_candles, get_current_data_from_exchange, \
-    get_time_from_exchange
+    get_time_from_exchange, configure_market
 from model.Moment import Moment
 from controller.view_controller import *
 
@@ -40,7 +40,17 @@ def live_main():
     start_time = get_time_from_exchange(exchange)
     log_debug(f"live trading started at time: {start_time}")
 
-    # candles = get_n_past_candles(scenario.live_start_of_work_needed_candles)
+    while True:
+        market = configure_market(exchange)
+        if not market:
+            log_warning(
+                f"market isn't active right now. we will try again {scenario.live_try_again_time_inactive_market} seconds later.")
+            sleep(scenario.live_try_again_time_inactive_market)
+        else:
+            break
+
+    candles = get_n_past_candles(
+        exchange, scenario.live_start_of_work_needed_candles)
     # calculate_indicators_and_bundle_into_candles(candles)
     # t, p, cid = get_current_data_from_exchange()
     # this_moment = Moment(t, p, cid)

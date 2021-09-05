@@ -27,7 +27,7 @@ def connect_to_exchange() -> ccxt.Exchange:
     return exchange
 
 
-def get_n_past_candles(n: int) -> list:
+def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
     candles = []
     for i in range(n):
         candles.append(Candle(i, randint(1, 100), randint(
@@ -54,4 +54,20 @@ def exchange_sell(crypto: float, price: float):
 
 
 def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
+    # not available for all exchanges
     return exchange.fetch_time()
+
+
+def configure_market(exchange: ccxt.Exchange):
+    market = exchange.market(scenario.live_market)
+    market_state = market['active']
+    log_debug(
+        f"market was at state: {market_state} in time: {get_time_from_exchange(exchange)}")
+
+    if market_state:
+        if not (scenario.fee == market['maker'] == market['taker']):
+            raise Exception("inconsistent fees")
+
+        log_debug(f"market: {market['info']} fetched successfully")
+        return market
+    return None

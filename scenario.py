@@ -57,6 +57,11 @@ class Scenario:
 
     live_calculations_threshold = 1 * 60
 
+    live_market = 'BTC/USDT'
+
+    # in seconds
+    live_try_again_time_inactive_market = 30
+
 
 scenario = Scenario()
 
