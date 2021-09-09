@@ -12,16 +12,17 @@ def read_api_key() -> tuple:
     secret = None
     with open("../api-key-kucoin.txt", "r") as file:
         key = file.readline().split()[1][1:-2]
-        secret = file.readline().split()[1][1:-1]
-    return key, secret
+        secret = file.readline().split()[1][1:-2]
+        password = file.readline().split()[1][1:-1]
+    return key, secret, password
 
 
 def connect_to_exchange() -> ccxt.Exchange:
-    key, secret = read_api_key()
+    key, secret, password = read_api_key()
     exchange = ccxt.kucoin(config={
         'apiKey': key,
         'secret': secret,
-        'password': '13467978aA',
+        'password': password,
     })
     exchange.set_sandbox_mode(True)
     exchange.load_markets()
