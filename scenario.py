@@ -62,6 +62,8 @@ class Scenario:
     # in seconds
     live_try_again_time_inactive_market = 30
 
+    live_timeframe = '1h'
+
 
 scenario = Scenario()
 

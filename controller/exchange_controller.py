@@ -1,5 +1,6 @@
 # YA SAJJAD
 from random import randint
+from time import sleep
 import ccxt
 
 from model.Candle import Candle
@@ -18,8 +19,9 @@ def read_api_key() -> tuple:
 def connect_to_exchange() -> ccxt.Exchange:
     key, secret = read_api_key()
     exchange = ccxt.kucoin(config={
-        'key': key,
-        'secret': secret
+        'apiKey': key,
+        'secret': secret,
+        'password': '13467978aA',
     })
     exchange.set_sandbox_mode(True)
     exchange.load_markets()
@@ -28,12 +30,20 @@ def connect_to_exchange() -> ccxt.Exchange:
 
 
 def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
-    candles = []
+    while True:
+        # multiply to ensure fetch more than `n` candles
+        candles = exchange.fetch_ohlcv(
+            scenario.live_market, scenario.live_timeframe, limit=3*n)
+        if len(candles) >= n:
+            break
+        log_debug(
+            "couldn't fetch all of your're candles. we will try after 5 seconds.")
+        sleep(5)
+    candle_objects = []
     for i in range(n):
-        candles.append(Candle(i, randint(1, 100), randint(
-            1, 100), randint(1, 100), randint(1, 100), randint(1, 100)))
-    log_debug("successfull response from KUCOIN")
-    return candles
+        candle_objects.append(Candle(
+            candles[i][0] // 1000, candles[i][1], candles[i][2], candles[i][3], candles[i][4], candles[i][5]))
+    return candle_objects
 
 
 def get_last_candle() -> Candle:

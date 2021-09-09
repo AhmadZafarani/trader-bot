@@ -51,7 +51,7 @@ def live_main():
 
     candles = get_n_past_candles(
         exchange, scenario.live_start_of_work_needed_candles)
-    # calculate_indicators_and_bundle_into_candles(candles)
+    calculate_indicators_and_bundle_into_candles(candles)
     # t, p, cid = get_current_data_from_exchange()
     # this_moment = Moment(t, p, cid)
     # set_this_moment(this_moment)
@@ -59,7 +59,8 @@ def live_main():
 
 
 control_logs()
-n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
+# n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
+n = 2
 if n == 1:
     main()
 elif n == 2:
