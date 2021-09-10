@@ -43,13 +43,13 @@ class Scenario:
         "price_to_line" : {"enable" : 0 , "options" : {"line" : 12 , "min_percentage" : 50 , "red" : True}},
         "line_to_line" : {"enable" : 0 , "options" : {"line" : [12 , 26]}},
         "profit_loss_limit" : {"enable": 0 , "options" : {"profit_limit":10 , "loss_limit" : -1}},
-        "peridical_profit_loss_limit" :  {"enable" : 1 , "options" : {"profit_limit":4 , "loss_limit" : -0.1}}
+        "peridical_profit_loss_limit" :  {"enable" : 1 , "options" : {"profit_limit":12 , "loss_limit" : -1.8}}
     }
     volume_buy = 90
-    per_profit_limit = 19
-    per_loss_limit = -2.0
-    sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit 
-    sell_method["peridical_profit_loss_limit"]["options"]["loss_limit"] = per_loss_limit 
+    # per_profit_limit = 19
+    # per_loss_limit = -2.0
+    # sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit 
+    # sell_method["peridical_profit_loss_limit"]["options"]["loss_limit"] = per_loss_limit 
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
