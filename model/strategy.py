@@ -3,8 +3,6 @@ from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller
 from scenario import scenario
-from controller.logs import setup_logger
-import logging
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
