@@ -10,3 +10,5 @@ __pycache__/
 .vscode/
 logs/*.log
 all-parameters-test/*.csv
+all-parameters-test/*.txt
+.idea/
