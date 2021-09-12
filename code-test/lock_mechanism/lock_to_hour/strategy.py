@@ -75,6 +75,7 @@ class Strategy(ABC):
 
 lock_strategies = {}
 
+lock_all = False
 
 class Dummy_Strategy(Strategy):
 
@@ -97,7 +98,7 @@ class Dummy_Strategy(Strategy):
         elif self.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
-    def continue_strategy(self):
+    def continue_strategy(self, working_strategies, **kwargs):
         if not (self.moment.candle_id == self.buy_id + 12):
             return
         

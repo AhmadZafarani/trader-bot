@@ -41,7 +41,6 @@ class Strategy(ABC):
         self.sell_time_date = "0/0/0"
         self.sell_time_hour = 0
         self.sell_time_minute = 0
-
         self.btc_balance = btc
         if self.strategy_works():
             self.working = True
@@ -56,7 +55,7 @@ class Strategy(ABC):
         pass
 
     @abstractmethod
-    def continue_strategy(self):
+    def continue_strategy(self, working_strategies, **kwargs):
         pass
 
     def finish_strategy(self, args=''):
@@ -74,6 +73,25 @@ class Strategy(ABC):
 
 
 lock_strategies = {}
+lock_all = False
+
+
+def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
+    crypto1 = 0
+    for ws in working_strategies:
+        crypto1 += ws.sell_volume
+    # print("solved crypto : " , crypto1)
+
+    price = ((start_of_profit_loss_period_balance *
+             (1 + profit_loss/100)) - dollar) / crypto1
+    # print("solved price : " , price , " moment_price : " , moment.price)
+    for ws in working_strategies:
+        if not ws.selled:
+            controller.sell(ws.sell_volume, price)
+            ws.finish_strategy(ws.finish_txt)
+            if ws.lock_method == "lock_to_fin":
+                lock_strategies.pop(ws.short_name)
+
 
 
 class Dummy_Strategy(Strategy):
@@ -98,7 +116,7 @@ class Dummy_Strategy(Strategy):
         elif self.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
-    def continue_strategy(self):
+    def continue_strategy(self, working_strategies, **kwargs):
         if not (controller.get_this_moment().hour == 19 and controller.get_this_moment().minute == 30):
             return
         
@@ -111,8 +129,5 @@ class Dummy_Strategy(Strategy):
         ''')
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy")
-
-
-
 
 strategies = {'dummy': Dummy_Strategy}

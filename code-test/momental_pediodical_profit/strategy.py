@@ -75,6 +75,7 @@ class Strategy(ABC):
 
 lock_strategies = {}
 
+lock_all = False
 
 class Dummy_Strategy(Strategy):
 
@@ -96,7 +97,7 @@ class Dummy_Strategy(Strategy):
         elif scenario.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
 
-    def continue_strategy(self):
+    def continue_strategy(self, working_strategirs , **kwargs):
         if not(self.moment.hour == 19 and self.moment.minute == 44) :
             return
         # return
