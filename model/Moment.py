@@ -14,13 +14,15 @@ class Moment:
         self.price = price
         self.candle_id = candle_id
         self.profit_loss_percentage = 0
+        self.moment_id = 0
 
     def update_moment(self, time: int, price: float, candle_id: int,
-                      profit_loss_percentage: float):
+                      profit_loss_percentage: float, moment_id: int):
         self.date, self.hour, self.minute = extract_time(time)
         self.price = price
         self.candle_id = candle_id
         self.profit_loss_percentage = profit_loss_percentage
+        self.moment_id = moment_id
 
     def __str__(self) -> str:
         return f'fields: {self.__dict__}'

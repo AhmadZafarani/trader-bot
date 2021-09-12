@@ -5,9 +5,10 @@ model/__pycache__
 *.txt
 balance_report.csv
 periodical_report.csv
+balance_report.csv
 __pycache__/
 .vscode/
-test*
-logs/*
-!requirements.txt
+logs/*.log
+all-parameters-test/*.csv
+all-parameters-test/*.txt
 .idea/

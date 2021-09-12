@@ -1,0 +1,495 @@
+Moment: id: 1 , minute: 0, hour: 0, date: 01/01/21, price: 28923.63 , Candle-ID : 1 , Profit(loss) : 0
+        ADX: 11.0, 17.62, 20.14
+        ICHI: 28740.275, 28575.0, 29359.47, 28193.195, 27438.0
+
+         
+Moment: id: 2 , minute: 0, hour: 1, date: 01/01/21, price: 28995.13 , Candle-ID : 2 , Profit(loss) : 0.0
+        ADX: 11.29, 24.04, 18.25
+        ICHI: 28916.0, 28660.0, 29323.82, 28358.142, 27590.0
+
+         
+Moment: id: 3 , minute: 0, hour: 2, date: 01/01/21, price: 29409.99 , Candle-ID : 3 , Profit(loss) : 0.0
+        ADX: 11.45, 22.5, 17.08
+        ICHI: 28947.28, 28660.0, 29351.95, 28492.5, 27590.0
+
+         
+Moment: id: 4 , minute: 0, hour: 3, date: 01/01/21, price: 29194.65 , Candle-ID : 4 , Profit(loss) : 0.0
+        ADX: 10.41, 21.57, 16.37
+        ICHI: 29080.085, 28660.0, 29349.63, 28510.168, 27590.0
+
+         
+Moment: id: 5 , minute: 0, hour: 4, date: 01/01/21, price: 29278.4 , Candle-ID : 5 , Profit(loss) : 0.0
+        ADX: 8.88, 20.06, 17.53
+        ICHI: 29080.085, 28660.0, 29589.99, 28510.168, 27590.0
+
+         
+Moment: id: 6 , minute: 0, hour: 5, date: 01/01/21, price: 29220.31 , Candle-ID : 6 , Profit(loss) : 0.0
+        ADX: 8.37, 19.45, 17.0
+        ICHI: 29080.085, 28660.0, 29709.07, 28510.168, 27590.0
+
+         
+Moment: id: 7 , minute: 0, hour: 6, date: 01/01/21, price: 29187.01 , Candle-ID : 7 , Profit(loss) : 0.0
+        ADX: 7.86, 19.39, 16.32
+        ICHI: 29080.085, 28660.0, 29750.0, 28510.168, 27590.0
+
+         
+Moment: id: 8 , minute: 0, hour: 7, date: 01/01/21, price: 29174.35 , Candle-ID : 8 , Profit(loss) : 0.0
+        ADX: 7.25, 17.86, 20.59
+        ICHI: 29080.085, 28660.0, 29844.51, 28510.168, 27590.0
+
+         
+Moment: id: 9 , minute: 0, hour: 8, date: 01/01/21, price: 29092.83 , Candle-ID : 9 , Profit(loss) : 0.0
+        ADX: 7.21, 16.73, 19.29
+        ICHI: 29080.085, 28660.0, 29612.87, 28510.168, 27590.0
+
+         
+Moment: id: 10 , minute: 0, hour: 9, date: 01/01/21, price: 29000.01 , Candle-ID : 10 , Profit(loss) : 0.0
+        ADX: 7.06, 18.24, 17.94
+        ICHI: 29138.27, 28660.0, 29680.99, 28510.168, 27590.0
+
+         
+Moment: id: 11 , minute: 0, hour: 10, date: 01/01/21, price: 29202.21 , Candle-ID : 11 , Profit(loss) : 0.0
+        ADX: 7.06, 18.29, 17.2
+        ICHI: 29135.9, 28660.0, 29755.0, 28506.418, 27722.73
+
+         
+Moment: id: 12 , minute: 0, hour: 11, date: 01/01/21, price: 29223.82 , Candle-ID : 12 , Profit(loss) : 0.0
+        ADX: 7.22, 18.8, 16.48
+        ICHI: 29104.555, 28660.0, 30604.03, 28621.25, 27722.73
+
+         
+Moment: id: 13 , minute: 0, hour: 12, date: 01/01/21, price: 29313.49 , Candle-ID : 13 , Profit(loss) : 0.0
+        ADX: 8.17, 21.22, 14.88
+        ICHI: 29203.27, 28725.0, 31541.17, 28685.5, 27752.495
+
+         
+Moment: id: 14 , minute: 0, hour: 13, date: 01/01/21, price: 29233.49 , Candle-ID : 14 , Profit(loss) : 0.0
+        ADX: 9.26, 19.97, 14.01
+        ICHI: 29203.27, 28725.0, 31290.53, 28640.5, 27752.495
+
+         
+Moment: id: 15 , minute: 0, hour: 14, date: 01/01/21, price: 29464.79 , Candle-ID : 15 , Profit(loss) : 0.2021
+        ADX: 10.27, 20.13, 13.19
+        ICHI: 29203.27, 28725.0, 31691.29, 28503.0, 27752.495
+
+         
+Moment: id: 16 , minute: 0, hour: 15, date: 01/01/21, price: 29327.84 , Candle-ID : 16 , Profit(loss) : 0.0651
+        ADX: 9.54, 18.54, 17.32
+        ICHI: 29203.27, 28855.625, 32482.28, 28550.925, 27752.495
+
+         
+Moment: id: 17 , minute: 0, hour: 16, date: 01/01/21, price: 29188.67 , Candle-ID : 17 , Profit(loss) : 0.0358
+        ADX: 8.8, 17.57, 16.41
+        ICHI: 29236.12, 28955.5, 32856.96, 28571.25, 27752.495
+
+         
+Moment: id: 18 , minute: 0, hour: 17, date: 01/01/21, price: 29300.57 , Candle-ID : 18 , Profit(loss) : 0.0358
+        ADX: 8.45, 16.01, 19.09
+        ICHI: 29268.5, 28955.5, 32999.98, 28552.708, 27752.495
+
+         
+Moment: id: 19 , minute: 0, hour: 18, date: 01/01/21, price: 29079.64 , Candle-ID : 19 , Profit(loss) : 0.0358
+        ADX: 9.73, 13.92, 23.01
+        ICHI: 29112.285, 28981.0, 33027.2, 28542.092, 27752.495
+
+         
+Moment: id: 20 , minute: 0, hour: 19, date: 01/01/21, price: 29072.7 , Candle-ID : 20 , Profit(loss) : 0.0358
+        ADX: 11.01, 13.4, 22.15
+        ICHI: 29112.285, 29012.28, 30667.22, 28542.092, 27752.495
+
+         
+Moment: id: 21 , minute: 0, hour: 20, date: 01/01/21, price: 29029.04 , Candle-ID : 21 , Profit(loss) : 0.0358
+        ADX: 11.34, 15.52, 20.29
+        ICHI: 29112.285, 29112.285, 31694.59, 28535.0, 27752.495
+
+         
+Moment: id: 22 , minute: 0, hour: 21, date: 01/01/21, price: 29200.96 , Candle-ID : 22 , Profit(loss) : 0.0358
+        ADX: 11.74, 15.2, 19.59
+        ICHI: 29077.285, 29112.285, 32145.66, 28534.912, 27771.75
+
+         
+Moment: id: 23 , minute: 0, hour: 22, date: 01/01/21, price: 29160.39 , Candle-ID : 23 , Profit(loss) : 0.0358
+        ADX: 11.93, 15.27, 18.61
+        ICHI: 29077.285, 29112.285, 32178.33, 28542.388, 27902.97
+
+         
+Moment: id: 24 , minute: 0, hour: 23, date: 01/01/21, price: 29262.32 , Candle-ID : 24 , Profit(loss) : 0.0358
+        ADX: 12.51, 15.16, 18.13
+        ICHI: 29007.785, 29112.285, 32447.94, 28607.7, 27902.97
+
+         
+Moment: id: 25 , minute: 0, hour: 0, date: 01/02/21, price: 29331.69 , Candle-ID : 25 , Profit(loss) : 0
+        ADX: 14.07, 13.79, 22.97
+        ICHI: 28992.285, 29112.285, 32585.09, 28657.638, 28021.71
+
+         
+Moment: id: 26 , minute: 0, hour: 1, date: 01/02/21, price: 29197.48 , Candle-ID : 26 , Profit(loss) : 0.0
+        ADX: 15.03, 14.26, 21.38
+        ICHI: 29012.285, 29112.285, 32741.67, 28657.638, 28060.19
+
+         
+Moment: id: 27 , minute: 0, hour: 2, date: 01/02/21, price: 29359.47 , Candle-ID : 27 , Profit(loss) : 0.0
+        ADX: 14.81, 15.4, 20.62
+        ICHI: 29046.785, 29112.285, 32573.87, 28788.0, 28181.89
+
+         
+Moment: id: 28 , minute: 0, hour: 3, date: 01/02/21, price: 29323.82 , Candle-ID : 28 , Profit(loss) : 0.0
+        ADX: 14.85, 14.92, 21.55
+        ICHI: 29174.685, 29112.285, 33192.53, 28803.64, 28207.785
+
+         
+Moment: id: 29 , minute: 0, hour: 4, date: 01/02/21, price: 29351.95 , Candle-ID : 29 , Profit(loss) : 0.0
+        ADX: 14.82, 14.24, 21.52
+        ICHI: 29174.685, 29112.285, 33758.67, 28870.042, 28395.0
+
+         
+Moment: id: 30 , minute: 0, hour: 5, date: 01/02/21, price: 29349.63 , Candle-ID : 30 , Profit(loss) : 0.0
+        ADX: 14.91, 18.38, 20.18
+        ICHI: 29268.265, 29112.285, 33967.13, 28870.042, 28395.0
+
+         
+Moment: id: 31 , minute: 0, hour: 6, date: 01/02/21, price: 29589.99 , Candle-ID : 31 , Profit(loss) : 0.0
+        ADX: 15.09, 20.98, 18.64
+        ICHI: 29345.765, 29184.785, 34452.34, 28870.042, 28395.0
+
+         
+Moment: id: 32 , minute: 0, hour: 7, date: 01/02/21, price: 29709.07 , Candle-ID : 32 , Profit(loss) : 0.0
+        ADX: 15.22, 21.88, 17.68
+        ICHI: 29383.515, 29222.535, 34367.68, 28870.042, 28395.0
+
+         
+Moment: id: 33 , minute: 0, hour: 8, date: 01/02/21, price: 29750.0 , Candle-ID : 33 , Profit(loss) : 0.0
+        ADX: 14.35, 21.42, 16.69
+        ICHI: 29397.82, 29236.84, 34190.55, 28870.042, 28395.0
+
+         
+Moment: id: 34 , minute: 0, hour: 9, date: 01/02/21, price: 29844.51 , Candle-ID : 34 , Profit(loss) : 0.0
+        ADX: 13.12, 19.61, 16.91
+        ICHI: 29499.5, 29261.785, 33877.96, 28870.042, 28395.0
+
+         
+Moment: id: 35 , minute: 0, hour: 10, date: 01/02/21, price: 29612.87 , Candle-ID : 35 , Profit(loss) : 0.0
+        ADX: 12.22, 17.81, 18.05
+        ICHI: 29559.5, 29261.785, 34413.53, 28899.135, 28395.0
+
+         
+Moment: id: 36 , minute: 0, hour: 11, date: 01/02/21, price: 29680.99 , Candle-ID : 36 , Profit(loss) : 0.0
+        ADX: 11.36, 17.06, 17.29
+        ICHI: 29559.5, 29261.785, 34103.72, 28897.95, 28395.0
+
+         
+Moment: id: 37 , minute: 0, hour: 12, date: 01/02/21, price: 29755.0 , Candle-ID : 37 , Profit(loss) : 0.0
+        ADX: 14.07, 36.74, 13.01
+        ICHI: 30054.0, 29756.285, 33880.0, 28882.278, 28395.0
+
+         
+Moment: id: 38 , minute: 0, hour: 13, date: 01/02/21, price: 30604.03 , Candle-ID : 38 , Profit(loss) : 0.0
+        ADX: 17.73, 42.19, 10.48
+        ICHI: 30455.75, 30093.22, 33811.54, 28964.135, 28460.0
+
+         
+Moment: id: 39 , minute: 0, hour: 14, date: 01/02/21, price: 31541.17 , Candle-ID : 39 , Profit(loss) : 0.9062
+        ADX: 20.25, 38.42, 9.51
+        ICHI: 30508.945, 30096.23, 33506.62, 28964.135, 28588.5
+
+         
+Moment: id: 40 , minute: 0, hour: 15, date: 01/02/21, price: 31290.53 , Candle-ID : 40 , Profit(loss) : 0.6557
+        ADX: 23.38, 38.7, 8.56
+        ICHI: 30636.955, 30212.285, 32676.74, 28964.135, 28588.5
+
+         
+Moment: id: 41 , minute: 0, hour: 16, date: 01/02/21, price: 31691.29 , Candle-ID : 41 , Profit(loss) : 0.6244
+        ADX: 27.75, 48.74, 6.77
+        ICHI: 31236.955, 30812.285, 32909.27, 29029.448, 28588.5
+
+         
+Moment: id: 42 , minute: 0, hour: 17, date: 01/02/21, price: 32482.28 , Candle-ID : 42 , Profit(loss) : 0.6244
+        ADX: 31.85, 44.8, 6.22
+        ICHI: 31236.955, 30812.285, 32769.76, 29095.81, 28684.35
+
+         
+Moment: id: 43 , minute: 0, hour: 18, date: 01/02/21, price: 32856.96 , Candle-ID : 43 , Profit(loss) : 0.6244
+        ADX: 35.97, 44.39, 5.45
+        ICHI: 31386.955, 30962.285, 32772.21, 29112.0, 28725.0
+
+         
+Moment: id: 44 , minute: 0, hour: 19, date: 01/02/21, price: 32999.98 , Candle-ID : 44 , Profit(loss) : 0.6244
+        ADX: 41.22, 41.09, 5.05
+        ICHI: 31461.395, 30962.285, 33726.21, 29046.642, 28725.0
+
+         
+Moment: id: 45 , minute: 0, hour: 20, date: 01/02/21, price: 33027.2 , Candle-ID : 45 , Profit(loss) : 0.6244
+        ADX: 41.13, 29.77, 27.13
+        ICHI: 31520.695, 31090.185, 33558.34, 29062.282, 28725.0
+
+         
+Moment: id: 46 , minute: 0, hour: 21, date: 01/02/21, price: 30667.22 , Candle-ID : 46 , Profit(loss) : 0.6244
+        ADX: 40.41, 24.77, 25.04
+        ICHI: 31800.0, 31090.185, 33119.14, 29112.285, 28725.0
+
+         
+Moment: id: 47 , minute: 0, hour: 22, date: 01/02/21, price: 31694.59 , Candle-ID : 47 , Profit(loss) : 0.6244
+        ADX: 39.92, 25.61, 22.89
+        ICHI: 31800.0, 31123.265, 33000.05, 29094.785, 28725.0
+
+         
+Moment: id: 48 , minute: 0, hour: 23, date: 01/02/21, price: 32145.66 , Candle-ID : 48 , Profit(loss) : 0.6244
+        ADX: 39.8, 23.76, 21.24
+        ICHI: 31800.0, 31123.265, 32843.88, 29094.785, 28725.0
+
+         
+Moment: id: 49 , minute: 0, hour: 0, date: 01/03/21, price: 32178.33 , Candle-ID : 49 , Profit(loss) : 0
+        ADX: 40.52, 24.98, 20.12
+        ICHI: 31800.0, 31123.265, 33191.04, 29060.035, 28725.0
+
+         
+Moment: id: 50 , minute: 0, hour: 1, date: 01/03/21, price: 32447.94 , Candle-ID : 50 , Profit(loss) : 0.0
+        ADX: 41.65, 26.43, 18.93
+        ICHI: 31800.0, 31123.265, 33454.22, 29052.285, 28725.0
+
+         
+Moment: id: 51 , minute: 0, hour: 2, date: 01/03/21, price: 32585.09 , Candle-ID : 51 , Profit(loss) : 0.0
+        ADX: 39.56, 26.49, 18.27
+        ICHI: 31800.0, 31200.0, 33505.16, 29062.285, 28725.0
+
+         
+Moment: id: 52 , minute: 0, hour: 3, date: 01/03/21, price: 32741.67 , Candle-ID : 52 , Profit(loss) : 0.0
+        ADX: 36.27, 25.49, 19.15
+        ICHI: 31760.0, 31260.0, 33257.55, 29079.535, 28725.0
+
+         
+Moment: id: 53 , minute: 0, hour: 4, date: 01/03/21, price: 32573.87 , Candle-ID : 53 , Profit(loss) : 0.0
+        ADX: 33.67, 28.57, 17.53
+        ICHI: 31775.0, 31260.0, 32813.01, 29143.485, 28725.0
+
+         
+Moment: id: 54 , minute: 0, hour: 5, date: 01/03/21, price: 33192.53 , Candle-ID : 54 , Profit(loss) : 0.0
+        ADX: 31.85, 34.92, 15.62
+        ICHI: 32240.0, 31700.0, 33100.02, 29143.485, 28725.0
+
+         
+Moment: id: 55 , minute: 0, hour: 6, date: 01/03/21, price: 33758.67 , Candle-ID : 55 , Profit(loss) : 0.0
+        ADX: 29.17, 33.25, 14.87
+        ICHI: 32802.48, 31764.815, 32068.84, 29190.275, 28725.0
+
+         
+Moment: id: 56 , minute: 0, hour: 7, date: 01/03/21, price: 33967.13 , Candle-ID : 56 , Profit(loss) : 0.0
+        ADX: 27.1, 36.49, 13.31
+        ICHI: 33139.055, 32114.055, 32045.14, 29265.275, 28797.5
+
+         
+Moment: id: 57 , minute: 0, hour: 8, date: 01/03/21, price: 34452.34 , Candle-ID : 57 , Profit(loss) : 0.0
+        ADX: 24.84, 33.2, 12.11
+        ICHI: 33370.55, 32126.01, 31038.63, 29303.025, 28835.25
+
+         
+Moment: id: 58 , minute: 0, hour: 9, date: 01/03/21, price: 34367.68 , Candle-ID : 58 , Profit(loss) : 0.0
+        ADX: 22.59, 30.64, 11.18
+        ICHI: 33489.555, 32126.01, 30270.76, 29317.33, 28849.555
+
+         
+Moment: id: 59 , minute: 0, hour: 10, date: 01/03/21, price: 34190.55 , Candle-ID : 59 , Profit(loss) : 0.0
+        ADX: 24.63, 27.85, 13.97
+        ICHI: 33591.055, 32126.01, 30743.06, 29380.642, 28874.5
+
+         
+Moment: id: 60 , minute: 0, hour: 11, date: 01/03/21, price: 33877.96 , Candle-ID : 60 , Profit(loss) : 0.0
+        ADX: 27.08, 27.04, 13.07
+        ICHI: 33591.055, 32126.01, 31219.02, 29410.642, 28874.5
+
+         
+Moment: id: 61 , minute: 0, hour: 12, date: 01/03/21, price: 34413.53 , Candle-ID : 61 , Profit(loss) : 0.0
+        ADX: 29.34, 26.73, 12.22
+        ICHI: 33614.055, 32200.45, 31400.0, 29410.642, 28874.5
+
+         
+Moment: id: 62 , minute: 0, hour: 13, date: 01/03/21, price: 34103.72 , Candle-ID : 62 , Profit(loss) : 0.0
+        ADX: 31.27, 25.18, 12.79
+        ICHI: 33943.775, 32259.75, 32113.68, 29905.142, 29369.0
+
+         
+Moment: id: 63 , minute: 0, hour: 14, date: 01/03/21, price: 33880.0 , Candle-ID : 63 , Profit(loss) : -0.2561
+        ADX: 31.98, 23.44, 15.36
+        ICHI: 34090.555, 32539.055, 31745.72, 30274.485, 29705.935
+
+         
+Moment: id: 64 , minute: 0, hour: 15, date: 01/03/21, price: 33811.54 , Candle-ID : 64 , Profit(loss) : -0.3241
+        ADX: 30.86, 20.89, 20.56
+        ICHI: 33752.555, 32539.055, 31320.31, 30302.588, 29708.945
+
+         
+Moment: id: 65 , minute: 0, hour: 16, date: 01/03/21, price: 33506.62 , Candle-ID : 65 , Profit(loss) : -0.3577
+        ADX: 29.63, 18.65, 19.06
+        ICHI: 33660.205, 32539.055, 31024.17, 30424.62, 29825.0
+
+         
+Moment: id: 66 , minute: 0, hour: 17, date: 01/03/21, price: 32676.74 , Candle-ID : 66 , Profit(loss) : -0.3577
+        ADX: 29.03, 17.16, 19.31
+        ICHI: 33527.365, 32539.055, 31165.16, 31024.62, 30425.0
+
+         
+Moment: id: 67 , minute: 0, hour: 18, date: 01/03/21, price: 32909.27 , Candle-ID : 67 , Profit(loss) : -0.3577
+        ADX: 28.07, 15.97, 19.68
+        ICHI: 33433.5, 32539.055, 31665.51, 31024.62, 30555.625
+
+         
+Moment: id: 68 , minute: 0, hour: 19, date: 01/03/21, price: 32769.76 , Candle-ID : 68 , Profit(loss) : -0.3577
+        ADX: 26.08, 15.27, 18.8
+        ICHI: 33433.5, 32539.055, 31244.97, 31174.62, 30805.5
+
+         
+Moment: id: 69 , minute: 0, hour: 20, date: 01/03/21, price: 32772.21 , Candle-ID : 69 , Profit(loss) : -0.3577
+        ADX: 24.24, 21.79, 16.95
+        ICHI: 33433.5, 32539.055, 31014.27, 31211.84, 30805.5
+
+         
+Moment: id: 70 , minute: 0, hour: 21, date: 01/03/21, price: 33726.21 , Candle-ID : 70 , Profit(loss) : -0.3577
+        ADX: 21.88, 21.49, 16.38
+        ICHI: 33326.01, 32539.055, 31332.05, 31305.44, 30831.0
+
+         
+Moment: id: 71 , minute: 0, hour: 22, date: 01/03/21, price: 33558.34 , Candle-ID : 71 , Profit(loss) : -0.3577
+        ADX: 18.56, 20.14, 20.17
+        ICHI: 33208.5, 32539.055, 31988.71, 31445.092, 30862.28
+
+         
+Moment: id: 72 , minute: 0, hour: 23, date: 01/03/21, price: 33119.14 , Candle-ID : 72 , Profit(loss) : -0.3577
+        ADX: 15.9, 18.27, 22.01
+        ICHI: 33070.225, 33101.535, 32430.49, 31461.632, 30962.285
+
+         
+Moment: id: 73 , minute: 0, hour: 0, date: 01/04/21, price: 33000.05 , Candle-ID : 73 , Profit(loss) : 0
+        ADX: 14.5, 17.05, 22.42
+        ICHI: 33064.46, 33139.055, 32786.06, 31461.632, 30962.285
+
+         
+Moment: id: 74 , minute: 0, hour: 1, date: 01/04/21, price: 32843.88 , Candle-ID : 74 , Profit(loss) : 0.0
+        ADX: 12.56, 17.92, 20.89
+        ICHI: 33064.46, 33370.55, 32306.64, 31461.632, 30962.285
+
+         
+Moment: id: 75 , minute: 0, hour: 2, date: 01/04/21, price: 33191.04 , Candle-ID : 75 , Profit(loss) : 0.0
+        ADX: 9.96, 19.32, 19.64
+        ICHI: 33064.46, 33489.555, 31200.0, 31461.632, 30962.285
+
+         
+Moment: id: 76 , minute: 0, hour: 3, date: 01/04/21, price: 33454.22 , Candle-ID : 76 , Profit(loss) : 0.0
+        ADX: 7.69, 18.65, 18.96
+        ICHI: 33131.085, 33522.555, 30858.98, 31500.0, 30962.285
+
+         
+Moment: id: 77 , minute: 0, hour: 4, date: 01/04/21, price: 33505.16 , Candle-ID : 77 , Profit(loss) : 0.0
+        ADX: 6.32, 18.78, 18.16
+        ICHI: 33131.085, 33522.555, 30436.25, 31510.0, 30962.285
+
+         
+Moment: id: 78 , minute: 0, hour: 5, date: 01/04/21, price: 33257.55 , Candle-ID : 78 , Profit(loss) : 0.0
+        ADX: 6.89, 17.78, 21.18
+        ICHI: 33131.085, 33522.555, 31123.25, 31517.5, 30962.285
+
+         
+Moment: id: 79 , minute: 0, hour: 6, date: 01/04/21, price: 32813.01 , Candle-ID : 79 , Profit(loss) : 0.0
+        ADX: 7.23, 17.63, 19.86
+        ICHI: 33030.675, 33522.555, 30817.77, 31970.0, 31402.285
+
+         
+Moment: id: 80 , minute: 0, hour: 7, date: 01/04/21, price: 33100.02 , Candle-ID : 80 , Profit(loss) : 0.0
+        ADX: 9.14, 14.87, 29.21
+        ICHI: 32552.5, 33141.555, 31192.09, 32283.648, 31402.285
+
+         
+Moment: id: 81 , minute: 0, hour: 8, date: 01/04/21, price: 32068.84 , Candle-ID : 81 , Profit(loss) : 0.0
+        ADX: 10.78, 13.34, 26.71
+        ICHI: 32525.0, 33114.055, 31569.63, 32626.555, 31701.34
+
+         
+Moment: id: 82 , minute: 0, hour: 9, date: 01/04/21, price: 32045.14 , Candle-ID : 82 , Profit(loss) : 0.0
+        ADX: 13.51, 11.22, 32.49
+        ICHI: 31924.425, 32459.63, 31345.77, 32748.28, 31701.34
+
+         
+Moment: id: 83 , minute: 0, hour: 10, date: 01/04/21, price: 31038.63 , Candle-ID : 83 , Profit(loss) : 0.0
+        ADX: 17.21, 8.78, 40.3
+        ICHI: 30865.0, 31365.0, 31776.66, 32807.782, 31701.34
+
+         
+Moment: id: 84 , minute: 0, hour: 11, date: 01/04/21, price: 30270.76 , Candle-ID : 84 , Profit(loss) : 0.0
+        ADX: 20.83, 7.89, 36.2
+        ICHI: 30865.0, 31365.0, 31585.01, 32858.532, 31701.34
+
+         
+Moment: id: 85 , minute: 0, hour: 12, date: 01/04/21, price: 30743.06 , Candle-ID : 85 , Profit(loss) : 0.0
+        ADX: 24.46, 11.0, 33.77
+        ICHI: 30865.0, 31365.0, 31460.01, 32858.532, 31701.34
+
+         
+Moment: id: 86 , minute: 0, hour: 13, date: 01/04/21, price: 31219.02 , Candle-ID : 86 , Profit(loss) : 0.0
+        ADX: 27.42, 10.39, 31.9
+        ICHI: 30769.0, 31365.0, 32342.33, 32907.253, 31701.34
+
+         
+Moment: id: 87 , minute: 0, hour: 14, date: 01/04/21, price: 31400.0 , Candle-ID : 87 , Profit(loss) : 0.1493
+        ADX: 28.8, 15.26, 30.17
+        ICHI: 30769.0, 31257.51, 32099.98, 33101.762, 31701.34
+
+         
+Moment: id: 88 , minute: 0, hour: 15, date: 01/04/21, price: 32113.68 , Candle-ID : 88 , Profit(loss) : 0.8609
+        ADX: 30.57, 14.68, 28.77
+        ICHI: 30639.345, 31140.0, 32469.9, 33314.805, 31701.34
+
+         
+Moment: id: 89 , minute: 0, hour: 16, date: 01/04/21, price: 31745.72 , Candle-ID : 89 , Profit(loss) : 0.8288
+        ADX: 33.45, 13.43, 32.22
+        ICHI: 30348.94, 31001.725, 32742.73, 33145.805, 31701.34
+
+         
+Moment: id: 90 , minute: 0, hour: 17, date: 01/04/21, price: 31320.31 , Candle-ID : 90 , Profit(loss) : 0.8288
+        ADX: 36.4, 12.56, 30.84
+        ICHI: 30157.835, 30995.96, 33372.84, 33099.63, 31701.34
+
+         
+Moment: id: 91 , minute: 0, hour: 18, date: 01/04/21, price: 31024.17 , Candle-ID : 91 , Profit(loss) : 0.8288
+        ADX: 39.29, 12.12, 29.77
+        ICHI: 30157.835, 30995.96, 33697.75, 33033.21, 31701.34
+
+         
+Moment: id: 92 , minute: 0, hour: 19, date: 01/04/21, price: 31165.16 , Candle-ID : 92 , Profit(loss) : 0.8288
+        ADX: 40.96, 14.4, 28.07
+        ICHI: 30792.835, 30995.96, 33969.17, 32986.277, 31701.34
+
+         
+Moment: id: 93 , minute: 0, hour: 20, date: 01/04/21, price: 31665.51 , Candle-ID : 93 , Profit(loss) : 0.8288
+        ADX: 42.84, 13.7, 26.71
+        ICHI: 31319.96, 30995.96, 33699.63, 32986.277, 31701.34
+
+         
+Moment: id: 94 , minute: 0, hour: 21, date: 01/04/21, price: 31244.97 , Candle-ID : 94 , Profit(loss) : 0.8288
+        ADX: 43.15, 12.92, 27.98
+        ICHI: 31392.835, 30995.96, 34183.42, 32986.277, 31701.34
+
+         
+Moment: id: 95 , minute: 0, hour: 22, date: 01/04/21, price: 31014.27 , Candle-ID : 95 , Profit(loss) : 0.8288
+        ADX: 43.39, 12.36, 26.78
+        ICHI: 31406.015, 30995.96, 33949.53, 32932.532, 31701.34
+
+         
+Moment: id: 96 , minute: 0, hour: 23, date: 01/04/21, price: 31332.05 , Candle-ID : 96 , Profit(loss) : 0.8288
+        ADX: 41.46, 16.01, 24.86
+        ICHI: 31406.015, 30895.55, 33918.01, 32873.777, 31829.24
+
+         
+Moment: id: 97 , minute: 0, hour: 0, date: 01/05/21, price: 31988.71 , Candle-ID : 97 , Profit(loss) : 0
+        ADX: 37.12, 21.59, 23.1
+        ICHI: 31739.87, 30865.0, 33811.28, 33085.88, 31829.24
+
+         
+Moment: id: 98 , minute: 0, hour: 1, date: 01/05/21, price: 32430.49 , Candle-ID : 98 , Profit(loss) : 0.0
+        ADX: 32.77, 20.56, 22.0
+        ICHI: 31739.87, 30865.0, 33873.3, 33101.758, 31862.32
+
+         
+Moment: id: 99 , minute: 0, hour: 2, date: 01/05/21, price: 32786.06 , Candle-ID : 99 , Profit(loss) : 0.0
+        ADX: 29.33, 19.77, 20.86
+        ICHI: 31854.73, 30865.0, 34117.59, 33217.505, 31862.32
+
+         

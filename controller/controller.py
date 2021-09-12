@@ -5,11 +5,7 @@ from time import time, sleep
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
-from controller.view_controller import *
 from scenario import scenario
-from controller.exchange_controller import get_last_candle, get_current_data_from_exchange, exchange_sell, \
-    exchange_buy, get_time_from_exchange
-
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
@@ -57,14 +53,14 @@ def data_converter(candles_file: str, extra_candle_files: dict) -> list:
 
 
 def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files: list, candle: Candle, candles: list):
-    candle_time, price, volume = csv_reader[moment_index]  # volume MAY be used!
+    # volume MAY be used!
+    candle_time, price, volume = csv_reader[moment_index]
     price = float(price)
     candle_time = int(candle_time) // 1000
 
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
-    this_moment.update_moment(candle_time, price, candle.identifier, profit_loss_percentage)
-
-    # exract extra fields from extra files
+    this_moment.update_moment(
+        time, price, candle.identifier, profit_loss_percentage, moment_index)
     for file in moments_extra_files:
         field_names = file[0]
         field_length = len(field_names)
@@ -73,12 +69,16 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
         for j in range(field_length):
             this_moment.__setattr__(field_names[j], float(fields[j]))
 
+    viewed = view_before_trade(this_moment, moment_index,
+                               bitcoin_balance, dollar_balance)
     try_strategies(this_moment, candles)
-    check_view_essentials(this_moment, moment_index,
-                          bitcoin_balance, dollar_balance)
+    if not viewed:
+        check_view_essentials(this_moment, moment_index,
+                              bitcoin_balance, dollar_balance)
 
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
+    # setub logger
     files = open_extra_files(moments_extra_files)
 
     control_logs()
@@ -114,23 +114,26 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
 
 def try_strategies(moment: Moment, candles: list):
     global working_strategies, bitcoin_balance, dollar_balance
-    if scenario.lock_method == 'lock_to_hour':
-        for locked in list(strategies.lock_strategies):  # unlock strategies
+    for locked in list(strategies.lock_strategies):       # unlock strategies
+        if strategies.lock_strategies[locked][1] != 0:
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
-
-    for ws in working_strategies:  # continue the work of opened strategies
-        ws.continue_strategy()
+    for ws in working_strategies:
+        ws.continue_strategy(
+            working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar_balance=dollar_balance)
 
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
-
-    for s in strategies.strategies:  # try to start not locked strategies
-        if not s in strategies.lock_strategies:
-            strtg = strategies.strategies[s](
-                moment, bitcoin_balance, dollar_balance, candles)
-            if strtg.working:
-                working_strategies.append(strtg)
+    if not strategies.lock_all:
+        for s in strategies.strategies:     # trying to start not locked strategies
+            if not s in strategies.lock_strategies:
+                strtg = strategies.strategies[s](
+                    moment, bitcoin_balance, dollar_balance, candles)
+                if strtg.working:
+                    working_strategies.append(strtg)
+    if strategies.lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
+        # print(f'all_unlocked in {moment}')
+        strategies.lock_all = False
 
 
 def buy(bitcoin: int, price: int):
@@ -139,6 +142,7 @@ def buy(bitcoin: int, price: int):
         return
 
     global bitcoin_balance, dollar_balance
+    bitcoin = round(bitcoin, 4)
     bitcoin_balance += bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
     dollar_balance -= (bitcoin * price * (1 + scenario.fee))
@@ -153,6 +157,7 @@ def sell(bitcoin: int, price: int):
         return
 
     global bitcoin_balance, dollar_balance
+    bitcoin = round(bitcoin, 4)
     bitcoin_balance -= bitcoin
     bitcoin_balance = round(bitcoin_balance, 4)
     if bitcoin_balance < 0:

@@ -67,7 +67,7 @@ for i in range(14, len(DX)):
     sum_ADX = sum_ADX - DX[i - 14] + DX[i]
     ADX.append(sum_ADX / 14.0)
 
-with open('data/BTC_FULL_ADX.csv', 'w', newline='') as file:
+with open('data/BTC_FULL_1h_ADX.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['adx', 'DI_plus', 'DI_minus'])
     for i in range(len(data)):
