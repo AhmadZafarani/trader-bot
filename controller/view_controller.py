@@ -33,6 +33,7 @@ def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float,
         periodical_results.append(
             (moment.date, start_of_period_balance, e, p, sa))
 
+
 # ============= LOG CONTROL =========================================
 
 

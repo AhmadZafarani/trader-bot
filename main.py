@@ -21,12 +21,12 @@ def main():
     extra_candle_files = {}
     for ecdf in scenario.extra_candles_data_files:
         extra_candle_files[ecdf] = data_folder / \
-            scenario.extra_candles_data_files[ecdf]
+                                   scenario.extra_candles_data_files[ecdf]
 
     extra_moment_files = {}
     for emdf in scenario.extra_moments_data_files:
         extra_moment_files[emdf] = data_folder / \
-            scenario.extra_moments_data_files[emdf]
+                                   scenario.extra_moments_data_files[emdf]
 
     candles = data_converter(candles_file, extra_candle_files)
 
@@ -52,9 +52,9 @@ def live_main():
     candles = get_n_past_candles(
         exchange, scenario.live_start_of_work_needed_candles)
     calculate_indicators_and_bundle_into_candles(candles)
-    # t, p, cid = get_current_data_from_exchange()
-    # this_moment = Moment(t, p, cid)
-    # set_this_moment(this_moment)
+    t, p, cid = get_current_data_from_exchange(exchange)
+    this_moment = Moment(t, p, cid)
+    set_this_moment(this_moment)
     # analyze_live_data(candles, start_time)
 
 

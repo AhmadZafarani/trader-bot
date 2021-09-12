@@ -1,3 +1,4 @@
+pytz
 ccxt
 matplotlib
 numpy

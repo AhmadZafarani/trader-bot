@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from model.Moment import Moment
 import controller.controller as controller
 from scenario import scenario
+
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
@@ -64,7 +65,8 @@ class Strategy(ABC):
         self.working = False
 
     @staticmethod
-    def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, sold_volume: int, args: str) -> str:
+    def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, sold_volume: int,
+               args: str) -> str:
         if buy_price <= sell_price:
             s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tProfit\nmore informatons:\t{args}\n\n'
         else:

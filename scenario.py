@@ -1,4 +1,7 @@
 # YA BAGHER
+from model.indicators import *
+
+
 class Scenario:
     log_file_path = 'logs/cndl-mmnt.log'
 
@@ -38,16 +41,9 @@ class Scenario:
 
     live_trading_mode = False
 
-    # TODO: specify indicator methods interface
-    """
-        these are two dictionaries like this:
-        EXTRA_FIELD_NAME: EXTRA_FILE_PATH
-
-        ** we assumed that the files are located some where in data/data-provider/ directory. **
-        ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
-    """
-    live_candle_indicators = {
-    }
+    live_candle_indicators = [
+        moving_average,
+    ]
 
     live_moment_indicators = {
     }

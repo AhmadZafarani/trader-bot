@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sys import argv
 
-
 percent = []
 
 inp = argv[1] if len(argv) > 1 else ""
@@ -14,7 +13,7 @@ def variance_expected(data: list) -> list:
     mean = sum(data) / len(data)
     res = sum((i - mean) ** 2 for i in data) / len(data)
     eee = math.sqrt(res)
-    return([round(mean, 4), round(eee, 4)])
+    return [round(mean, 4), round(eee, 4)]
 
 
 def open_output_and_calculate_variance_expected():
@@ -42,7 +41,7 @@ if inp != "only-print":
     xpoints = np.array(range(0, len(percent)))
     ypoints = np.array(percent)
     plt.plot(xpoints, ypoints, 'o', xpoints,
-             v_e[0]*np.ones((len(percent), 1)), 'r', xpoints, np.ones((len(percent), 1)), 'g')
+             v_e[0] * np.ones((len(percent), 1)), 'r', xpoints, np.ones((len(percent), 1)), 'g')
 
     plt.grid()
     plt.show()

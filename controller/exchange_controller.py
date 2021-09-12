@@ -1,5 +1,4 @@
 # YA SAJJAD
-from random import randint
 from time import sleep
 import ccxt
 
@@ -8,8 +7,6 @@ from controller.view_controller import *
 
 
 def read_api_key() -> tuple:
-    key = None
-    secret = None
     with open("../api-key-kucoin.txt", "r") as file:
         key = file.readline().split()[1][1:-2]
         secret = file.readline().split()[1][1:-2]
@@ -34,26 +31,28 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
     while True:
         # multiply to ensure fetch more than `n` candles
         candles = exchange.fetch_ohlcv(
-            scenario.live_market, scenario.live_timeframe, limit=3*n)
+            scenario.live_market, scenario.live_timeframe, limit=3 * n)
         if len(candles) >= n:
             break
         log_debug(
-            "couldn't fetch all of your're candles. we will try after 5 seconds.")
+            "couldn't fetch all of your candles. we will try after 5 seconds.")
         sleep(5)
     candle_objects = []
     for i in range(n):
-        candle_objects.append(Candle(
-            candles[i][0] // 1000, candles[i][1], candles[i][2], candles[i][3], candles[i][4], candles[i][5]))
+        candle_objects.append(Candle(identifier=candles[i][0] // 1000, open_price=candles[i][1],
+                                     high_price=candles[i][2], low_price=candles[i][3], close_price=candles[i][4],
+                                     traded_volume=candles[i][5]))
     return candle_objects
 
 
-def get_last_candle() -> Candle:
-    pass
+def get_last_candle(exchange: ccxt.Exchange) -> Candle:
+    c = get_n_past_candles(exchange, 1)
+    return c[0]
 
 
-def get_current_data_from_exchange() -> tuple:
+def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
     log_debug("current data: request sent to KUCOIN")
-    return randint(1, 100), randint(1, 100), randint(1, 100)
+    return get_time_from_exchange(exchange), 2, get_last_candle(exchange).identifier
 
 
 def exchange_buy(crypto: float, price: float):

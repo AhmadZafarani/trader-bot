@@ -7,8 +7,8 @@ from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import *
 from scenario import scenario
-from controller.exchange_controller import get_last_candle, get_current_data_from_exchange, exchange_sell, exchange_buy, get_time_from_exchange
-
+from controller.exchange_controller import get_last_candle, get_current_data_from_exchange, exchange_sell, \
+    exchange_buy, get_time_from_exchange
 
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
@@ -57,13 +57,12 @@ def data_converter(candles_file: str, extra_candle_files: dict) -> list:
 
 
 def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files: list, candle: Candle, candles: list):
-    time, price, volume = csv_reader[moment_index]        # volume MAY be used!
+    candle_time, price, volume = csv_reader[moment_index]  # volume MAY be used!
     price = float(price)
-    time = int(time) // 1000
+    candle_time = int(candle_time) // 1000
 
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
-    this_moment.update_moment(
-        time, price, candle.identifier, profit_loss_percentage)
+    this_moment.update_moment(candle_time, price, candle.identifier, profit_loss_percentage)
 
     # exract extra fields from extra files
     for file in moments_extra_files:
@@ -88,7 +87,7 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
         csv_reader = reader(csvfile, delimiter=',')
         moments_data = list(csv_reader)
         moment_index = 1
-        for c in candles:   # the i th moment of candle
+        for c in candles:  # the i th moment of candle
             log_info(c)
 
             for _ in range(scenario.number_of_moments_in_a_candle):
@@ -116,17 +115,17 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
 def try_strategies(moment: Moment, candles: list):
     global working_strategies, bitcoin_balance, dollar_balance
     if scenario.lock_method == 'lock_to_hour':
-        for locked in list(strategies.lock_strategies):       # unlock strategies
+        for locked in list(strategies.lock_strategies):  # unlock strategies
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
 
-    for ws in working_strategies:   # continue the work of opened strategies
+    for ws in working_strategies:  # continue the work of opened strategies
         ws.continue_strategy()
 
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
 
-    for s in strategies.strategies:     # try to start not locked strategies
+    for s in strategies.strategies:  # try to start not locked strategies
         if not s in strategies.lock_strategies:
             strtg = strategies.strategies[s](
                 moment, bitcoin_balance, dollar_balance, candles)
@@ -172,9 +171,13 @@ def set_report(r: str):
 
 # ================= LIVE TRADING =======================
 def calculate_indicators_and_bundle_into_candles(candles: list):
-    log_debug("constructed candles:")
-    for c in candles:
-        log_debug(f"\t{c}")
+    log_debug("constructed candles are:")
+    for i in range(len(candles)):
+        for func in scenario.live_candle_indicators:
+            indic = func(i, candles)
+            for k in indic:
+                candles[i].__setattr__(k, indic[k])
+        log_debug(f"\t{candles[i]}")
 
 
 def set_this_moment(moment: Moment):
@@ -201,8 +204,8 @@ def analyze_live_data(candles: list, start_time: int):
 def sleep_till_end_of_moment(last_wake_time: int):
     x = get_time_from_exchange() - last_wake_time + \
         scenario.live_sleep_between_each_moment + scenario.live_calculations_threshold
-    x = x // 60 * 60    # round the sleep time into minutes
-    sleep(x)    # TODO: release system resources at this time
+    x = x // 60 * 60  # round the sleep time into minutes
+    sleep(x)
 
 
 def sync_bot_data_with_exchange(candles: list, moment_index: int):
