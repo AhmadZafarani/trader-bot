@@ -80,11 +80,9 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
     crypto1 = 0
     for ws in working_strategies:
         crypto1 += ws.sell_volume
-    # print("solved crypto : " , crypto1)
 
     price = ((start_of_profit_loss_period_balance *
-             (1 + profit_loss/100)) - dollar) / crypto1
-    # print("solved price : " , price , " moment_price : " , moment.price)
+              (1 + profit_loss/100)) - dollar) / crypto1
     for ws in working_strategies:
         if not ws.selled:
             controller.sell(ws.sell_volume, price)
@@ -125,14 +123,12 @@ class Dummy_Strategy(Strategy):
         sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
         '''
         if self.moment.profit_loss_percentage <= -1:
-            # print(f'all locked in {self.moment}')
             lock_all = True
             lock_all_strategies(
                 working_strategies=working_strategies, moment=self.moment)
             return
         if not(self.moment.hour == 19 and self.moment.minute == 44):
             return
-        # return
         controller.sell(self.sell_volume, controller.get_this_moment().price)
         self.selled = True
         self.finish_strategy(self.finish_txt)
@@ -168,7 +164,6 @@ class ICHI_CROSS(Strategy):
             else:
                 return False
         if i == 2:
-            # TODO
             if ((self.candles[self.moment.candle_id - 1].open_price > self.candles[self.moment.candle_id - 1].leading_line1 and
                     self.candles[self.moment.candle_id - 1].open_price > self.candles[self.moment.candle_id - 1].leading_line2 and
                  self.candles[self.moment.candle_id - 1].close_price > self.candles[self.moment.candle_id - 1].leading_line1 and
@@ -182,7 +177,6 @@ class ICHI_CROSS(Strategy):
                  self.candles[self.moment.candle_id - 2].base_line < self.candles[self.moment.candle_id - 2].leading_line2):
                 return False
 
-            ####
             id1, id2 = self.get_cross_to_span_cross_distance_ids()
             distance = id2 - id1 + 1
             width = []
@@ -239,11 +233,6 @@ class ICHI_CROSS(Strategy):
                     if scenario.opening_intractions[i] == 1:
                         if not self.check_open_con(i):
                             return False
-            # print(f''' Candle curent : {self.candles[self.moment.candle_id - 1]}
-            # ADX prev : {[self.candles[self.moment.candle_id - 2].adx , self.candles[self.moment.candle_id - 1].DI_plus , self.candles[self.moment.candle_id - 1].DI_minus ]}
-            # ICHI prev : conv : {self.candles[self.moment.candle_id - 2].conversion_line} , base:{self.candles[self.moment.candle_id - 2].base_line}
-            # ICHI prev prev : conv : {self.candles[self.moment.candle_id - 3].conversion_line} , base:{self.candles[self.moment.candle_id - 3].base_line}
-            #  ''')
             return True
 
     def start_strategy(self):
@@ -352,6 +341,7 @@ class ICHI_CROSS(Strategy):
                     working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.loss_limit_per)
                 return True
             return False
+
     def continue_strategy(self, working_strategies, **kwargs):
         self.sell_price = controller.get_this_moment().price
         self.sell_time_date = self.moment.date
@@ -374,9 +364,9 @@ class ICHI_CROSS(Strategy):
         # sell ICHI prev : conv : {self.ICHII}
         # sell ICHI prev prev : conv : {self.ICHHII}
         # """
-        if scenario.close_intraction[4] == 1 :
-                if self.check_clese_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
-                    return
+        if scenario.close_intraction[4] == 1:
+            if self.check_clese_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
+                return
         for i in range(1, len(scenario.close_intraction)):
             if scenario.close_intraction[i-1] == 1:
                 if self.check_clese_con(i=i, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
@@ -569,4 +559,4 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'moving_average' : Moving_average}
+strategies = {'moving_average': Moving_average}

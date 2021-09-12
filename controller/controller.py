@@ -115,7 +115,8 @@ def try_strategies(moment: Moment, candles: list):
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
     for ws in working_strategies:
-        ws.continue_strategy(working_strategies , start_of_profit_loss_period_balance = start_of_profit_loss_period_balance , dollar_balance = dollar_balance )
+        ws.continue_strategy(
+            working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar_balance=dollar_balance)
 
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]

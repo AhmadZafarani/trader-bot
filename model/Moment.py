@@ -10,13 +10,15 @@ class Moment:
         self.candle_id = candle_id
         self.profit_loss_percentage = 0
         self.moment_id = 0
+
     def update_moment(self, time: int, price: int, candle_id: int,
-                      profit_loss_percentage: float , moment_id : int):
+                      profit_loss_percentage: float, moment_id: int):
         self.date, self.hour, self.minute = self.extract_time(time)
         self.price = price
         self.candle_id = candle_id
         self.profit_loss_percentage = profit_loss_percentage
         self.moment_id = moment_id
+
     def extract_time(self, time: int) -> tuple:
         t = datetime.fromtimestamp(time, timezone('GMT'))
         return t.date().strftime('%x'), t.hour, t.minute

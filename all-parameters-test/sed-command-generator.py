@@ -16,8 +16,8 @@ num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
-    ("per_profit_limit" , range(1 , 20)),
-    ("per_loss_limit", [-0.1 - 0.1*x for x in range(20)] )
+    ("per_profit_limit", range(1, 20)),
+    ("per_loss_limit", [-0.1 - 0.1*x for x in range(20)])
     # ("loss_limit_per" , [-0.1 - 0.1 * x for x in range(20)])
     # ("volume_buy", list(range(20, 80, 10))),
     # ("lock_method", ["lock_to_fin", "lock_to_hour"]),

@@ -11,11 +11,11 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ma12": "BTC_FULL_1h_MA12.csv", 
-        "ma26" : "BTC_FULL_1h_MA26.csv",
-        "ICHI" : "BTC_FULL_1h_ICHI.csv",
-        "iscross" : "BTC_FULL_1h_ISCROSS.csv"
-        }
+        "ma12": "BTC_FULL_1h_MA12.csv",
+        "ma26": "BTC_FULL_1h_MA26.csv",
+        "ICHI": "BTC_FULL_1h_ICHI.csv",
+        "iscross": "BTC_FULL_1h_ISCROSS.csv"
+    }
     extra_moments_data_files = {
     }
 
@@ -27,29 +27,28 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24 
-
+    profit_loss_period_step = 24
 
     # =====================================================================
     # strategy configuration
-    # name : Moving_average 
-    # opening conditions 
-    
+    # name : Moving_average
+    # opening conditions
+
     buy_method = {
-        "price_to_line" : {"enable" : 0 , "options" : {"line" : 12 , "min_percentage" : 50 , "green" : True}},
-        "line_to_line" : {"enable" : 1 , "options" : {"line" : [12 , 26]}}
+        "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "green": True}},
+        "line_to_line": {"enable": 1, "options": {"line": [12, 26]}}
     }
     sell_method = {
-        "price_to_line" : {"enable" : 0 , "options" : {"line" : 12 , "min_percentage" : 50 , "red" : True}},
-        "line_to_line" : {"enable" : 0 , "options" : {"line" : [12 , 26]}},
-        "profit_loss_limit" : {"enable": 0 , "options" : {"profit_limit":10 , "loss_limit" : -1}},
-        "peridical_profit_loss_limit" :  {"enable" : 1 , "options" : {"profit_limit":12 , "loss_limit" : -1.8}}
+        "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "red": True}},
+        "line_to_line": {"enable": 0, "options": {"line": [12, 26]}},
+        "profit_loss_limit": {"enable": 0, "options": {"profit_limit": 10, "loss_limit": -1}},
+        "peridical_profit_loss_limit":  {"enable": 1, "options": {"profit_limit": 12, "loss_limit": -1.8}}
     }
     volume_buy = 90
     # per_profit_limit = 19
     # per_loss_limit = -2.0
-    # sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit 
-    # sell_method["peridical_profit_loss_limit"]["options"]["loss_limit"] = per_loss_limit 
+    # sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit
+    # sell_method["peridical_profit_loss_limit"]["options"]["loss_limit"] = per_loss_limit
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
@@ -136,5 +135,3 @@ scenario = Scenario()
 
 def set_value(variable_name: str, value):
     scenario.__setattr__(variable_name, value)
-
-

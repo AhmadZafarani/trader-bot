@@ -9,4 +9,4 @@ balance_report.csv
 __pycache__/
 .vscode/
 logs/*.log
-all-parameters-test/test*
+all-parameters-test/*.csv
