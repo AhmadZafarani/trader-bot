@@ -21,12 +21,12 @@ def main():
     extra_candle_files = {}
     for ecdf in scenario.extra_candles_data_files:
         extra_candle_files[ecdf] = data_folder / \
-                                   scenario.extra_candles_data_files[ecdf]
+            scenario.extra_candles_data_files[ecdf]
 
     extra_moment_files = {}
     for emdf in scenario.extra_moments_data_files:
         extra_moment_files[emdf] = data_folder / \
-                                   scenario.extra_moments_data_files[emdf]
+            scenario.extra_moments_data_files[emdf]
 
     candles = data_converter(candles_file, extra_candle_files)
 
@@ -40,22 +40,17 @@ def live_main():
     start_time = get_time_from_exchange(exchange)
     log_debug(f"live trading started at time: {start_time}")
 
-    while True:
-        market = configure_market(exchange)
-        if not market:
-            log_warning(
-                f"market isn't active right now. we will try again {scenario.live_try_again_time_inactive_market} seconds later.")
-            sleep(scenario.live_try_again_time_inactive_market)
-        else:
-            break
+    configure_market(exchange)
 
     candles = get_n_past_candles(
         exchange, scenario.live_start_of_work_needed_candles)
     calculate_indicators_and_bundle_into_candles(candles)
-    t, p, cid = get_current_data_from_exchange(exchange)
-    this_moment = Moment(t, p, cid)
+
+    t, p = get_current_data_from_exchange(exchange)
+    this_moment = Moment(t / 1000.0, p, candles[-1].identifier)
     set_this_moment(this_moment)
-    # analyze_live_data(candles, start_time)
+
+    analyze_live_data(candles, start_time)
 
 
 control_logs()

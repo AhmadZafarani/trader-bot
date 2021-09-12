@@ -10,7 +10,7 @@ def extract_time(time: int) -> tuple:
 
 class Moment:
     def __init__(self, time: int, price: float, candle_id: int):
-        self.minute, self.date, self.hour = extract_time(time)
+        self.date, self.hour, self.minute = extract_time(time)
         self.price = price
         self.candle_id = candle_id
         self.profit_loss_percentage = 0
@@ -23,7 +23,7 @@ class Moment:
         self.profit_loss_percentage = profit_loss_percentage
 
     def __str__(self) -> str:
-        return f'minute: {self.minute}, hour: {self.hour}, date: {self.date}, price: {self.price} , Candle-ID : {self.candle_id}'
+        return f'fields: {self.__dict__}'
 
     def __repr__(self) -> str:
         return self.__str__()

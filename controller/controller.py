@@ -196,7 +196,7 @@ def analyze_live_data(candles: list, start_time: int):
 
         start_time = time()
         moment_index += 1
-        sync_bot_data_with_exchange(candles)
+        sync_bot_data_with_exchange(candles, moment_index)
 
         try_strategies(this_moment, candles)
 
@@ -230,5 +230,6 @@ def is_same_as(c1: Candle, c2: Candle) -> bool:
 
 
 def calculate_indicators_and_bundle_into_this_moment():
+    # TODO: fill here!
     global this_moment
     log_debug(f"constructed this_moment: {this_moment}")

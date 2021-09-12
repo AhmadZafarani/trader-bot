@@ -19,7 +19,7 @@ class Candle:
         self.traded_volume = traded_volume
 
     def __str__(self) -> str:
-        return f'id: {self.identifier}, high: {self.high_price}, low: {self.low_price}, open: {self.open_price}, close: {self.close_price}'
+        return f'fields: {self.__dict__}'
 
     def __repr__(self) -> str:
         return self.__str__()

@@ -35,7 +35,7 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
         if len(candles) >= n:
             break
         log_debug(
-            "couldn't fetch all of your candles. we will try after 5 seconds.")
+            "couldn't fetch all of your candles. we will try again after 5 seconds.")
         sleep(5)
     candle_objects = []
     for i in range(n):
@@ -51,8 +51,7 @@ def get_last_candle(exchange: ccxt.Exchange) -> Candle:
 
 
 def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
-    log_debug("current data: request sent to KUCOIN")
-    return get_time_from_exchange(exchange), 2, get_last_candle(exchange).identifier
+    return get_time_from_exchange(exchange), get_current_price(exchange)
 
 
 def exchange_buy(crypto: float, price: float):
@@ -69,15 +68,27 @@ def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
 
 
 def configure_market(exchange: ccxt.Exchange):
-    market = exchange.market(scenario.live_market)
-    market_state = market['active']
-    log_debug(
-        f"market was at state: {market_state} in time: {get_time_from_exchange(exchange)}")
+    while True:
+        market = exchange.market(scenario.live_market)
+        market_state = market['active']
+        log_debug(
+            f"market was at state: {market_state} in time: {get_time_from_exchange(exchange)}")
 
-    if market_state:
+        if not market_state:
+            log_warning(
+                f"market isn't active right now. we will try again {scenario.live_try_again_time_inactive_market} seconds later.")
+            sleep(scenario.live_try_again_time_inactive_market)
+            exchange.load_markets(reload=True)
+            continue
         if not (scenario.fee == market['maker'] == market['taker']):
             raise Exception("inconsistent fees")
 
         log_debug(f"market: {market['info']} fetched successfully")
-        return market
-    return None
+        return
+
+
+def get_current_price(exchange: ccxt.Exchange) -> float:
+    trades = exchange.fetch_trades(scenario.live_market)
+    price = trades[-1]['price']
+    log_info(f"now {scenario.live_market} price is: {price}")
+    return price
