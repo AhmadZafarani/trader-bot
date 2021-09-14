@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from model.Moment import Moment
 import controller.controller as controller
 from scenario import scenario
+from controller.view_controller import setup_logger, get_logger
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
@@ -82,9 +83,9 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
         crypto1 += ws.sell_volume
 
     price = ((start_of_profit_loss_period_balance *
-              (1 + profit_loss/100)) - dollar) / crypto1
+              (1 + profit_loss / 100)) - dollar) / crypto1
     for ws in working_strategies:
-        if not ws.selled:
+        if not ws.solled:
             controller.sell(ws.sell_volume, price)
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
@@ -98,17 +99,20 @@ class Dummy_Strategy(Strategy):
 
     def start_strategy(self):
         self.short_name = 'dummy'
-        self.selled = False
+        self.solled = False
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_id = self.moment.candle_id
         self.buy_volume = 0.995 * self.dollar_balance/self.moment.price
         self.sell_volume = self.buy_volume
+
         controller.buy(self.buy_volume, self.moment.price)
+
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
         self.buy_time = [self.moment.hour, self.moment.minute]
         self.buy_date = self.moment.date
+
         if self.lock_method == 'lock_to_hour':
             lock_strategies["dummy"] = [
                 Dummy_Strategy, self.moment.candle_id + self.lock_hour, "normal"]
@@ -122,16 +126,20 @@ class Dummy_Strategy(Strategy):
         buy_time : {self.buy_date} {self.buy_time[0]}:{self.buy_time[1]} 
         sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
         '''
+
         if self.moment.profit_loss_percentage <= -1:
             lock_all = True
             lock_all_strategies(
                 working_strategies=working_strategies, moment=self.moment)
             return
+
         if not(self.moment.hour == 19 and self.moment.minute == 44):
             return
+
         controller.sell(self.sell_volume, controller.get_this_moment().price)
-        self.selled = True
+        self.solled = True
         self.finish_strategy(self.finish_txt)
+
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy")
 
@@ -192,7 +200,7 @@ class ICHI_CROSS(Strategy):
 
         if i == 3:
             sgn = 0
-            lenght = 100 * (max(self.candles[self.moment.candle_id - 1].open_price, self.candles[self.moment.candle_id - 1].close_price) -
+            length = 100 * (max(self.candles[self.moment.candle_id - 1].open_price, self.candles[self.moment.candle_id - 1].close_price) -
                             min(self.candles[self.moment.candle_id - 1].open_price, self.candles[self.moment.candle_id - 1].close_price)) / \
                 min(self.candles[self.moment.candle_id - 1].open_price,
                     self.candles[self.moment.candle_id - 1].close_price)
@@ -201,7 +209,7 @@ class ICHI_CROSS(Strategy):
             else:
                 sgn = -1
 
-            if sgn * lenght > scenario.next_candle_lenght_min:
+            if sgn * length > scenario.next_candle_length_min:
                 return True
             else:
                 return False
@@ -238,7 +246,7 @@ class ICHI_CROSS(Strategy):
     def start_strategy(self):
         global lock_strategies
         self.short_name = 'ichi_cross'
-        self.selled = False
+        self.solled = False
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
@@ -268,12 +276,12 @@ class ICHI_CROSS(Strategy):
         self.sell_time_minute = self.moment.minute
 
         controller.sell(self.buy_volume, self.sell_price)
-        self.selled = True
+        self.solled = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_cross")
 
-    def check_clese_con(self, i, working_strategies, start_of_profit_loss_period_balance: int, dollar_balance: int) -> bool:
+    def check_close_con(self, i, working_strategies, start_of_profit_loss_period_balance: int, dollar_balance: int) -> bool:
         global lock_all
         if i == 1:
             if 100 * abs(self.candles[self.moment.candle_id - 2].conversion_line - self.candles[self.moment.candle_id - 2].base_line) / min(self.candles[self.moment.candle_id - 2].base_line, self.candles[self.moment.candle_id - 2].conversion_line) < \
@@ -365,55 +373,55 @@ class ICHI_CROSS(Strategy):
         # sell ICHI prev prev : conv : {self.ICHHII}
         # """
         if scenario.close_intraction[4] == 1:
-            if self.check_clese_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
+            if self.check_close_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
                 return
         for i in range(1, len(scenario.close_intraction)):
             if scenario.close_intraction[i-1] == 1:
-                if self.check_clese_con(i=i, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
+                if self.check_close_con(i=i, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
                     self.fin_and_before()
                     break
 
 
 setup_logger('log5', r'logs/moving_average.log')
-log5 = logging.getLogger('log5')
+log5 = get_logger('log5')
 
 
 class Moving_average(Strategy):
     def check_open_con(self, key: str, value: dict):
         if key == 'price_to_line':
-            cndl = [self.candles[self.moment.candle_id-1],
-                    self.candles[self.moment.candle_id-2]]
+            cndl = [self.candles[self.moment.candle_id - 1],
+                    self.candles[self.moment.candle_id - 2]]
             moving_average = getattr(
-                self.candles[self.moment.candle_id-2], "ma"+str(value["options"]["line"]))
+                self.candles[self.moment.candle_id - 2], "ma" + str(value["options"]["line"]))
             if moving_average == 0:
-                print("movin12 = 0 ")
+                print("moving12 = 0 ")
                 return False
             if value["options"]["green"]:
                 if cndl[-1].close_price > cndl[-1].open_price:
-                    if 100*(cndl[-1].close_price - moving_average) / (cndl[-1].close_price - cndl[-1].open_price) >= value["options"]["min_percentage"]:
+                    if 100 * (cndl[-1].close_price - moving_average) / (cndl[-1].close_price - cndl[-1].open_price) >= value["options"]["min_percentage"]:
                         if cndl[0].open_price > moving_average:
                             return True
                 return False
             else:
                 maximum = max(cndl[-1].open_price, cndl[-1].close_price)
                 minimum = min(cndl[-1].open_price, cndl[-1].close_price)
-                if 100*(maximum - moving_average)/(maximum - minimum) > value["options"]["min_percentage"]:
+                if 100 * (maximum - moving_average) / (maximum - minimum) > value["options"]["min_percentage"]:
                     if cndl[0].open_price > moving_average:
                         return True
                 return False
         if key == 'line_to_line':
 
             moving1 = [
-                getattr(self.candles[self.moment.candle_id-2],
-                        "ma"+str(value["options"]["line"][0])),
-                getattr(self.candles[self.moment.candle_id-3],
-                        "ma"+str(value["options"]["line"][0]))
+                getattr(self.candles[self.moment.candle_id - 2],
+                        "ma" + str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id - 3],
+                        "ma" + str(value["options"]["line"][0]))
             ]
             moving2 = [
-                getattr(self.candles[self.moment.candle_id-2],
-                        "ma"+str(value["options"]["line"][1])),
-                getattr(self.candles[self.moment.candle_id-3],
-                        "ma"+str(value["options"]["line"][1]))
+                getattr(self.candles[self.moment.candle_id - 2],
+                        "ma" + str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id - 3],
+                        "ma" + str(value["options"]["line"][1]))
             ]
             if 0 in moving1:
                 return False
@@ -433,7 +441,7 @@ class Moving_average(Strategy):
     def start_strategy(self):
         global lock_strategies
         self.short_name = 'moving_average'
-        self.selled = False
+        self.solled = False
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
@@ -444,7 +452,9 @@ class Moving_average(Strategy):
         self.sell_volume = self.buy_volume
         self.C = self.candles[self.moment.candle_id-1]
         self.buy_price = self.moment.price
+
         controller.buy(self.buy_volume, self.moment.price)
+
         if self.lock_method == 'lock_to_hour':
             lock_strategies[self.short_name] = [
                 Moving_average, self.moment.candle_id + self.lock_hour]
@@ -459,12 +469,12 @@ class Moving_average(Strategy):
         self.sell_time_minute = self.moment.minute
 
         controller.sell(self.buy_volume, self.sell_price)
-        self.selled = True
+        self.solled = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop(self.short_name)
 
-    def check_clese_con(self, key: str, value: dict, working_strategies: list, start_of_profit_loss_period_balance: int, dollar_balance: int):
+    def check_close_con(self, key: str, value: dict, working_strategies: list, start_of_profit_loss_period_balance: int, dollar_balance: int):
         global lock_all
 
         if key == "price_to_line":
@@ -487,16 +497,16 @@ class Moving_average(Strategy):
                 return False
         if key == "line_to_line":
             moving1 = [
-                getattr(self.candles[self.moment.candle_id-2],
-                        "ma"+str(value["options"]["line"][0])),
-                getattr(self.candles[self.moment.candle_id-3],
-                        "ma"+str(value["options"]["line"][0]))
+                getattr(self.candles[self.moment.candle_id - 2],
+                        "ma" + str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id - 3],
+                        "ma" + str(value["options"]["line"][0]))
             ]
             moving2 = [
-                getattr(self.candles[self.moment.candle_id-2],
-                        "ma"+str(value["options"]["line"][1])),
-                getattr(self.candles[self.moment.candle_id-3],
-                        "ma"+str(value["options"]["line"][1]))
+                getattr(self.candles[self.moment.candle_id - 2],
+                        "ma" + str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id - 3],
+                        "ma" + str(value["options"]["line"][1]))
             ]
             if moving1[0] < moving2[0] and moving1[1] >= moving2[1]:
                 return True
@@ -528,7 +538,7 @@ class Moving_average(Strategy):
                 # """
                 return True
             return False
-        if key == "peridical_profit_loss_limit":
+        if key == "periodical_profit_loss_limit":
             if self.moment.profit_loss_percentage >= value['options']['profit_limit']:
                 lock_all = True
                 lock_all_strategies(
@@ -554,7 +564,7 @@ class Moving_average(Strategy):
         # """
         for key, value in scenario.sell_method.items():
             if value['enable']:
-                if self.check_clese_con(key=key, value=value, working_strategies=working_strategies,  start_of_profit_loss_period_balance=kwargs["start_of_profit_loss_period_balance"], dollar_balance=kwargs['dollar_balance']):
+                if self.check_close_con(key=key, value=value, working_strategies=working_strategies,  start_of_profit_loss_period_balance=kwargs["start_of_profit_loss_period_balance"], dollar_balance=kwargs['dollar_balance']):
                     self.fin_and_before()
                     break
 

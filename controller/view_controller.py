@@ -43,6 +43,22 @@ def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float,
 # ============= LOG CONTROL =========================================
 
 
+def setup_logger(logger_name: str, log_file: str, level=logging.INFO):
+    l = logging.getLogger(logger_name)
+    formatter = logging.Formatter('%(message)s')
+    fileHandler = logging.FileHandler(log_file, mode='w')
+    fileHandler.setFormatter(formatter)
+    streamHandler = logging.StreamHandler()
+    streamHandler.setFormatter(formatter)
+
+    l.setLevel(level)
+    l.addHandler(fileHandler)
+
+
+def get_logger(name: str) -> logging.Logger:
+    return logging.getLogger(name)
+
+
 def control_logs():
     logging.basicConfig(level=logging.DEBUG, filename=scenario.log_file_path,
                         filemode='w', format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%d-%b-%y %H:%M:%S')

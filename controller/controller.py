@@ -6,6 +6,10 @@ from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
 from scenario import scenario
+from view_controller import *
+from exchange_controller import *
+
+
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
@@ -78,7 +82,6 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
-    # setub logger
     files = open_extra_files(moments_extra_files)
 
     control_logs()
@@ -132,7 +135,6 @@ def try_strategies(moment: Moment, candles: list):
                 if strtg.working:
                     working_strategies.append(strtg)
     if strategies.lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
-        # print(f'all_unlocked in {moment}')
         strategies.lock_all = False
 
 
