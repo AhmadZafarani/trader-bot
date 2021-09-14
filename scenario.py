@@ -141,7 +141,8 @@ class Scenario:
     live_trading_mode = False
 
     live_candle_indicators = [
-        moving_average,
+        moving12,
+        moving26,
     ]
 
     live_moment_indicators = {
