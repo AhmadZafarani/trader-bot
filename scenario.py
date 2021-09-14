@@ -76,7 +76,7 @@ class Scenario:
     # next_candle_length_min
     # values : -5 , 5
     # default : 1
-    next_candle_lenght_min = 0.2
+    next_candle_length_min = 0.2
 
     # opening conditions intractions :
     # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
@@ -136,7 +136,7 @@ class Scenario:
 
     # ================ LIVE PARAMETERS ===============================
 
-    live_start_of_work_needed_candles = 10
+    live_start_of_work_needed_candles = 100
 
     live_trading_mode = False
 

@@ -569,4 +569,4 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'moving_average': Moving_average}
+strategies = {'dummy': Dummy_Strategy}
