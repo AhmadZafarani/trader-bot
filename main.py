@@ -1,6 +1,6 @@
 # YA HOSSEIN
 from pathlib import Path
-from time import sleep, time
+from time import time
 
 from controller.controller import data_converter, analyze_data, calculate_indicators_and_bundle_into_candles, \
     set_this_moment, analyze_live_data
@@ -55,7 +55,7 @@ def live_main():
 
 control_logs()
 # n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
-n = 2
+n = 1
 if n == 1:
     main()
 elif n == 2:

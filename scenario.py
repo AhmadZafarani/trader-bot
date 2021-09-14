@@ -5,7 +5,7 @@ from model.indicators import *
 class Scenario:
     log_file_path = 'logs/cndl-mmnt.log'
 
-    candles_data_csv_file_name = 'BTC_2021_15m_cndl.csv'
+    candles_data_csv_file_name = 'BTC_FULL_1h.csv'
 
     moment_data_csv_file_name = 'BTC_FULL_1h_moment.csv'
 

@@ -6,8 +6,8 @@ from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
 from scenario import scenario
-from view_controller import *
-from exchange_controller import *
+from controller.view_controller import *
+from controller.exchange_controller import *
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -64,7 +64,7 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
     this_moment.update_moment(
-        time, price, candle.identifier, profit_loss_percentage, moment_index)
+        candle_time, price, candle.identifier, profit_loss_percentage, moment_index)
     for file in moments_extra_files:
         field_names = file[0]
         field_length = len(field_names)
