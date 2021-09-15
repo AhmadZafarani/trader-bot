@@ -245,6 +245,7 @@ class ICHI_CROSS(Strategy):
         self.short_name = 'ichi_cross'
         self.selled = False
         self.lock_hour = 0
+        self.finish_txt = 'EMPTY'
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
         self.buy_time_hour = self.moment.hour
@@ -271,7 +272,7 @@ class ICHI_CROSS(Strategy):
         self.sell_time_date = self.moment.date
         self.sell_time_hour = self.moment.hour
         self.sell_time_minute = self.moment.minute
-
+        # print(f'sell in {self.moment}')
         controller.sell(self.buy_volume, self.sell_price)
         self.selled = True
         self.finish_strategy(self.finish_txt)
@@ -391,7 +392,7 @@ class Moving_average(Strategy):
             moving_average = getattr(
                 self.candles[self.moment.candle_id-2], "ma"+str(value["options"]["line"]))
             if moving_average == 0:
-                print("movin12 = 0 ")
+                # print("movin12 = 0 ")
                 return False
             if value["options"]["green"]:
                 if cndl[-1].close_price > cndl[-1].open_price:
@@ -439,6 +440,7 @@ class Moving_average(Strategy):
         global lock_strategies
         self.short_name = 'moving_average'
         self.selled = False
+        self.finish_txt = 'EMPTY'
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
@@ -564,4 +566,4 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'moving_average': Moving_average , 'ichi_cross' : ICHI_CROSS}
+strategies = {'moving_average' : Moving_average }

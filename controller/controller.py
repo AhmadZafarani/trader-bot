@@ -110,13 +110,14 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
     crypto1 = 0
     for ws in working_strategies:
         # print("1")
-        # print(ws.sell_volume)
+        # print('ws.sell_volume : ' ,ws.sell_volume)
         crypto1 += ws.sell_volume
     # print(f'crypto1 : {crypto1}')
     price = ((start_of_profit_loss_period_balance *(1 + profit_loss/100)) - dollar) / crypto1
     for ws in working_strategies:
         if not ws.selled:
             sell(ws.sell_volume, price)
+            # print(f'strategy finished in {moment}')
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
                 strategies.lock_strategies.pop(ws.short_name)
@@ -130,24 +131,27 @@ def try_strategies(moment: Moment, candles: list):
         if strategies.lock_strategies[locked][1] != 0:
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
-    for ws in working_strategies:
-        ws.continue_strategy(
-            working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar_balance=dollar_balance)
-
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
-
-
     # lock all strategy if periodical profit loss is reached
-    if scenario.peridical_profit_loss_limit["enable"] and not lock_all:
+    if scenario.peridical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
         if moment.profit_loss_percentage >= scenario.peridical_profit_loss_limit['options']['profit_limit']:
             lock_all = True
+            # print(f'will call lock all from profit in : {moment}')
             lock_all_strategies(
                 working_strategies=working_strategies, moment=moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.peridical_profit_loss_limit['options']['profit_limit'])
         elif moment.profit_loss_percentage <= scenario.peridical_profit_loss_limit['options']['loss_limit']:
             lock_all = True
+            # print(f'will call lock all from loss in : {moment}')
             lock_all_strategies(
                 working_strategies=working_strategies, moment=moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.peridical_profit_loss_limit['options']['loss_limit'])
+    working_strategies = [ws for ws in working_strategies if ws.working]
+    for ws in working_strategies:
+        ws.continue_strategy(
+            working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar_balance=dollar_balance)
+
+
+
 
     if not lock_all:
         for s in strategies.strategies:     # trying to start not locked strategies
