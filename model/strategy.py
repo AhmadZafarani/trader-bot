@@ -73,22 +73,22 @@ class Strategy(ABC):
 
 
 lock_strategies = {}
-lock_all = False
+# lock_all = False
 
 
-def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
-    crypto1 = 0
-    for ws in working_strategies:
-        crypto1 += ws.sell_volume
+# def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
+#     crypto1 = 0
+#     for ws in working_strategies:
+#         crypto1 += ws.sell_volume
 
-    price = ((start_of_profit_loss_period_balance *
-              (1 + profit_loss/100)) - dollar) / crypto1
-    for ws in working_strategies:
-        if not ws.selled:
-            controller.sell(ws.sell_volume, price)
-            ws.finish_strategy(ws.finish_txt)
-            if ws.lock_method == "lock_to_fin":
-                lock_strategies.pop(ws.short_name)
+#     price = ((start_of_profit_loss_period_balance *
+#               (1 + profit_loss/100)) - dollar) / crypto1
+#     for ws in working_strategies:
+#         if not ws.selled:
+#             controller.sell(ws.sell_volume, price)
+#             ws.finish_strategy(ws.finish_txt)
+#             if ws.lock_method == "lock_to_fin":
+#                 lock_strategies.pop(ws.short_name)
 
 
 class Dummy_Strategy(Strategy):
@@ -134,6 +134,9 @@ class Dummy_Strategy(Strategy):
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy")
+
+setup_logger('log6', r'logs/ichi.log')
+log6 = logging.getLogger('log6')
 
 
 class ICHI_CROSS(Strategy):
@@ -214,6 +217,7 @@ class ICHI_CROSS(Strategy):
             return True
 
     def strategy_works(self) -> bool:
+        global log6
         if self.moment.candle_id <= 77:
             return False
         if self.cross_happend():
@@ -233,6 +237,7 @@ class ICHI_CROSS(Strategy):
                     if scenario.opening_intractions[i] == 1:
                         if not self.check_open_con(i):
                             return False
+            log6.info(self.candles[self.moment.candle_id-1])
             return True
 
     def start_strategy(self):
@@ -245,7 +250,7 @@ class ICHI_CROSS(Strategy):
         self.buy_time_hour = self.moment.hour
         self.buy_time_minute = self.moment.minute
         self.buy_volume = (self.dollar_balance /
-                           self.moment.price) * (scenario.volume_buy / 100)
+                           self.moment.price) * (scenario.volume_buy_ichi / 100)
         self.sell_volume = self.buy_volume
         self.C = self.candles[self.moment.candle_id-1]
         self.ICHI = [self.candles[self.moment.candle_id - 2].conversion_line,
@@ -329,18 +334,18 @@ class ICHI_CROSS(Strategy):
                 return True
             else:
                 return False
-        if i == 5:
-            if self.moment.profit_loss_percentage >= scenario.profit_limit_per:
-                lock_all = True
-                lock_all_strategies(
-                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.profit_limit_per)
-                return True
-            if self.moment.profit_loss_percentage <= scenario.loss_limit_per:
-                lock_all = True
-                lock_all_strategies(
-                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.loss_limit_per)
-                return True
-            return False
+        # if i == 5:
+        #     if self.moment.profit_loss_percentage >= scenario.profit_limit_per:
+        #         lock_all = True
+        #         lock_all_strategies(
+        #             working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.profit_limit_per)
+        #         return True
+        #     if self.moment.profit_loss_percentage <= scenario.loss_limit_per:
+        #         lock_all = True
+        #         lock_all_strategies(
+        #             working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.loss_limit_per)
+        #         return True
+        #     return False
 
     def continue_strategy(self, working_strategies, **kwargs):
         self.sell_price = controller.get_this_moment().price
@@ -364,9 +369,9 @@ class ICHI_CROSS(Strategy):
         # sell ICHI prev : conv : {self.ICHII}
         # sell ICHI prev prev : conv : {self.ICHHII}
         # """
-        if scenario.close_intraction[4] == 1:
-            if self.check_clese_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
-                return
+        # if scenario.close_intraction[4] == 1:
+        #     if self.check_clese_con(i=5, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
+        #         return
         for i in range(1, len(scenario.close_intraction)):
             if scenario.close_intraction[i-1] == 1:
                 if self.check_clese_con(i=i, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
@@ -440,7 +445,7 @@ class Moving_average(Strategy):
         self.buy_time_hour = self.moment.hour
         self.buy_time_minute = self.moment.minute
         self.buy_volume = (self.dollar_balance /
-                           self.moment.price) * (scenario.volume_buy / 100)
+                           self.moment.price) * (scenario.volume_buy_ma / 100)
         self.sell_volume = self.buy_volume
         self.C = self.candles[self.moment.candle_id-1]
         self.buy_price = self.moment.price
@@ -528,15 +533,15 @@ class Moving_average(Strategy):
                 # """
                 return True
             return False
-        if key == "peridical_profit_loss_limit":
-            if self.moment.profit_loss_percentage >= value['options']['profit_limit']:
-                lock_all = True
-                lock_all_strategies(
-                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=value['options']['profit_limit'])
-            elif self.moment.profit_loss_percentage <= value['options']['loss_limit']:
-                lock_all = True
-                lock_all_strategies(
-                    working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=value['options']['loss_limit'])
+        # if key == "peridical_profit_loss_limit":
+        #     if self.moment.profit_loss_percentage >= value['options']['profit_limit']:
+        #         lock_all = True
+        #         lock_all_strategies(
+        #             working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=value['options']['profit_limit'])
+        #     elif self.moment.profit_loss_percentage <= value['options']['loss_limit']:
+        #         lock_all = True
+        #         lock_all_strategies(
+        #             working_strategies=working_strategies, moment=self.moment, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=value['options']['loss_limit'])
 
     def continue_strategy(self, working_strategies, **kwargs):
         self.sell_price = controller.get_this_moment().price
@@ -559,4 +564,4 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'moving_average': Moving_average}
+strategies = {'ichi_cross': ICHI_CROSS}
