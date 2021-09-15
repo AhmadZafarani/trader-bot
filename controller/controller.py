@@ -109,8 +109,10 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
 def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
     crypto1 = 0
     for ws in working_strategies:
+        # print("1")
+        # print(ws.sell_volume)
         crypto1 += ws.sell_volume
-
+    # print(f'crypto1 : {crypto1}')
     price = ((start_of_profit_loss_period_balance *(1 + profit_loss/100)) - dollar) / crypto1
     for ws in working_strategies:
         if not ws.selled:
@@ -137,7 +139,7 @@ def try_strategies(moment: Moment, candles: list):
 
 
     # lock all strategy if periodical profit loss is reached
-    if scenario.peridical_profit_loss_limit["enable"] :
+    if scenario.peridical_profit_loss_limit["enable"] and not lock_all:
         if moment.profit_loss_percentage >= scenario.peridical_profit_loss_limit['options']['profit_limit']:
             lock_all = True
             lock_all_strategies(
@@ -154,7 +156,6 @@ def try_strategies(moment: Moment, candles: list):
                     moment, bitcoin_balance, dollar_balance, candles)
                 if strtg.working:
                     working_strategies.append(strtg)
-                    print(f"something appended in {moment}")
     if lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
         # print(f'all_unlocked in {moment}')
         lock_all = False

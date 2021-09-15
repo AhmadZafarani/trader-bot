@@ -564,4 +564,4 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'ichi_cross': ICHI_CROSS}
+strategies = {'moving_average': Moving_average , 'ichi_cross' : ICHI_CROSS}

@@ -29,7 +29,7 @@ class Scenario:
 
     profit_loss_period_step = 24
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 12, "loss_limit": -1.8}}
+    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 13, "loss_limit": -3}}
     # =====================================================================
     # strategy configuration
     # name : Moving_average
@@ -44,7 +44,7 @@ class Scenario:
         "line_to_line": {"enable": 0, "options": {"line": [12, 26]}},
         "profit_loss_limit": {"enable": 0, "options": {"profit_limit": 10, "loss_limit": -1}},
     }
-    volume_buy_ma = 45
+    volume_buy_ma = 90
     # per_profit_limit = 19
     # per_loss_limit = -2.0
     # sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit
@@ -128,7 +128,7 @@ class Scenario:
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}
     close_intraction = [0, 0, 0, 0]
-    volume_buy_ichi = 45
+    volume_buy_ichi = 90
 
 scenario = Scenario()
 
