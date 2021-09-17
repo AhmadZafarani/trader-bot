@@ -30,7 +30,7 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 96 
+    profit_loss_period_step = 48 
 
     peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 19, "loss_limit": -1.11}}
     # peridical_profit_loss_limit_enable = 1
@@ -63,10 +63,10 @@ class Scenario:
     # sell_method['price_to_line']['enable'] = sell_method_price_to_line_enable
     # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
     # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
-    per_profit_limit = 20
-    per_loss_limit = -1.6
-    peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
-    peridical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
+    # per_profit_limit = 20
+    # per_loss_limit = -1.6
+    # peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
+    # peridical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
