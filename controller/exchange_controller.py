@@ -22,7 +22,7 @@ def connect_to_exchange() -> ccxt.Exchange:
         'password': password,
     })
     exchange.set_sandbox_mode(True)
-    exchange.load_markets()
+    exchange.load_markets(params={'timeout': 20000})
     print("connected to KUCOIN")
     return exchange
 
@@ -64,7 +64,11 @@ def exchange_sell(crypto: float, price: float):
 
 def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
     # not available for all exchanges
-    return exchange.fetch_time()
+    while True:
+        try:
+            return exchange.fetch_time()
+        except ccxt.RequestTimeout as e:
+            log_warning(e.with_traceback())
 
 
 def configure_market(exchange: ccxt.Exchange):

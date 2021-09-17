@@ -85,7 +85,7 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
     price = ((start_of_profit_loss_period_balance *
               (1 + profit_loss / 100)) - dollar) / crypto1
     for ws in working_strategies:
-        if not ws.solled:
+        if not ws.sold:
             controller.sell(ws.sell_volume, price)
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
@@ -95,53 +95,25 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
 class Dummy_Strategy(Strategy):
 
     def strategy_works(self) -> bool:
-        return True
+        return self.moment.hour == 13 and self.moment.minute == 0
 
     def start_strategy(self):
-        self.short_name = 'dummy'
-        self.solled = False
-        self.lock_hour = 0
-        self.lock_method = "lock_to_fin"
-        self.buy_id = self.moment.candle_id
-        self.buy_volume = 0.995 * self.dollar_balance/self.moment.price
-        self.sell_volume = self.buy_volume
-
+        self.buy_volume = 1
+        self.sell_volume = 1
         controller.buy(self.buy_volume, self.moment.price)
-
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
         self.buy_time = [self.moment.hour, self.moment.minute]
-        self.buy_date = self.moment.date
 
-        if self.lock_method == 'lock_to_hour':
-            lock_strategies["dummy"] = [
-                Dummy_Strategy, self.moment.candle_id + self.lock_hour, "normal"]
-        elif self.lock_method == "lock_to_fin":
-            lock_strategies["dummy"] = [Dummy_Strategy, 0]
-
-    def continue_strategy(self, working_strategies: list):
-        global lock_all, lock_strategies
-        self.finish_txt = f'''date: {self.moment.date}
-        Candle : {self.C}
-        buy_time : {self.buy_date} {self.buy_time[0]}:{self.buy_time[1]} 
-        sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
-        '''
-
-        if self.moment.profit_loss_percentage <= -1:
-            lock_all = True
-            lock_all_strategies(
-                working_strategies=working_strategies, moment=self.moment)
-            return
-
-        if not(self.moment.hour == 19 and self.moment.minute == 44):
+    def continue_strategy(self, working_strategies, **kwargs):
+        if not (controller.get_this_moment().hour == 15 and controller.get_this_moment().minute == 0):
             return
 
         controller.sell(self.sell_volume, controller.get_this_moment().price)
-        self.solled = True
-        self.finish_strategy(self.finish_txt)
-
-        if self.lock_method == "lock_to_fin":
-            lock_strategies.pop("dummy")
+        self.finish_strategy(f'''date: {self.moment.date}
+        Candle : {self.C}
+        buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
+        ''')
 
 
 class ICHI_CROSS(Strategy):
@@ -246,7 +218,7 @@ class ICHI_CROSS(Strategy):
     def start_strategy(self):
         global lock_strategies
         self.short_name = 'ichi_cross'
-        self.solled = False
+        self.sold = False
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
@@ -276,7 +248,7 @@ class ICHI_CROSS(Strategy):
         self.sell_time_minute = self.moment.minute
 
         controller.sell(self.buy_volume, self.sell_price)
-        self.solled = True
+        self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_cross")
@@ -441,7 +413,7 @@ class Moving_average(Strategy):
     def start_strategy(self):
         global lock_strategies
         self.short_name = 'moving_average'
-        self.solled = False
+        self.sold = False
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
@@ -469,7 +441,7 @@ class Moving_average(Strategy):
         self.sell_time_minute = self.moment.minute
 
         controller.sell(self.buy_volume, self.sell_price)
-        self.solled = True
+        self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop(self.short_name)

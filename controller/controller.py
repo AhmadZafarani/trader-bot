@@ -192,14 +192,15 @@ def set_this_moment(moment: Moment):
     this_moment = moment
 
 
-def analyze_live_data(candles: list, start_time: int):
+def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
     global this_moment
     moment_index = 1
 
     calculate_indicators_and_bundle_into_this_moment()
     try_strategies(this_moment, candles)
     while True:
-        sleep_till_end_of_moment(start_time)
+        log_info(f"working strategies are: {working_strategies}")
+        sleep_till_end_of_moment(exchange, start_time)
 
         start_time = time()
         moment_index += 1
@@ -208,10 +209,11 @@ def analyze_live_data(candles: list, start_time: int):
         try_strategies(this_moment, candles)
 
 
-def sleep_till_end_of_moment(last_wake_time: int):
-    x = get_time_from_exchange() - last_wake_time + \
+def sleep_till_end_of_moment(exchange: ccxt.Exchange, last_wake_time: int):
+    x = (get_time_from_exchange(exchange) - last_wake_time) // 1000 + \
         scenario.live_sleep_between_each_moment + scenario.live_calculations_threshold
     x = x // 60 * 60  # round the sleep time into minutes
+    print(x)
     sleep(x)
 
 

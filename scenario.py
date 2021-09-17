@@ -149,9 +149,9 @@ class Scenario:
     }
 
     # in seconds
-    live_sleep_between_each_moment = 15 * 60
+    live_sleep_between_each_moment = 1 * 60
 
-    live_calculations_threshold = 1 * 60
+    live_calculations_threshold = 10
 
     live_market = 'BTC/USDT'
 
