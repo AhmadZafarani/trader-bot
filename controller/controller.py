@@ -1,6 +1,6 @@
 # YA FATEMEH
 from csv import reader
-from time import time, sleep
+from time import sleep
 
 from model.Candle import Candle
 from model.Moment import Moment
@@ -194,7 +194,7 @@ def set_this_moment(moment: Moment):
 
 def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
     global this_moment
-    moment_index = 1
+    moment_index = 0
 
     calculate_indicators_and_bundle_into_this_moment()
     try_strategies(this_moment, candles)
@@ -202,9 +202,9 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
         log_info(f"working strategies are: {working_strategies}")
         sleep_till_end_of_moment(exchange, start_time)
 
-        start_time = time()
+        start_time = get_time_from_exchange(exchange)
         moment_index += 1
-        sync_bot_data_with_exchange(candles, moment_index)
+        sync_bot_data_with_exchange(exchange, candles, moment_index)
 
         try_strategies(this_moment, candles)
 
@@ -213,16 +213,16 @@ def sleep_till_end_of_moment(exchange: ccxt.Exchange, last_wake_time: int):
     x = (get_time_from_exchange(exchange) - last_wake_time) // 1000 + \
         scenario.live_sleep_between_each_moment + scenario.live_calculations_threshold
     x = x // 60 * 60  # round the sleep time into minutes
-    print(x)
+    print(f"sleeping {x} seconds.")
     sleep(x)
 
 
-def sync_bot_data_with_exchange(candles: list, moment_index: int):
+def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_index: int):
     global this_moment
-    candle = get_last_candle()
-    t, p, cid = get_current_data_from_exchange()
+    candle = get_last_candle(exchange)
+    t, p = get_current_data_from_exchange(exchange)
     this_moment.update_moment(
-        t, p, cid, profit_loss_calculator(moment_index, p))
+        t / 1000.0, p, candle.identifier, profit_loss_calculator(moment_index, p), moment_index)
     calculate_indicators_and_bundle_into_this_moment()
 
     if is_same_as(candle, candles[-1]):
@@ -235,7 +235,7 @@ def sync_bot_data_with_exchange(candles: list, moment_index: int):
 
 
 def is_same_as(c1: Candle, c2: Candle) -> bool:
-    pass
+    return c1.identifier == c2.identifier
 
 
 def calculate_indicators_and_bundle_into_this_moment():
