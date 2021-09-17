@@ -11,8 +11,11 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
+        "ma9": "BTC_FULL_1h_MA9.csv",
         "ma12": "BTC_FULL_1h_MA12.csv",
         "ma26": "BTC_FULL_1h_MA26.csv",
+        "ma31": "BTC_FULL_1h_MA31.csv",
+        "ma52": "BTC_FULL_1h_MA52.csv",
         "ICHI": "BTC_FULL_1h_ICHI.csv",
         "iscross": "BTC_FULL_1h_ISCROSS.csv"
     }
@@ -27,29 +30,43 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24
+    profit_loss_period_step = 96 
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 12, "loss_limit": -1.8}}
-    peridical_profit_loss_limit_enable = 1
+    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 19, "loss_limit": -1.11}}
+    # peridical_profit_loss_limit_enable = 1
+    # peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
     # opening conditions
 
     buy_method = {
-        "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "green": True}},
-        "line_to_line": {"enable": 1, "options": {"line": [12, 26]}}
+        "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
+        "line_to_line": {"enable": 1, "options": {"line": [9, 26]}}
     }
     sell_method = {
         "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "red": True}},
         "line_to_line": {"enable": 0, "options": {"line": [12, 26]}},
         "profit_loss_limit": {"enable": 0, "options": {"profit_limit": 10, "loss_limit": -1}},
     }
-    volume_buy_ma = 90
-    # per_profit_limit = 19
-    # per_loss_limit = -2.0
-    # sell_method['peridical_profit_loss_limit']['options']['profit_limit'] = per_profit_limit
-    # sell_method["peridical_profit_loss_limit"]["options"]["loss_limit"] = per_loss_limit
+    volume_buy_ma = 89
+    # buy_method_line_to_line_options_line = [31, 52]
+
+    # buy_method_price_to_line_enable = 1
+    # buy_method_line_to_line_enable = 1
+    # sell_method_price_to_line_enable = 1
+    # sell_method_line_to_line_enable = 1
+    # sell_method_profit_loss_limit = 1
+    # buy_method['line_to_line']['options']['line'] = buy_method_line_to_line_options_line
+    # buy_method['price_to_line']['enable'] = buy_method_price_to_line_enable
+    # buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
+    # sell_method['price_to_line']['enable'] = sell_method_price_to_line_enable
+    # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
+    # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
+    per_profit_limit = 20
+    per_loss_limit = -1.6
+    peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
+    peridical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
 # =======================================================================
     # strategy configuration
     # name : ichi_cross

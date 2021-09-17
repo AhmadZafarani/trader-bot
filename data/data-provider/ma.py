@@ -29,10 +29,11 @@ with open('data/BTC_FULL_1h-time.csv') as csv_file:
         close_price.append(float(row[4]))
 # print(close_price)
 
-moving_12 = moving_avrage(12, close_price)
-moving_26 = moving_avrage(26, close_price)
-with open('data/BTC_FULL_1h_MA26.csv', mode='w') as ma_12file:
+# moving_12 = moving_avrage(12, close_price)
+moving_9 = moving_avrage(52, close_price)
+
+with open('data/BTC_FULL_1h_MA52.csv', mode='w') as ma_12file:
     ma12 = csv.writer(ma_12file)
-    ma12.writerow(['ma26'])
-    for m in moving_26:
+    ma12.writerow(['ma52'])
+    for m in moving_9:
         ma12.writerow([str(m)])
