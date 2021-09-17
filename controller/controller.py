@@ -213,7 +213,7 @@ def sleep_till_end_of_moment(exchange: ccxt.Exchange, last_wake_time: int):
     x = (get_time_from_exchange(exchange) - last_wake_time) // 1000 + \
         scenario.live_sleep_between_each_moment + scenario.live_calculations_threshold
     x = x // 60 * 60  # round the sleep time into minutes
-    print(f"sleeping {x} seconds.")
+    print(f"moment index: {this_moment.moment_id} => sleeping {x} seconds.")
     sleep(x)
 
 

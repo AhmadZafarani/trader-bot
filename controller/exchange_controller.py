@@ -1,6 +1,7 @@
 # YA SAJJAD
 from time import sleep
 import ccxt
+from ccxt.base.errors import RequestTimeout
 
 from model.Candle import Candle
 from controller.view_controller import *
@@ -30,8 +31,14 @@ def connect_to_exchange() -> ccxt.Exchange:
 def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
     while True:
         # multiply to ensure fetch more than `n` candles
-        candles = exchange.fetch_ohlcv(
-            scenario.live_market, scenario.live_timeframe, limit=3 * n)
+        try:
+            candles = exchange.fetch_ohlcv(
+                scenario.live_market, scenario.live_timeframe, limit=3 * n)
+        except RequestTimeout as e:
+            log_warning(e.with_traceback(None))
+            sleep(scenario.live_try_again_time_inactive_market)
+            continue
+
         if len(candles) >= n:
             break
         log_debug(
@@ -69,6 +76,7 @@ def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
             return exchange.fetch_time()
         except ccxt.RequestTimeout as e:
             log_warning(e.with_traceback(None))
+            sleep(scenario.live_try_again_time_inactive_market)
 
 
 def configure_market(exchange: ccxt.Exchange):
