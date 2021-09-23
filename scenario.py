@@ -1,7 +1,7 @@
 # YA BAGHER
 from model.indicators import *
 
-
+#salam
 class Scenario:
     log_file_path = 'logs/cndl-mmnt.log'
 
