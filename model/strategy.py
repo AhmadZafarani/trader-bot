@@ -93,25 +93,22 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
 
 
 class Dummy_Strategy(Strategy):
-
     def strategy_works(self) -> bool:
-        return self.moment.hour == 13 and self.moment.minute == 0
+        return self.moment.minute % 5 == 0
 
     def start_strategy(self):
         self.buy_volume = 1
         self.sell_volume = 1
         controller.buy(self.buy_volume, self.moment.price)
         self.buy_price = self.moment.price
-        self.C = self.candles[self.moment.candle_id - 1]
         self.buy_time = [self.moment.hour, self.moment.minute]
 
     def continue_strategy(self, working_strategies, **kwargs):
-        if not (controller.get_this_moment().hour == 15 and controller.get_this_moment().minute == 0):
+        if not controller.get_this_moment().minute % 5 == 3:
             return
 
         controller.sell(self.sell_volume, controller.get_this_moment().price)
         self.finish_strategy(f'''date: {self.moment.date}
-        Candle : {self.C}
         buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
         ''')
 

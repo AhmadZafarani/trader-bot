@@ -161,7 +161,7 @@ class Scenario:
 
     live_timeframe = '1h'
 
-    # fill 4 last characters with what I have send in to Telegram Group
+    # fill 4 last characters with what I have send in the Group
     live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2????'
 
 

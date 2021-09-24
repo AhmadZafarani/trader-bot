@@ -2,15 +2,13 @@
 from time import sleep
 import ccxt
 from ccxt.base.errors import RequestTimeout
-from cryptography import fernet
+from cryptography.fernet import Fernet
 
 from model.Candle import Candle
 from controller.view_controller import *
 
 
 def read_api_key() -> tuple:
-    from cryptography.fernet import Fernet
-
     f = Fernet(scenario.live_api_encryption_key)
     with open("api-kucoin.txt", "r") as file:
         key = file.readline().split()[1][1:-2].encode()
@@ -27,7 +25,7 @@ def connect_to_exchange() -> ccxt.Exchange:
         'secret': secret,
         'password': password,
     })
-    exchange.set_sandbox_mode(True)
+    exchange.set_sandbox_mode(False)
     exchange.load_markets(params={'timeout': 20000})
     print("connected to KUCOIN")
     return exchange
