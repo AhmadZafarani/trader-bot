@@ -1,7 +1,7 @@
 # YA BAGHER
 from model.indicators import *
 
-#salam
+
 class Scenario:
     log_file_path = 'logs/cndl-mmnt.log'
 
@@ -151,6 +151,7 @@ class Scenario:
     # in seconds
     live_sleep_between_each_moment = 1 * 60
 
+    # in seconds
     live_calculations_threshold = 10
 
     live_market = 'BTC/USDT'
@@ -159,6 +160,9 @@ class Scenario:
     live_try_again_time_inactive_market = 30
 
     live_timeframe = '1h'
+
+    # fill 4 last characters with what I have send in to Telegram Group
+    live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2????'
 
 
 scenario = Scenario()

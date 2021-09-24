@@ -12,3 +12,4 @@ logs/*.log
 all-parameters-test/*.csv
 all-parameters-test/*.txt
 .idea/
+!api-kucoin.txt
