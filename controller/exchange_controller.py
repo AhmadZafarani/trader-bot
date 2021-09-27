@@ -48,10 +48,16 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
             "couldn't fetch all of your candles. we will try again after 5 seconds.")
         sleep(5)
     candle_objects = []
+    first_candle_time = candles[0][0] - 1000 * \
+        scenario.live_timeframe_in_seconds
     for i in range(n):
-        candle_objects.append(Candle(identifier=candles[i][0] // 1000, open_price=candles[i][1],
-                                     high_price=candles[i][2], low_price=candles[i][3], close_price=candles[i][4],
-                                     traded_volume=candles[i][5]))
+        candle_objects.append(Candle(
+            # for start the candle_id from 1 and use it like index
+            identifier=(candles[i][0] - first_candle_time) // (1000 *
+                                                               scenario.live_timeframe_in_seconds),
+            open_price=candles[i][1], high_price=candles[i][2], low_price=candles[i][3],
+            close_price=candles[i][4], traded_volume=candles[i][5]
+        ))
     return candle_objects
 
 

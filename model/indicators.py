@@ -22,9 +22,9 @@ def moving_average(length: int, index: int, candles: list) -> float:
         return round(sum / (length), 3)
 
 
-def moving12(index: int, candles: list) -> dict:
-    return {'moving12': moving_average(12, index, candles)}
+def ma12(index: int, candles: list) -> dict:
+    return {'ma12': moving_average(12, index, candles)}
 
 
-def moving26(index: int, candles: list) -> dict:
-    return {'moving26': moving_average(26, index, candles)}
+def ma26(index: int, candles: list) -> dict:
+    return {'ma26': moving_average(26, index, candles)}

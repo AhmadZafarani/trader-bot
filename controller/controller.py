@@ -141,7 +141,7 @@ def try_strategies(moment: Moment, candles: list):
 def buy(bitcoin: int, price: int):
     if scenario.live_trading_mode:
         exchange_buy(bitcoin, price)
-        return
+    #     return
 
     global bitcoin_balance, dollar_balance
     bitcoin = round(bitcoin, 4)
@@ -156,7 +156,7 @@ def buy(bitcoin: int, price: int):
 def sell(bitcoin: int, price: int):
     if scenario.live_trading_mode:
         exchange_sell(bitcoin, price)
-        return
+    #     return
 
     global bitcoin_balance, dollar_balance
     bitcoin = round(bitcoin, 4)
@@ -197,7 +197,9 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
     moment_index = 0
 
     calculate_indicators_and_bundle_into_this_moment()
+    control_start_live_view()
     try_strategies(this_moment, candles)
+
     while True:
         log_info(f"working strategies are: {working_strategies}")
         sleep_till_end_of_moment(exchange, start_time)
@@ -205,6 +207,10 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
         start_time = get_time_from_exchange(exchange)
         moment_index += 1
         sync_bot_data_with_exchange(exchange, candles, moment_index)
+
+        # this part is for viewing previous moment
+        control_live_view(this_moment, moment_index,
+                          bitcoin_balance, dollar_balance, strategy_results)
 
         try_strategies(this_moment, candles)
 

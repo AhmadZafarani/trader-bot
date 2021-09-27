@@ -21,7 +21,7 @@ def check_view_essentials(moment: Moment, moment_index: int, bitcoin_balance: fl
     __periodical_data(moment, moment_index, bitcoin_balance, dollar_balance)
 
 
-def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float):
+def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float) -> bool:
     global start_of_period_balance, scenario
     e = dollar_balance + bitcoin_balance * moment.price
 
@@ -30,6 +30,8 @@ def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float,
         sa = f'{round(p * 100 / start_of_period_balance, 4)}'
         periodical_results.append(
             (f'{moment.date} {moment.hour}:{moment.minute}', start_of_period_balance, e, p, sa))
+        return True
+    return False
 
 
 def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float) -> bool:
@@ -38,6 +40,29 @@ def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float,
         return False
     start_of_period_balance = dollar_balance + bitcoin_balance * moment.price
     return True
+
+
+def control_live_view(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float, strategy_results: list):
+    global start_of_period_balance
+
+    t = (dollar_balance, bitcoin_balance)
+    view_balance(t)
+
+    if (moment_index - 1) % scenario.profit_loss_period_step == 0:
+        start_of_period_balance = dollar_balance + bitcoin_balance * moment.price
+    else:
+        end_of_period = __periodical_data(moment, moment_index,
+                          bitcoin_balance, dollar_balance)
+        if end_of_period:
+            view_periodical_result(periodical_results[-1])
+
+    if len(strategy_results) > 0:
+        view_strategy_result(strategy_results[-1])
+        strategy_results.pop()
+
+
+def control_start_live_view():
+    start_live_view()
 
 
 # ============= LOG CONTROL =========================================

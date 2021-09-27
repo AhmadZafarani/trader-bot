@@ -32,7 +32,7 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24
+    profit_loss_period_step = 6
 
     # =====================================================================
     # strategy configuration
@@ -141,8 +141,8 @@ class Scenario:
     live_trading_mode = False
 
     live_candle_indicators = [
-        moving12,
-        moving26,
+        ma12,
+        ma26,
     ]
 
     live_moment_indicators = {
@@ -161,8 +161,10 @@ class Scenario:
 
     live_timeframe = '1h'
 
+    live_timeframe_in_seconds = 3600
+
     # fill 4 last characters with what I have send in the Group
-    live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2????'
+    live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2XgM='
 
 
 scenario = Scenario()

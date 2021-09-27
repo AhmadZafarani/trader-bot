@@ -67,9 +67,9 @@ class Strategy(ABC):
     def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, sold_volume: int,
                args: str) -> str:
         if buy_price <= sell_price:
-            s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tProfit\nmore informatons:\t{args}\n\n'
+            s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tProfit\nmore information:\t{args}\n\n'
         else:
-            s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tLoss\nmore informatons:\t{args}\n\n'
+            s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tLoss\nmore information:\t{args}\n\n'
         return s
 
 
@@ -539,3 +539,4 @@ class Moving_average(Strategy):
 
 
 strategies = {'dummy': Dummy_Strategy}
+# strategies = {'moving_average': Moving_average}
