@@ -164,6 +164,7 @@ class Scenario:
     live_candle_indicators = [
         ma12,
         ma26,
+        ma9,
     ]
 
     live_moment_indicators = {

@@ -28,3 +28,7 @@ def ma12(index: int, candles: list) -> dict:
 
 def ma26(index: int, candles: list) -> dict:
     return {'ma26': moving_average(26, index, candles)}
+
+
+def ma9(index: int, candles: list) -> dict:
+    return {'ma9': moving_average(9, index, candles)}
