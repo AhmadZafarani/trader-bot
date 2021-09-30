@@ -14,21 +14,32 @@ num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
-    ("volume_buy", list(range(20, 80, 10))),
-    ("lock_method", ["lock_to_fin", "lock_to_hour"]),
-    ("lock_hour", list(range(3, 10, 3))),
-    ("profit_limit", list(range(2, 15, 3))),
-    ("loss_limit", [-1, -2, -3, -4, -5]),
-    ("opening_intractions", [[0] + [int(x) for x in list(
-        bin(m).replace("0b", "").zfill(3))] for m in range(8)]),
-    ("close_intraction", [[int(x) for x in list(
-        bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
-    ("min_slope_dif", [x * 0.02 + 0.04 for x in range(16)]),
-    ("under_cloud_condition2", [x * 0.01 + 0.01 for x in range(10)]),
-    ("next_candle_length_min", [x * 0.2 - 2 for x in range(20)]),
-    ("closing_con1_min", [x * 10 + 9 for x in range(10)]),
-    ("ten_kij_dif_max_then_kij", list(range(1, 6))),
-    ("closing_con1_red_candle", [0, 1])
+    # ('buy_method_line_to_line_options_line' , [[9,12], [9,26] ,[9,31] , [9,52], [12,26] , [12,31] , [12,52] , [26,31],[26,52],[31,52] ])
+    # ("peridical_profit_loss_limit_enable" , [0,1]),
+    # ("buy_method_price_to_line_enable" , [0,1]),
+    # ("buy_method_line_to_line_enable" , [0,1]),
+    # ("sell_method_price_to_line_enable" , [0,1]),
+    # ("sell_method_line_to_line_enable" , [0,1]),
+    # ("sell_method_profit_loss_limit" , [0,1])
+    ("per_profit_limit", [1*x+10 for x in range(11)]),
+    ("per_loss_limit", [-0.7 - 0.1*x for x in range(10)])
+    # ("profit_loss_period_step" , [24 , 48 , 72 , 96 , 12 , 36 ])
+    # ("loss_limit_per" , [-0.1 - 0.1 * x for x in range(20)])
+    # ("volume_buy", list(range(20, 80, 10))),
+    # ("lock_method", ["lock_to_fin", "lock_to_hour"]),
+    # ("lock_hour", list(range(3, 10, 3))),
+    # ("profit_limit", list(range(2, 15, 3))),
+    # ("loss_limit", [-1, -2, -3, -4, -5]),
+    # ("opening_intractions", [[0] + [int(x) for x in list(
+    #     bin(m).replace("0b", "").zfill(3))] for m in range(8)]),
+    # ("close_intraction", [[int(x) for x in list(
+    #     bin(m).replace("0b", "").zfill(4))] for m in range(16)]),
+    # ("min_slope_dif", [x*0.02+0.04 for x in range(16)]),
+    # ("under_cloud_condition2", [x*0.01+0.01 for x in range(10)]),
+    # ("next_candle_lenght_min", [x*0.2-2 for x in range(20)]),
+    # ("closing_con1_min", [x*10+9 for x in range(10)]),
+    # ("ten_kij_dif_max_then_kij", list(range(1, 6))),
+    # ("closing_con1_red_candle", [0, 1])
 ]
 
 test_variables_size = len(test_variables_list)
