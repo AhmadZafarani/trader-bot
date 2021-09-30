@@ -5,7 +5,6 @@ model/__pycache__
 *.txt
 balance_report.csv
 periodical_report.csv
-balance_report.csv
 __pycache__/
 .vscode/
 logs/*.log
@@ -14,3 +13,4 @@ all-parameters-test/*.txt
 .idea/
 !api-kucoin.txt
 !requirements.txt
+venv/
