@@ -52,7 +52,7 @@ def control_live_view(moment: Moment, moment_index: int, bitcoin_balance: float,
         start_of_period_balance = dollar_balance + bitcoin_balance * moment.price
     else:
         end_of_period = __periodical_data(moment, moment_index,
-                          bitcoin_balance, dollar_balance)
+                                          bitcoin_balance, dollar_balance)
         if end_of_period:
             view_periodical_result(periodical_results[-1])
 

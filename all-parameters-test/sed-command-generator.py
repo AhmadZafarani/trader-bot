@@ -72,15 +72,15 @@ while i < number_of_tests:
     for j in range(len(out)):  # construct sed commands regarding to 'out'
         if isinstance(out[j], str):
             string = string + \
-                     f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1\\\\\"{out[j]}\\\\\"/" scenario.py' + ';'
+                f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1\\\\\"{out[j]}\\\\\"/" scenario.py' + ';'
         else:
             string = string + \
-                     f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1{out[j]}/" scenario.py' + ';'
+                f'sed -i "s/\\\\({headers[j]} = \\\\).*/\\\\1{out[j]}/" scenario.py' + ';'
     file.write(string + '\n')
 
     for j in range(test_variables_size - 1, -1, -1):  # indices of next jaygasht
         test_variables_index[j] = (
-                                          test_variables_index[j] + 1) % len(test_variables_list[j][1])
+            test_variables_index[j] + 1) % len(test_variables_list[j][1])
         if test_variables_index[j] != 0:
             break
 

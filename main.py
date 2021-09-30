@@ -55,7 +55,7 @@ def live_main():
 
 control_logs()
 # n = int(input("press 1 for simulate trading on historical data. \npress 2 for live trading. \n"))
-n = 2
+n = 1
 if n == 1:
     main()
 elif n == 2:

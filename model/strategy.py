@@ -112,8 +112,9 @@ class Dummy_Strategy(Strategy):
         buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
         ''')
 
+
 setup_logger('log6', r'logs/ichi.log')
-log6 = logging.getLogger('log6')
+log6 = get_logger('log6')
 
 
 class ICHI_CROSS(Strategy):
@@ -545,5 +546,5 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'dummy': Dummy_Strategy}
-# strategies = {'moving_average': Moving_average}
+# strategies = {'dummy': Dummy_Strategy}
+strategies = {'moving_average': Moving_average}
