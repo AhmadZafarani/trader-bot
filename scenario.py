@@ -159,7 +159,6 @@ class Scenario:
 
     live_start_of_work_needed_candles = 30
 
-
     live_trading_mode = False
 
     live_candle_indicators = [
