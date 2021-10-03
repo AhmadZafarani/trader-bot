@@ -157,7 +157,8 @@ class Scenario:
 
     # ================ LIVE PARAMETERS ===============================
 
-    live_start_of_work_needed_candles = 100
+    live_start_of_work_needed_candles = 30
+
 
     live_trading_mode = False
 
@@ -181,9 +182,9 @@ class Scenario:
     # in seconds
     live_try_again_time_inactive_market = 30
 
-    live_timeframe = '1h'
+    live_timeframe = '5m'
 
-    live_timeframe_in_seconds = 3600
+    live_timeframe_in_seconds = 5 * 60
 
     # fill 4 last characters with what I have send in the Group
     live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2XgM='

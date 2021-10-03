@@ -45,7 +45,7 @@ def live_main():
     candles = get_n_past_candles(
         exchange, scenario.live_start_of_work_needed_candles)
     calculate_indicators_and_bundle_into_candles(candles)
-
+    print(candles)
     t, p = get_current_data_from_exchange(exchange)
     this_moment = Moment(t / 1000.0, p, candles[-1].identifier)
     set_this_moment(this_moment)
