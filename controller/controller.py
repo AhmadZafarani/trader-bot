@@ -283,9 +283,12 @@ def sync_last_candle(exchange: ccxt.Exchange, candles: list):
 
     # for compatibility with first moment
     if not is_same_as(lc, candles[-1]):
+        previous_candle = get_n_past_candles(exchange, 2,
+                                             scenario.live_start_of_work_needed_candles - 1)[0]
         candles.pop(0)
         for c in candles:
             c.identifier -= 1
+        candles[-1] = previous_candle
         candles.append(lc)
     else:
         candles[-1] = lc

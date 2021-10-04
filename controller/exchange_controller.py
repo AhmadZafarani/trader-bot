@@ -32,8 +32,6 @@ def connect_to_exchange() -> ccxt.Exchange:
 
 
 def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int) -> list:
-    global first_candle_time
-
     while True:
         # multiply to ensure fetch more than `n` candles
         try:
