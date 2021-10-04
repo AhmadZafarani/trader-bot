@@ -8,9 +8,6 @@ from model.Candle import Candle
 from controller.view_controller import *
 
 
-first_candle_time = -1
-
-
 def read_api_key() -> tuple:
     f = Fernet(scenario.live_api_encryption_key)
     with open("api-kucoin.txt", "r") as file:
@@ -34,7 +31,7 @@ def connect_to_exchange() -> ccxt.Exchange:
     return exchange
 
 
-def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
+def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int) -> list:
     global first_candle_time
 
     while True:
@@ -53,24 +50,26 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int) -> list:
             "couldn't fetch all of your candles. we will try again after 5 seconds.")
         sleep(5)
 
-    candle_objects = []
-    if first_candle_time == -1:
-        first_candle_time = candles[len(candles) - n][0] - 1000 * \
-            scenario.live_timeframe_in_seconds
+    return build_candle_objects_from_fetched_data(candles, n, start_index)
 
+
+def build_candle_objects_from_fetched_data(candles: list, n: int, start_index: int) -> list:
+    candle_objects = []
+    j = 0
     for i in range(len(candles) - n, len(candles)):
         candle_objects.append(Candle(
             # for start the candle_id from 1 and use it like index
-            identifier=(candles[i][0] - first_candle_time) // (1000 *
-                                                               scenario.live_timeframe_in_seconds),
-            open_price=candles[i][1], high_price=candles[i][2], low_price=candles[i][3],
+            identifier=start_index + j, open_price=candles[i][1],
+            high_price=candles[i][2], low_price=candles[i][3],
             close_price=candles[i][4], traded_volume=candles[i][5]
         ))
+        candle_objects[j].set_timestamp(candles[i][0])
+        j += 1
     return candle_objects
 
 
-def get_last_candle(exchange: ccxt.Exchange) -> Candle:
-    c = get_n_past_candles(exchange, 1)
+def get_last_candle(exchange: ccxt.Exchange, start_index: int) -> Candle:
+    c = get_n_past_candles(exchange, 1, start_index)
     return c[0]
 
 

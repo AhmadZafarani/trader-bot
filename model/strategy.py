@@ -91,7 +91,7 @@ lock_strategies = {}
 #             if ws.lock_method == "lock_to_fin":
 #                 lock_strategies.pop(ws.short_name)
 
-setup_logger('cndl-mmnt-sync', r'logs/cndl-mmnt-sync.log')   
+setup_logger('cndl-mmnt-sync', r'logs/cndl-mmnt-sync.log')
 log19 = get_logger('cndl-mmnt-sync')
 
 

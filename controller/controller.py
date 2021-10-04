@@ -121,7 +121,7 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
     for ws in working_strategies:
         crypto1 += ws.sell_volume
     price = ((start_of_profit_loss_period_balance *
-             (1 + profit_loss/100)) - dollar) / crypto1
+              (1 + profit_loss/100)) - dollar) / crypto1
     for ws in working_strategies:
         if not ws.sold:
             sell(ws.sell_volume, price)
@@ -259,26 +259,33 @@ def sleep_till_end_of_moment(exchange: ccxt.Exchange, last_wake_time: int):
 
 def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_index: int):
     global this_moment
-    candle = get_last_candle(exchange)
+    sync_last_candle(exchange, candles)
     t, p = get_current_data_from_exchange(exchange)
     this_moment.update_moment(
-        t / 1000.0, p, candle.identifier, profit_loss_calculator(moment_index, p), moment_index)
+        t / 1000.0, p, candles[-1].identifier, profit_loss_calculator(moment_index, p), moment_index)
     calculate_indicators_and_bundle_into_this_moment()
-
-    if is_same_as(candle, candles[-1]):
-        new_candle = [candle]
-        calculate_indicators_and_bundle_into_candles(new_candle)
-
-        # for compatibility with first moment
-        candles.pop(0)
-        candles.append(candle)
 
 
 def is_same_as(c1: Candle, c2: Candle) -> bool:
-    return c1.identifier == c2.identifier
+    return c1.timestamp == c2.timestamp
 
 
 def calculate_indicators_and_bundle_into_this_moment():
     # TODO: fill here!
     global this_moment
     log_debug(f"constructed this_moment: {this_moment}")
+
+
+def sync_last_candle(exchange: ccxt.Exchange, candles: list):
+    lc = get_last_candle(exchange, scenario.live_start_of_work_needed_candles)
+    lcl = [lc]
+    calculate_indicators_and_bundle_into_candles(lcl)
+
+    # for compatibility with first moment
+    if not is_same_as(lc, candles[-1]):
+        candles.pop(0)
+        for c in candles:
+            c.identifier -= 1
+        candles.append(lc)
+    else:
+        candles[-1] = lc
