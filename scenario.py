@@ -37,10 +37,10 @@ class Scenario:
 
     profit_loss_period_step = 48
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {
+    periodical_profit_loss_limit = {"enable": 1, "options": {
         "profit_limit": 19, "loss_limit": -1.11}}
-    # peridical_profit_loss_limit_enable = 1
-    # peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
+    # periodical_profit_loss_limit_enable = 1
+    # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
@@ -72,8 +72,8 @@ class Scenario:
     # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
     # per_profit_limit = 20
     # per_loss_limit = -1.6
-    # peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
-    # peridical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
+    # periodical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
+    # periodical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
     # =======================================================================
     # strategy configuration
     # name : ichi_cross

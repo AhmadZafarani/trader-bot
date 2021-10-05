@@ -6,6 +6,7 @@ from cryptography.fernet import Fernet
 
 from model.Candle import Candle
 from controller.view_controller import *
+SERVER_SIDE_ERROR = -1
 
 
 def read_api_key() -> tuple:
@@ -72,7 +73,12 @@ def get_last_candle(exchange: ccxt.Exchange, start_index: int) -> Candle:
 
 
 def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
-    return get_time_from_exchange(exchange), get_current_price(exchange)
+    ret1 = get_time_from_exchange(exchange)
+    ret2 = get_current_price(exchange)
+    if ret1 == SERVER_SIDE_ERROR or ret2 == SERVER_SIDE_ERROR:
+        return SERVER_SIDE_ERROR, SERVER_SIDE_ERROR
+    else:
+        return ret1, ret2
 
 
 def exchange_buy(crypto: float, price: float):
@@ -85,20 +91,23 @@ def exchange_sell(crypto: float, price: float):
 
 def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
     # not available for all exchanges
-    while True:
-        try:
-            return exchange.fetch_time()
-        except ccxt.RequestTimeout as e:
-            log_warning(e.with_traceback(None))
-            sleep(scenario.live_try_again_time_inactive_market)
+    try:
+        return exchange.fetch_time()
+    except ccxt.RequestTimeout as e:
+        log_warning(e.with_traceback(None))
+        return SERVER_SIDE_ERROR
 
 
 def configure_market(exchange: ccxt.Exchange):
     while True:
         market = exchange.market(scenario.live_market)
         market_state = market['active']
+        ret = get_time_from_exchange(exchange)
+        if ret == SERVER_SIDE_ERROR:
+            sleep(scenario.live_try_again_time_inactive_market)
+            continue
         log_debug(
-            f"market was at state: {market_state} in time: {get_time_from_exchange(exchange)}")
+            f"market was at state: {market_state} in time: {ret}")
 
         if not market_state:
             log_warning(
@@ -114,7 +123,11 @@ def configure_market(exchange: ccxt.Exchange):
 
 
 def get_current_price(exchange: ccxt.Exchange) -> float:
-    trades = exchange.fetch_trades(scenario.live_market)
-    price = trades[-1]['price']
-    log_info(f"now {scenario.live_market} price is: {price}")
-    return price
+    try:
+        trades = exchange.fetch_trades(scenario.live_market)
+        price = trades[-1]['price']
+        log_info(f"now {scenario.live_market} price is: {price}")
+        return price
+    except Exception as e:
+        log_warning(e.with_traceback(None))
+        return SERVER_SIDE_ERROR

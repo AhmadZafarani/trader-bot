@@ -142,18 +142,18 @@ def try_strategies(moment: Moment, candles: list):
     working_strategies = [ws for ws in working_strategies if ws.working]
 
     # lock all strategy if periodical profit loss is reached
-    if scenario.peridical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
-        if moment.profit_loss_percentage >= scenario.peridical_profit_loss_limit['options']['profit_limit']:
+    if scenario.periodical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
+        if moment.profit_loss_percentage >= scenario.periodical_profit_loss_limit['options']['profit_limit']:
             lock_all = True
             lock_all_strategies(working_strategies=working_strategies, moment=moment,
                                 start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                                 dollar=dollar_balance,
-                                profit_loss=scenario.peridical_profit_loss_limit['options']['profit_limit'])
-        elif moment.profit_loss_percentage <= scenario.peridical_profit_loss_limit['options']['loss_limit']:
+                                profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'])
+        elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
             lock_all = True
             lock_all_strategies(working_strategies=working_strategies, moment=moment,
                                 start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
-                                dollar=dollar_balance, profit_loss=scenario.peridical_profit_loss_limit['options']['loss_limit'])
+                                dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'])
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     for ws in working_strategies:
@@ -259,11 +259,18 @@ def sleep_till_end_of_moment(exchange: ccxt.Exchange, last_wake_time: int):
 
 def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_index: int):
     global this_moment
-    sync_last_candle(exchange, candles)
-    t, p = get_current_data_from_exchange(exchange)
-    this_moment.update_moment(
-        t / 1000.0, p, candles[-1].identifier, profit_loss_calculator(moment_index, p), moment_index)
-    calculate_indicators_and_bundle_into_this_moment()
+
+    while True:
+        sync_last_candle(exchange, candles)
+        t, p = get_current_data_from_exchange(exchange)
+        if t == SERVER_SIDE_ERROR and p == SERVER_SIDE_ERROR:
+            sleep(scenario.live_try_again_time_inactive_market)
+            continue
+
+        this_moment.update_moment(
+            t / 1000.0, p, candles[-1].identifier, profit_loss_calculator(moment_index, p), moment_index)
+        calculate_indicators_and_bundle_into_this_moment()
+        return
 
 
 def is_same_as(c1: Candle, c2: Candle) -> bool:
@@ -278,8 +285,6 @@ def calculate_indicators_and_bundle_into_this_moment():
 
 def sync_last_candle(exchange: ccxt.Exchange, candles: list):
     lc = get_last_candle(exchange, scenario.live_start_of_work_needed_candles)
-    lcl = [lc]
-    calculate_indicators_and_bundle_into_candles(lcl)
 
     # for compatibility with first moment
     if not is_same_as(lc, candles[-1]):
@@ -292,3 +297,5 @@ def sync_last_candle(exchange: ccxt.Exchange, candles: list):
         candles.append(lc)
     else:
         candles[-1] = lc
+
+    calculate_indicators_and_bundle_into_candles(candles)
