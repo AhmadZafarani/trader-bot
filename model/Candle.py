@@ -18,9 +18,6 @@ class Candle:
         self.close_price = close_price
         self.traded_volume = traded_volume
 
-    def set_timestamp(self, timestamp: int):
-        self.timestamp = timestamp
-
     def __str__(self) -> str:
         return f'fields: {self.__dict__}'
 

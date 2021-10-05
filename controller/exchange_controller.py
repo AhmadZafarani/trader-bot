@@ -1,7 +1,6 @@
 # YA SAJJAD
 from time import sleep
 import ccxt
-from ccxt.base.errors import RequestTimeout
 from cryptography.fernet import Fernet
 
 from model.Candle import Candle
@@ -32,14 +31,17 @@ def connect_to_exchange() -> ccxt.Exchange:
     return exchange
 
 
-def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int) -> list:
+def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int, handle_failure=True):
     while True:
         # multiply to ensure fetch more than `n` candles
         try:
             candles = exchange.fetch_ohlcv(
                 scenario.live_market, scenario.live_timeframe, limit=3 * n)
-        except RequestTimeout as e:
+        except Exception as e:
             log_warning(e.with_traceback(None))
+            if not handle_failure:
+                return SERVER_SIDE_ERROR
+
             sleep(scenario.live_try_again_time_inactive_market)
             continue
 
@@ -62,14 +64,8 @@ def build_candle_objects_from_fetched_data(candles: list, n: int, start_index: i
             high_price=candles[i][2], low_price=candles[i][3],
             close_price=candles[i][4], traded_volume=candles[i][5]
         ))
-        candle_objects[j].set_timestamp(candles[i][0])
         j += 1
     return candle_objects
-
-
-def get_last_candle(exchange: ccxt.Exchange, start_index: int) -> Candle:
-    c = get_n_past_candles(exchange, 1, start_index)
-    return c[0]
 
 
 def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:

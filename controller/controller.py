@@ -239,8 +239,17 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
         sleep_till_end_of_moment(exchange, start_time)
 
         start_time = get_time_from_exchange(exchange)
+        if start_time == SERVER_SIDE_ERROR:
+            log_warning("moment process failed! => get_time_from_exchange")
+            continue
+
         moment_index += 1
-        sync_bot_data_with_exchange(exchange, candles, moment_index)
+
+        ret = sync_bot_data_with_exchange(exchange, candles, moment_index)
+        if ret == SERVER_SIDE_ERROR:
+            log_warning(
+                "moment process failed! => sync_bot_data_with_exchange")
+            continue
 
         # this part is for viewing previous moment
         control_live_view(this_moment, moment_index,
@@ -261,20 +270,18 @@ def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_i
     global this_moment
 
     while True:
-        sync_last_candle(exchange, candles)
+        ret = sync_last_candles(exchange, candles)
+        if ret == SERVER_SIDE_ERROR:
+            return SERVER_SIDE_ERROR
+
         t, p = get_current_data_from_exchange(exchange)
         if t == SERVER_SIDE_ERROR and p == SERVER_SIDE_ERROR:
-            sleep(scenario.live_try_again_time_inactive_market)
-            continue
+            return SERVER_SIDE_ERROR
 
         this_moment.update_moment(
             t / 1000.0, p, candles[-1].identifier, profit_loss_calculator(moment_index, p), moment_index)
         calculate_indicators_and_bundle_into_this_moment()
         return
-
-
-def is_same_as(c1: Candle, c2: Candle) -> bool:
-    return c1.timestamp == c2.timestamp
 
 
 def calculate_indicators_and_bundle_into_this_moment():
@@ -283,19 +290,10 @@ def calculate_indicators_and_bundle_into_this_moment():
     log_debug(f"constructed this_moment: {this_moment}")
 
 
-def sync_last_candle(exchange: ccxt.Exchange, candles: list):
-    lc = get_last_candle(exchange, scenario.live_start_of_work_needed_candles)
-
-    # for compatibility with first moment
-    if not is_same_as(lc, candles[-1]):
-        previous_candle = get_n_past_candles(exchange, 2,
-                                             scenario.live_start_of_work_needed_candles - 1)[0]
-        candles.pop(0)
-        for c in candles:
-            c.identifier -= 1
-        candles[-1] = previous_candle
-        candles.append(lc)
-    else:
-        candles[-1] = lc
+def sync_last_candles(exchange: ccxt.Exchange, candles: list):
+    candles = get_n_past_candles(
+        exchange, scenario.live_start_of_work_needed_candles, 1, handle_failure=False)
+    if candles == SERVER_SIDE_ERROR:
+        return SERVER_SIDE_ERROR
 
     calculate_indicators_and_bundle_into_candles(candles)
