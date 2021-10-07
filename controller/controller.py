@@ -236,12 +236,7 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
 
     while True:
         log_info(f"working strategies are: {working_strategies}")
-        sleep_till_end_of_moment(exchange, start_time)
-
-        start_time = get_time_from_exchange(exchange)
-        if start_time == SERVER_SIDE_ERROR:
-            log_warning("moment process failed! => get_time_from_exchange")
-            continue
+        sleep_till_end_of_moment()
 
         moment_index += 1
 
@@ -258,13 +253,9 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
         try_strategies(this_moment, candles)
 
 
-def sleep_till_end_of_moment(exchange: ccxt.Exchange, last_wake_time: int):
-    x = (get_time_from_exchange(exchange) - last_wake_time) // 1000 + \
-        scenario.live_sleep_between_each_moment + scenario.live_calculations_threshold
-    x = int(scenario.live_timeframe_in_seconds / (scenario.live_timeframe_in_seconds // x))
-    # x = x // 60 * 60  # round the sleep time into minutes
-    print(f"moment index: {this_moment.moment_id} => sleeping {x} seconds.")
-    sleep(x)
+def sleep_till_end_of_moment():
+    print(f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
+    sleep(scenario.live_sleep_between_each_moment)
 
 
 def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_index: int):
@@ -292,8 +283,11 @@ def calculate_indicators_and_bundle_into_this_moment():
 
 
 def sync_last_candles(exchange: ccxt.Exchange, candles: list):
-    candles = get_n_past_candles(
+    new_candles = get_n_past_candles(
         exchange, scenario.live_start_of_work_needed_candles, 1, handle_failure=False)
+    candles.clear()
+    for c in new_candles:
+        candles.append(c)
     if candles == SERVER_SIDE_ERROR:
         return SERVER_SIDE_ERROR
 
