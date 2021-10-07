@@ -97,9 +97,11 @@ log19 = get_logger('cndl-mmnt-sync')
 
 class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
-        log19.warning(f'''C : {self.candles[self.moment.candle_id - 1]}
+        log19.warning(f'''C[0] : {self.candles[self.moment.candle_id - 1]}
+C[-1] : {self.candles[self.moment.candle_id - 2]}
         M : {self.moment}''')
-        return self.moment.minute % 5 == 0
+        # return self.moment.minute % 5 == 0
+        return False
 
     def start_strategy(self):
         self.buy_volume = 1

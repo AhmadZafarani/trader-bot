@@ -50,7 +50,7 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int, handle
         log_debug(
             "couldn't fetch all of your candles. we will try again after 5 seconds.")
         sleep(5)
-
+        # TODO Change sleep time
     return build_candle_objects_from_fetched_data(candles, n, start_index)
 
 

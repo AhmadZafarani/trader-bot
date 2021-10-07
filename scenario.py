@@ -171,7 +171,7 @@ class Scenario:
     }
 
     # in seconds
-    live_sleep_between_each_moment = 1 * 60
+    live_sleep_between_each_moment = 45
 
     # in seconds
     live_calculations_threshold = 10
