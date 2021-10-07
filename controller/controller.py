@@ -242,8 +242,9 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
 
         ret = sync_bot_data_with_exchange(exchange, candles, moment_index)
         if ret == SERVER_SIDE_ERROR:
-            log_warning(
+            log_error(
                 "moment process failed! => sync_bot_data_with_exchange")
+            moment_index -= 1
             continue
 
         # this part is for viewing previous moment
@@ -254,7 +255,8 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
 
 
 def sleep_till_end_of_moment():
-    print(f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
+    print(
+        f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
     sleep(scenario.live_sleep_between_each_moment)
 
 
@@ -285,10 +287,10 @@ def calculate_indicators_and_bundle_into_this_moment():
 def sync_last_candles(exchange: ccxt.Exchange, candles: list):
     new_candles = get_n_past_candles(
         exchange, scenario.live_start_of_work_needed_candles, 1, handle_failure=False)
+    if new_candles == SERVER_SIDE_ERROR:
+        return SERVER_SIDE_ERROR
+
     candles.clear()
     for c in new_candles:
         candles.append(c)
-    if candles == SERVER_SIDE_ERROR:
-        return SERVER_SIDE_ERROR
-
     calculate_indicators_and_bundle_into_candles(candles)

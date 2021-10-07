@@ -38,7 +38,7 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int, handle
             candles = exchange.fetch_ohlcv(
                 scenario.live_market, scenario.live_timeframe, limit=3 * n)
         except Exception as e:
-            log_warning(e.with_traceback(None))
+            log_error("error in get_n_past_candles" + str(e))
             if not handle_failure:
                 return SERVER_SIDE_ERROR
 
@@ -89,8 +89,8 @@ def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
     # not available for all exchanges
     try:
         return exchange.fetch_time()
-    except ccxt.RequestTimeout as e:
-        log_warning(e.with_traceback(None))
+    except Exception as e:
+        log_error("error in get_time_from_exchange" + str(e))
         return SERVER_SIDE_ERROR
 
 
@@ -125,5 +125,5 @@ def get_current_price(exchange: ccxt.Exchange) -> float:
         log_info(f"now {scenario.live_market} price is: {price}")
         return price
     except Exception as e:
-        log_warning(e.with_traceback(None))
+        log_error("error in get_current_price" + str(e))
         return SERVER_SIDE_ERROR
