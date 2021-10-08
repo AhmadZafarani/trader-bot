@@ -408,7 +408,6 @@ class Moving_average(Strategy):
                         return True
                 return False
         if key == 'line_to_line':
-
             moving1 = [
                 getattr(self.candles[self.moment.candle_id-2],
                         "ma"+str(value["options"]["line"][0])),
@@ -425,8 +424,12 @@ class Moving_average(Strategy):
                 return False
             if 0 in moving2:
                 return False
-            if moving1[0] > moving2[0] and moving1[1] <= moving2[1]:
-                return True
+            if value["options"]['cross'] :
+                if moving1[0] > moving2[0] and moving1[1] <= moving2[1]:
+                    return True
+            else : 
+                if moving1[0] > moving2[0] : 
+                    return True
 
     def strategy_works(self):
         global log5

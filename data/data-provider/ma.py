@@ -22,7 +22,7 @@ def moving_avrage(len: int, price_list: list):
 
 
 close_price = []
-with open('data/BTC_FULL_1h-time.csv') as csv_file:
+with open('data/BTC_new_1h-time.csv') as csv_file:
     csv_reader = csv.reader(csv_file)
     next(csv_reader)
     for row in csv_reader:
@@ -30,10 +30,10 @@ with open('data/BTC_FULL_1h-time.csv') as csv_file:
 # print(close_price)
 
 # moving_12 = moving_avrage(12, close_price)
-moving_9 = moving_avrage(52, close_price)
+moving_9 = moving_avrage(9, close_price)
 
-with open('data/BTC_FULL_1h_MA52.csv', mode='w') as ma_12file:
+with open('data/BTC_FULL_1h_MA9.csv', mode='w') as ma_12file:
     ma12 = csv.writer(ma_12file)
-    ma12.writerow(['ma52'])
+    ma12.writerow(['ma9'])
     for m in moving_9:
         ma12.writerow([str(m)])

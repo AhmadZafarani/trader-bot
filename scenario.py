@@ -1,8 +1,8 @@
 # YA BAGHER
 class Scenario:
-    candles_data_csv_file_name = 'BTC_FULL_1h.csv'
+    candles_data_csv_file_name = 'BTC_new_1h.csv'
 
-    moment_data_csv_file_name = 'BTC_FULL_1h_moment.csv'
+    moment_data_csv_file_name = 'BTC_new_1h_moment.csv'
 
     """
         these are dictionaries like this:
@@ -12,12 +12,12 @@ class Scenario:
     """
     extra_candles_data_files = {
         "ma9": "BTC_FULL_1h_MA9.csv",
-        "ma12": "BTC_FULL_1h_MA12.csv",
+        # "ma12": "BTC_FULL_1h_MA12.csv",
         "ma26": "BTC_FULL_1h_MA26.csv",
-        "ma31": "BTC_FULL_1h_MA31.csv",
-        "ma52": "BTC_FULL_1h_MA52.csv",
-        "ICHI": "BTC_FULL_1h_ICHI.csv",
-        "iscross": "BTC_FULL_1h_ISCROSS.csv"
+        # "ma31": "BTC_FULL_1h_MA31.csv",
+        # "ma52": "BTC_FULL_1h_MA52.csv",
+        # "ICHI": "BTC_FULL_1h_ICHI.csv",
+        # "iscross": "BTC_FULL_1h_ISCROSS.csv"
     }
     extra_moments_data_files = {
     }
@@ -30,9 +30,9 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 48 
+    profit_loss_period_step = 24
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 19, "loss_limit": -1.11}}
+    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 19, "loss_limit": -2.11}}
     # peridical_profit_loss_limit_enable = 1
     # peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
     # =====================================================================
@@ -42,11 +42,11 @@ class Scenario:
 
     buy_method = {
         "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
-        "line_to_line": {"enable": 1, "options": {"line": [9, 26]}}
+        "line_to_line": {"enable": 1, "options": {"line": [9, 26] ,"cross":0}}
     }
     sell_method = {
         "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "red": True}},
-        "line_to_line": {"enable": 0, "options": {"line": [12, 26]}},
+        "line_to_line": {"enable": 0, "options": {"line": [9, 26]}},
         "profit_loss_limit": {"enable": 0, "options": {"profit_limit": 10, "loss_limit": -1}},
     }
     volume_buy_ma = 89
