@@ -98,26 +98,44 @@ log19 = get_logger('cndl-mmnt-sync')
 class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
         log19.warning(f'''C[0] : {self.candles[self.moment.candle_id - 1]}
-C[-1] : {self.candles[self.moment.candle_id - 2]}
-        M : {self.moment}''')
+# C[-1] : {self.candles[self.moment.candle_id - 2]}
+#         M : {self.moment}''')
         # return self.moment.minute % 5 == 0
-        return False
+        return True 
 
     def start_strategy(self):
-        self.buy_volume = 1
-        self.sell_volume = 1
+        global lock_strategies
+        self.buy_volume = 99000 / self.moment.price
+        self.sell_volume = self.buy_volume
         controller.buy(self.buy_volume, self.moment.price)
         self.buy_price = self.moment.price
         self.buy_time = [self.moment.hour, self.moment.minute]
+        self.short_name = 'dummy'
+        self.sold = False
+        self.lock_hour = 0
+        self.finish_txt = 'EMPTY'
+        self.lock_method = "lock_to_fin"
+        if self.lock_method == 'lock_to_hour':
+            lock_strategies["dummy"] = [
+                Dummy_Strategy, self.moment.candle_id + self.lock_hour]
+        elif self.lock_method == "lock_to_fin":
+            lock_strategies["dummy"] = [Dummy_Strategy, 0]
+
+
 
     def continue_strategy(self, working_strategies, **kwargs):
-        if not controller.get_this_moment().minute % 5 == 3:
-            return
+        pass 
+        # if not controller.get_this_moment().minute % 5 == 3:
+        #     return
+        # self.sold = True
+        # self.finish_strategy(self.finish_txt)
+        # if self.lock_method == "lock_to_fin":
+        #     lock_strategies.pop("ichi_cross")
 
-        controller.sell(self.sell_volume, controller.get_this_moment().price)
-        self.finish_strategy(f'''date: {self.moment.date}
-        buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
-        ''')
+        # controller.sell(self.sell_volume, controller.get_this_moment().price)
+        # self.finish_strategy(f'''date: {self.moment.date}
+        # buy_time : {self.buy_time[0]} : {self.buy_time[1]} 
+        # ''')
 
 
 setup_logger('log6', r'logs/ichi.log')
@@ -393,26 +411,29 @@ class Moving_average(Strategy):
                         return True
                 return False
         if key == 'line_to_line':
-
             moving1 = [
-                getattr(self.candles[self.moment.candle_id - 2],
-                        "ma" + str(value["options"]["line"][0])),
-                getattr(self.candles[self.moment.candle_id - 3],
-                        "ma" + str(value["options"]["line"][0]))
+                getattr(self.candles[self.moment.candle_id-2],
+                        "ma"+str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id-3],
+                        "ma"+str(value["options"]["line"][0]))
             ]
             moving2 = [
-                getattr(self.candles[self.moment.candle_id - 2],
-                        "ma" + str(value["options"]["line"][1])),
-                getattr(self.candles[self.moment.candle_id - 3],
-                        "ma" + str(value["options"]["line"][1]))
+                getattr(self.candles[self.moment.candle_id-2],
+                        "ma"+str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id-3],
+                        "ma"+str(value["options"]["line"][1]))
             ]
             if 0 in moving1:
                 return False
             if 0 in moving2:
                 return False
-            if moving1[0] > moving2[0] and moving1[1] <= moving2[1]:
-                return True
-
+            if value["options"]['cross'] :
+                if moving1[0] > moving2[0] and moving1[1] <= moving2[1]:
+                    return True
+            else : 
+                if moving1[0] > moving2[0] : 
+                    print("buy")
+                    return True
     def strategy_works(self):
         global log5
         for key, value in scenario.buy_method.items():
@@ -553,5 +574,5 @@ class Moving_average(Strategy):
                     break
 
 
-strategies = {'dummy': Dummy_Strategy}
-# strategies = {'moving_average': Moving_average}
+# strategies = {'dummy': Dummy_Strategy}
+strategies = {'moving_average': Moving_average}
