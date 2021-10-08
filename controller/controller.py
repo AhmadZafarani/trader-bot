@@ -121,8 +121,8 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
     for ws in working_strategies:
         crypto1 += ws.sell_volume
     price = ((start_of_profit_loss_period_balance *
-              (1 + profit_loss/100)) - dollar) / crypto1 # can't o this for live 
-    price = moment.price 
+              (1 + profit_loss/100)) - dollar) / crypto1  # can't o this for live
+    price = moment.price
     for ws in working_strategies:
         if not ws.sold:
             sell(ws.sell_volume, price)

@@ -37,7 +37,8 @@ class Scenario:
 
     profit_loss_period_step = 48 * 60
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 19, "loss_limit": -1.11}}
+    periodical_profit_loss_limit = {"enable": 1, "options": {
+        "profit_limit": 19, "loss_limit": -1.11}}
     # periodical_profit_loss_limit_enable = 1
     # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
@@ -47,7 +48,7 @@ class Scenario:
 
     buy_method = {
         "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
-        "line_to_line": {"enable": 1, "options": {"line": [9, 26] ,"cross":1}}
+        "line_to_line": {"enable": 1, "options": {"line": [9, 26], "cross": 1}}
 
     }
     sell_method = {

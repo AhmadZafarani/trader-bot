@@ -64,6 +64,7 @@ def build_candle_objects_from_fetched_data(candles: list, n: int, start_index: i
             high_price=candles[i][2], low_price=candles[i][3],
             close_price=candles[i][4], traded_volume=candles[i][5]
         ))
+        candle_objects[j].set_timestamp(candles[i][0])
         j += 1
     return candle_objects
 
