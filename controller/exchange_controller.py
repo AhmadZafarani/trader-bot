@@ -79,11 +79,13 @@ def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
 
 
 def exchange_buy(crypto: float, price: float):
-    print(f"exchange buy with price: {price} and volume: {crypto} .")
+    # print(f"exchange buy with price: {price} and volume: {crypto} .")
+    pass
 
 
 def exchange_sell(crypto: float, price: float):
-    print(f"exchange sell with price: {price} and volume: {crypto} .")
+    # print(f"exchange sell with price: {price} and volume: {crypto} .")
+    pass
 
 
 def get_time_from_exchange(exchange: ccxt.Exchange) -> int:

@@ -1,5 +1,7 @@
 # YA REZA
 from abc import ABC, abstractmethod
+import string
+import random
 
 from model.Moment import Moment
 import controller.controller as controller
@@ -28,7 +30,7 @@ from controller.view_controller import setup_logger, get_logger
 
 
 class Strategy(ABC):
-    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list):
+    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list , logger , name : str) :
         self.moment = moment
         self.candles = candles
         self.working = False
@@ -42,8 +44,13 @@ class Strategy(ABC):
         self.sell_time_hour = 0
         self.sell_time_minute = 0
         self.btc_balance = btc
+        self.logger = logger
+        self.short_name = name
+        self.id = f'{name}_{str( "".join(random.choice(string.ascii_letters) for i in range(10)) )}'
         if self.strategy_works():
+
             self.working = True
+            self.logger.warning(f"strtegy \"{self.id}\" started in {self.moment.get_time_string()}")
             self.start_strategy()
 
     @abstractmethod
@@ -62,6 +69,7 @@ class Strategy(ABC):
         controller.set_report(Strategy.report(self.buy_price, controller.get_this_moment().price,
                                               self.__class__.__name__, self.buy_volume, self.sell_volume, args))
         self.working = False
+        self.logger.warning(f'{self.id} finished in {self.moment.get_time_string()}')
 
     @staticmethod
     def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, sold_volume: int,
@@ -91,16 +99,10 @@ lock_strategies = {}
 #             if ws.lock_method == "lock_to_fin":
 #                 lock_strategies.pop(ws.short_name)
 
-setup_logger('cndl-mmnt-sync', r'logs/cndl-mmnt-sync.log')
-log19 = get_logger('cndl-mmnt-sync')
 
 
 class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
-        log19.warning(f'''C[0] : {self.candles[self.moment.candle_id - 1]}
-# C[-1] : {self.candles[self.moment.candle_id - 2]}
-#         M : {self.moment}''')
-        # return self.moment.minute % 5 == 0
         return True
 
     def start_strategy(self):
@@ -112,15 +114,18 @@ class Dummy_Strategy(Strategy):
         self.buy_time = [self.moment.hour, self.moment.minute]
         self.short_name = 'dummy'
         self.sold = False
-        self.lock_hour = 0
+        self.lock_seconds = 60
         self.finish_txt = 'EMPTY'
         self.lock_method = "lock_to_fin"
+        self.logger.warning(f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
         if self.lock_method == 'lock_to_hour':
             lock_strategies["dummy"] = [
-                Dummy_Strategy, self.moment.candle_id + self.lock_hour]
+                Dummy_Strategy, self.moment.timestamp + self.lock_seconds , self.id] 
+
+            self.logger.warning(f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
         elif self.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
-
+            self.logger.warning(f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
     def continue_strategy(self, working_strategies, **kwargs):
         pass
         # if not controller.get_this_moment().minute % 5 == 3:
@@ -136,8 +141,6 @@ class Dummy_Strategy(Strategy):
         # ''')
 
 
-setup_logger('log6', r'logs/ichi.log')
-log6 = get_logger('log6')
 
 
 class ICHI_CROSS(Strategy):
@@ -382,8 +385,6 @@ class ICHI_CROSS(Strategy):
                     break
 
 
-setup_logger('log5', r'logs/moving_average.log')
-log5 = get_logger('log5')
 
 
 class Moving_average(Strategy):
@@ -434,11 +435,9 @@ class Moving_average(Strategy):
                     return True
 
     def strategy_works(self):
-        global log5
         for key, value in scenario.buy_method.items():
             if value['enable'] == 1:
                 if self.check_open_con(key=key, value=value):
-                    log5.info(self.candles[self.moment.candle_id-1])
                     return True
 
     def start_strategy(self):
@@ -446,8 +445,8 @@ class Moving_average(Strategy):
         self.short_name = 'moving_average'
         self.sold = False
         self.finish_txt = 'EMPTY'
-        self.lock_hour = 0
-        self.lock_method = "lock_to_fin"
+        self.lock_seconds = scenario.moving_average_lock_secnds
+        self.lock_method = scenario.moving_average_lock_method
         self.buy_time_date = self.moment.date
         self.buy_time_hour = self.moment.hour
         self.buy_time_minute = self.moment.minute
@@ -456,14 +455,22 @@ class Moving_average(Strategy):
         self.sell_volume = self.buy_volume
         self.C = self.candles[self.moment.candle_id-1]
         self.buy_price = self.moment.price
-
+        self.logger.warning(f" \"{self.id}\" - Details : vloume = {self.buy_volume} , price = {self.buy_price}")
         controller.buy(self.buy_volume, self.moment.price)
 
+
+        self.logger.warning(f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
         if self.lock_method == 'lock_to_hour':
-            lock_strategies[self.short_name] = [
-                Moving_average, self.moment.candle_id + self.lock_hour]
+            lock_strategies["dummy"] = [
+                Dummy_Strategy, self.moment.timestamp + self.lock_seconds , self.id] 
+
+            self.logger.warning(f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
         elif self.lock_method == "lock_to_fin":
-            lock_strategies[self.short_name] = [Moving_average, 0]
+            lock_strategies["dummy"] = [Dummy_Strategy, 0]
+            self.logger.warning(f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
+
+
+
 
     def fin_and_before(self):
         global lock_strategies
@@ -573,5 +580,5 @@ class Moving_average(Strategy):
                     break
 
 
-# strategies = {'dummy': Dummy_Strategy}
-strategies = {'moving_average': Moving_average}
+strategies = {'dummy': Dummy_Strategy}
+# strategies = {'moving_average': Moving_average}

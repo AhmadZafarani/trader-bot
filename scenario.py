@@ -35,27 +35,26 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 48 * 60
+    profit_loss_period_step = 2 * 60 * 2
 
     periodical_profit_loss_limit = {"enable": 1, "options": {
-        "profit_limit": 19, "loss_limit": -1.11}}
+        "profit_limit": 3, "loss_limit": -1}}
     # periodical_profit_loss_limit_enable = 1
     # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
     # opening conditions
-
+    moving_average_lock_method = "lock_to_fin" 
+    moving_average_lock_seconds = 0
     buy_method = {
         "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
-        "line_to_line": {"enable": 1, "options": {"line": [9, 26], "cross": 1}}
-
+        "line_to_line": {"enable": 1, "options": {"line": [9, 26], "cross": 1}},
     }
     sell_method = {
         "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "red": True}},
         "line_to_line": {"enable": 0, "options": {"line": [12, 26]}},
         "profit_loss_limit": {"enable": 0, "options": {"profit_limit": 10, "loss_limit": -1}},
-        "periodical_profit_loss_limit": {"enable": 1, "options": {"profit_limit": 12, "loss_limit": -1.8}}
     }
     volume_buy_ma = 89
     # buy_method_line_to_line_options_line = [31, 52]
@@ -172,16 +171,16 @@ class Scenario:
     }
 
     # in seconds
-    live_sleep_between_each_moment = 60
+    live_sleep_between_each_moment = 28
 
     live_market = 'BTC/USDT'
 
     # in seconds
     live_try_again_time_inactive_market = 30
 
-    live_timeframe = '1h'
+    live_timeframe = '5m'
 
-    live_timeframe_in_seconds = 60 * 60
+    live_timeframe_in_seconds = 5 * 60
 
     # fill 4 last characters with what I have send in the Group
     live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2XgM='

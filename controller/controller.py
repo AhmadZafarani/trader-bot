@@ -8,7 +8,7 @@ import model.strategy as strategies
 from scenario import scenario
 from controller.view_controller import *
 from controller.exchange_controller import *
-
+from view.views import log_cndl_mmnt
 
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
@@ -116,12 +116,12 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
         return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 4)
 
 
-def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
+def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int , logger) :
     crypto1 = 0
     for ws in working_strategies:
         crypto1 += ws.sell_volume
-    price = ((start_of_profit_loss_period_balance *
-              (1 + profit_loss/100)) - dollar) / crypto1  # can't o this for live
+    # price = ((start_of_profit_loss_period_balance *
+    #           (1 + profit_loss/100)) - dollar) / crypto1  # can't o this for live
     price = moment.price
     for ws in working_strategies:
         if not ws.sold:
@@ -129,14 +129,17 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
                 strategies.lock_strategies.pop(ws.short_name)
+    logger.warning(f'all({[x.id for x in working_strategies ]}) locked in {moment.get_time_string()}') 
+    logger.info(f'More Details for lock_all : price , Volume = {price} , {crypto1}')
 
 
-def try_strategies(moment: Moment, candles: list):
+def try_strategies(moment: Moment, candles: list , strategy_logger ):
     global working_strategies, bitcoin_balance, dollar_balance, lock_all
 
     for locked in list(strategies.lock_strategies):       # unlock strategies
         if strategies.lock_strategies[locked][1] != 0:
-            if strategies.lock_strategies[locked][1] == moment.candle_id:
+            if strategies.lock_strategies[locked][1] <= moment.timestamp:
+                strategy_logger.warning(f'"{strategies.lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
                 strategies.lock_strategies.pop(locked)
 
     # remove finished strategies from working_strategies
@@ -145,31 +148,38 @@ def try_strategies(moment: Moment, candles: list):
     # lock all strategy if periodical profit loss is reached
     if scenario.periodical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
         if moment.profit_loss_percentage >= scenario.periodical_profit_loss_limit['options']['profit_limit']:
+            strategy_logger.warning(f"periodical profit limit reached in {moment.get_time_string()}")
             lock_all = True
             lock_all_strategies(working_strategies=working_strategies, moment=moment,
                                 start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                                 dollar=dollar_balance,
-                                profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'])
+                                profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit']
+                                ,logger= strategy_logger)
         elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
+            strategy_logger.warning(f"periodical loss limit reached in {moment.get_time_string()}")
             lock_all = True
             lock_all_strategies(working_strategies=working_strategies, moment=moment,
                                 start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
-                                dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'])
+                                dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit']
+                                ,logger= strategy_logger)
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     for ws in working_strategies:
+        strategy_logger.debug(f'continuing "{ws.id}" in {moment.get_time_string()}')
         ws.continue_strategy(working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                              dollar_balance=dollar_balance)
 
     if not lock_all:
         for s in strategies.strategies:     # trying to start not locked strategies
             if not s in strategies.lock_strategies:
+                strategy_logger.debug(f'working on "{s}" in {moment.get_time_string()}')
                 strtg = strategies.strategies[s](
-                    moment, bitcoin_balance, dollar_balance, candles)
+                    moment, bitcoin_balance, dollar_balance, candles , logger=strategy_logger , name= s)
                 if strtg.working:
                     working_strategies.append(strtg)
 
     if lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
+        strategy_logger.warning(f'all strategies unlocked in {moment.get_time_string()}')
         lock_all = False
 
 
@@ -186,7 +196,6 @@ def buy(bitcoin: int, price: int):
     dollar_balance = round(dollar_balance, 4)
     if dollar_balance < 0:
         raise RuntimeError('dollar balance is negative')
-
 
 def sell(bitcoin: int, price: int):
     if scenario.live_trading_mode:
@@ -232,9 +241,9 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
     moment_index = 0
 
     calculate_indicators_and_bundle_into_this_moment()
-    control_start_live_view()
-    try_strategies(this_moment, candles)
-
+    loggers = control_start_live_view()
+    try_strategies(this_moment, candles , strategy_logger=loggers[1])
+    log_cndl_mmnt(loggers[0] , this_moment , candles)
     while True:
         log_info(f"working strategies are: {working_strategies}")
         sleep_till_end_of_moment()
@@ -249,10 +258,10 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
             continue
 
         # this part is for viewing previous moment
-        control_live_view(this_moment, moment_index,
+        control_live_view(loggers,candles,this_moment, moment_index,
                           bitcoin_balance, dollar_balance, strategy_results)
 
-        try_strategies(this_moment, candles)
+        try_strategies(this_moment, candles , strategy_logger=loggers[1])
 
 
 def sleep_till_end_of_moment():

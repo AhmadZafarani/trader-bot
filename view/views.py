@@ -44,3 +44,10 @@ def start_live_view():
             'Date, Start Of Period Balance, End Of Period Balance, Delta Balance, delta percentage\n')
     with open('strategy_results.txt', 'w') as file:
         pass
+
+def log_cndl_mmnt(logger , moment  , candles): 
+    log_string = f'''C[0] : {candles[moment.candle_id - 1]}
+         M : {moment}'''
+    logger.info(log_string)
+
+    
