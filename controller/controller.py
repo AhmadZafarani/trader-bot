@@ -265,8 +265,8 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list, start_time: int):
 
 
 def sleep_till_end_of_moment():
-    print(
-        f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
+    # print(
+    #     f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
     sleep(scenario.live_sleep_between_each_moment)
 
 
