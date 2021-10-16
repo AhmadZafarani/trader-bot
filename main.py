@@ -62,7 +62,7 @@ def live_main():
     this_moment = Moment(t / 1000.0, p, candles[-1].identifier)
     set_this_moment(this_moment)
 
-    analyze_live_data(exchange, candles, start_time)
+    analyze_live_data(exchange, candles)
 
 
 control_logs()

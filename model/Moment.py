@@ -5,12 +5,13 @@ from pytz import timezone
 
 def extract_time(time: int) -> tuple:
     t = datetime.fromtimestamp(time, timezone('GMT'))
-    return t.date().strftime('%x'), t.hour, t.minute, t.second , time
+    return t.date().strftime('%x'), t.hour, t.minute, t.second, time
 
 
 class Moment:
     def __init__(self, time: int, price: float, candle_id: int):
-        self.date, self.hour, self.minute, self.second, self.timestamp = extract_time(time)
+        self.date, self.hour, self.minute, self.second, self.timestamp = extract_time(
+            time)
         self.price = price
         self.candle_id = candle_id
         self.profit_loss_percentage = 0
@@ -18,7 +19,8 @@ class Moment:
 
     def update_moment(self, time: int, price: float, candle_id: int,
                       profit_loss_percentage: float, moment_id: int):
-        self.date, self.hour, self.minute, self.second , self.timestamp = extract_time(time)
+        self.date, self.hour, self.minute, self.second, self.timestamp = extract_time(
+            time)
         self.price = price
         self.candle_id = candle_id
         self.profit_loss_percentage = profit_loss_percentage

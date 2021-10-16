@@ -42,7 +42,7 @@ def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float,
     return True
 
 
-def control_live_view(loggers : list ,candles : list , moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float, strategy_results: list):
+def control_live_view(loggers: list, candles: list, moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float, strategy_results: list):
     global start_of_period_balance
 
     t = (dollar_balance, bitcoin_balance)
@@ -60,25 +60,26 @@ def control_live_view(loggers : list ,candles : list , moment: Moment, moment_in
         view_strategy_result(strategy_results[-1])
         strategy_results.pop()
 
-    log_cndl_mmnt(loggers[0], moment , candles )
+    log_cndl_mmnt(loggers[0], moment, candles)
 
 
 def control_start_live_view():
-    setup_logger('cndl-mmnt-sync', r'logs/cndl-mmnt-sync.log' , level=logging.INFO)
+    setup_logger('cndl-mmnt-sync', r'logs/cndl-mmnt-sync.log',
+                 level=logging.INFO)
     log19 = get_logger('cndl-mmnt-sync')
 
-    setup_logger('strategy-logs', r'logs/strategy-logs.log' , level=logging.INFO, format_log='%(asctime)s - %(message)s')
+    setup_logger('strategy-logs', r'logs/strategy-logs.log',
+                 level=logging.INFO, format_log='%(asctime)s - %(message)s')
     log20 = get_logger('strategy-logs')
 
-
     start_live_view()
-    return [log19 ,log20]
+    return [log19, log20]
 
 
 # ============= LOG CONTROL =========================================
 
 
-def setup_logger(logger_name: str, log_file: str, level=logging.INFO, format_log = '%(message)s'  ):
+def setup_logger(logger_name: str, log_file: str, level=logging.INFO, format_log='%(message)s'):
     l = logging.getLogger(logger_name)
     formatter = logging.Formatter(format_log)
     fileHandler = logging.FileHandler(log_file, mode='w')

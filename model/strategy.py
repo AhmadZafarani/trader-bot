@@ -6,7 +6,6 @@ import random
 from model.Moment import Moment
 import controller.controller as controller
 from scenario import scenario
-from controller.view_controller import setup_logger, get_logger
 """
     in order of implementing a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
@@ -30,7 +29,7 @@ from controller.view_controller import setup_logger, get_logger
 
 
 class Strategy(ABC):
-    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list , logger , name : str) :
+    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list, logger, name: str):
         self.moment = moment
         self.candles = candles
         self.working = False
@@ -50,7 +49,8 @@ class Strategy(ABC):
         if self.strategy_works():
 
             self.working = True
-            self.logger.warning(f"strtegy \"{self.id}\" started in {self.moment.get_time_string()}")
+            self.logger.warning(
+                f"strategy \"{self.id}\" started in {self.moment.get_time_string()}")
             self.start_strategy()
 
     @abstractmethod
@@ -69,7 +69,8 @@ class Strategy(ABC):
         controller.set_report(Strategy.report(self.buy_price, controller.get_this_moment().price,
                                               self.__class__.__name__, self.buy_volume, self.sell_volume, args))
         self.working = False
-        self.logger.warning(f'{self.id} finished in {self.moment.get_time_string()}')
+        self.logger.warning(
+            f'{self.id} finished in {self.moment.get_time_string()}')
 
     @staticmethod
     def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, sold_volume: int,
@@ -100,7 +101,6 @@ lock_strategies = {}
 #                 lock_strategies.pop(ws.short_name)
 
 
-
 class Dummy_Strategy(Strategy):
     def strategy_works(self) -> bool:
         return True
@@ -117,15 +117,19 @@ class Dummy_Strategy(Strategy):
         self.lock_seconds = 60
         self.finish_txt = 'EMPTY'
         self.lock_method = "lock_to_fin"
-        self.logger.warning(f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
+        self.logger.warning(
+            f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
         if self.lock_method == 'lock_to_hour':
             lock_strategies["dummy"] = [
-                Dummy_Strategy, self.moment.timestamp + self.lock_seconds , self.id] 
+                Dummy_Strategy, self.moment.timestamp + self.lock_seconds, self.id]
 
-            self.logger.warning(f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
+            self.logger.warning(
+                f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
         elif self.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
-            self.logger.warning(f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
+            self.logger.warning(
+                f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
+
     def continue_strategy(self, working_strategies, **kwargs):
         pass
         # if not controller.get_this_moment().minute % 5 == 3:
@@ -139,8 +143,6 @@ class Dummy_Strategy(Strategy):
         # self.finish_strategy(f'''date: {self.moment.date}
         # buy_time : {self.buy_time[0]} : {self.buy_time[1]}
         # ''')
-
-
 
 
 class ICHI_CROSS(Strategy):
@@ -221,7 +223,7 @@ class ICHI_CROSS(Strategy):
             return True
 
     def strategy_works(self) -> bool:
-        global log6
+        # global log6
         if self.moment.candle_id <= 77:
             return False
         if self.cross_happend():
@@ -241,7 +243,7 @@ class ICHI_CROSS(Strategy):
                     if scenario.opening_intractions[i] == 1:
                         if not self.check_open_con(i):
                             return False
-            log6.info(self.candles[self.moment.candle_id-1])
+            # log6.info(self.candles[self.moment.candle_id-1])
             return True
 
     def start_strategy(self):
@@ -379,12 +381,11 @@ class ICHI_CROSS(Strategy):
         for i in range(1, len(scenario.close_intraction)):
             if scenario.close_intraction[i-1] == 1:
                 if self.check_close_con(i=i, working_strategies=working_strategies,
-                                        start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], 
+                                        start_of_profit_loss_period_balance=kwargs[
+                                            'start_of_profit_loss_period_balance'],
                                         dollar_balance=kwargs["dollar_balance"]):
                     self.fin_and_before()
                     break
-
-
 
 
 class Moving_average(Strategy):
@@ -445,7 +446,7 @@ class Moving_average(Strategy):
         self.short_name = 'moving_average'
         self.sold = False
         self.finish_txt = 'EMPTY'
-        self.lock_seconds = scenario.moving_average_lock_secnds
+        self.lock_seconds = scenario.moving_average_lock_seconds
         self.lock_method = scenario.moving_average_lock_method
         self.buy_time_date = self.moment.date
         self.buy_time_hour = self.moment.hour
@@ -455,22 +456,22 @@ class Moving_average(Strategy):
         self.sell_volume = self.buy_volume
         self.C = self.candles[self.moment.candle_id-1]
         self.buy_price = self.moment.price
-        self.logger.warning(f" \"{self.id}\" - Details : vloume = {self.buy_volume} , price = {self.buy_price}")
+        self.logger.warning(
+            f" \"{self.id}\" - Details : volume = {self.buy_volume} , price = {self.buy_price}")
         controller.buy(self.buy_volume, self.moment.price)
 
-
-        self.logger.warning(f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
+        self.logger.warning(
+            f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
         if self.lock_method == 'lock_to_hour':
             lock_strategies["dummy"] = [
-                Dummy_Strategy, self.moment.timestamp + self.lock_seconds , self.id] 
+                Dummy_Strategy, self.moment.timestamp + self.lock_seconds, self.id]
 
-            self.logger.warning(f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
+            self.logger.warning(
+                f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
         elif self.lock_method == "lock_to_fin":
             lock_strategies["dummy"] = [Dummy_Strategy, 0]
-            self.logger.warning(f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
-
-
-
+            self.logger.warning(
+                f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
 
     def fin_and_before(self):
         global lock_strategies
