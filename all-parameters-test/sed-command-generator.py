@@ -16,6 +16,10 @@ num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
     and the values should all be generated and placed in a list
 """
 test_variables_list = [
+    ('month' ,  ['jan20', 'feb20', 'mar20', 'apr20' , 'jun20' , 'jul20' , 'aug20' , 'oct20' , 'nov20' , 
+'jan21', 'feb21', 'mar21' , 'aug21' , 'sep21'
+]),
+    ('strtgg', ['ma', 'ichi'])
     # ('buy_method_line_to_line_options_line' , [[9,12], [9,26] ,[9,31] , [9,52], [12,26] , [12,31] , [12,52] , [26,31],[26,52],[31,52] ])
     # ("peridical_profit_loss_limit_enable" , [0,1]),
     # ("buy_method_price_to_line_enable" , [0,1]),
@@ -23,8 +27,8 @@ test_variables_list = [
     # ("sell_method_price_to_line_enable" , [0,1]),
     # ("sell_method_line_to_line_enable" , [0,1]),
     # ("sell_method_profit_loss_limit" , [0,1])
-    ("per_profit_limit", [1*x+10 for x in range(11)]),
-    ("per_loss_limit", [-0.7 - 0.1*x for x in range(10)])
+    # ("per_profit_limit", [1*x+10 for x in range(11)]),
+    # ("per_loss_limit", [-0.7 - 0.1*x for x in range(10)])
     # ("profit_loss_period_step" , [24 , 48 , 72 , 96 , 12 , 36 ])
     # ("loss_limit_per" , [-0.1 - 0.1 * x for x in range(20)])
     # ("volume_buy", list(range(20, 80, 10))),

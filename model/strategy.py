@@ -218,8 +218,8 @@ class ICHI_CROSS(Strategy):
 
     def strategy_works(self) -> bool:
         global log6
-        # if self.moment.candle_id <= 27:
-        #     return False
+        if self.moment.candle_id <= 27:
+            return False
         if self.cross_happend():
             if scenario.opening_intractions[2] == 1:
                 for i in range(len(scenario.opening_intractions)):
@@ -433,6 +433,8 @@ class Moving_average(Strategy):
 
     def strategy_works(self):
         global log5
+        if self.moment.candle_id <= 26 :
+            return False
         for key, value in scenario.buy_method.items():
             if value['enable'] == 1:
                 if self.check_open_con(key=key, value=value):
@@ -569,5 +571,7 @@ class Moving_average(Strategy):
                     break
 
 
-# strategies = {'moving_average' : Moving_average }
-strategies = {'ichi_cross' : ICHI_CROSS }
+if scenario.strtgg == 'ma':
+    strategies = {'moving_average' : Moving_average }
+elif scenario.strtgg == 'ichi':
+    strategies = {'ichi_cross' : ICHI_CROSS }

@@ -1,8 +1,10 @@
 # YA BAGHER
 class Scenario:
-    candles_data_csv_file_name = 'BTC_Feb.csv'
+    month = "sep21"
+    strtgg = "ichi"
+    candles_data_csv_file_name = f'{month}/BTC_{month}.csv'
 
-    moment_data_csv_file_name = 'BTC_Feb_moment.csv'
+    moment_data_csv_file_name = f'{month}/BTC_{month}_moment.csv'
 
     """
         these are dictionaries like this:
@@ -11,13 +13,13 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ma9": "BTC_Feb_MA9.csv",
+        "ma9": f"{month}/BTC_{month}_MA9.csv",
         # "ma12": "BTC_FULL_1h_MA12.csv",
-        "ma26": "BTC_Feb_MA26.csv",
+        "ma26": f"{month}/BTC_{month}_MA26.csv",
         # "ma31": "BTC_FULL_1h_MA31.csv",
         # "ma52": "BTC_FULL_1h_MA52.csv",
-        "ICHI": "BTC_Feb_ICHI.csv",
-        "iscross": "BTC_Feb_ISCROSS.csv"
+        "ICHI": f"{month}/BTC_{month}_ICHI.csv",
+        "iscross": f"{month}/BTC_{month}_ISCROSS.csv"
     }
     extra_moments_data_files = {
     }
@@ -42,7 +44,7 @@ class Scenario:
 
     buy_method = {
         "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
-        "line_to_line": {"enable": 1, "options": {"line": [9, 26] ,"cross":0}}
+        "line_to_line": {"enable": 1, "options": {"line": [9, 26] ,"cross":1}}
     }
     sell_method = {
         "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "red": True}},

@@ -4,9 +4,7 @@ from hourly_data import h
 from ichimoku_bemola import ichi
 from ma import ma
 from span_cross_calc import iscross
-months = ['jan20', 'feb20', 'mar20', 'apr20' , 'may20', 'jun20' , 'jul20' , 'aug20' , 'sep20', 'oct20' , 'nov20' , 'dec20',
-'jan21', 'feb21', 'mar21', 'apr21' , 'may21', 'jun21' , 'jul21' , 'aug21' , 'sep21'
-]
+months =
 
 def get_month_name(month_name : int):
     
