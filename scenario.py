@@ -1,8 +1,8 @@
 # YA BAGHER
 class Scenario:
-    candles_data_csv_file_name = 'BTC_new_1h.csv'
+    candles_data_csv_file_name = 'BTC_Feb.csv'
 
-    moment_data_csv_file_name = 'BTC_new_1h_moment.csv'
+    moment_data_csv_file_name = 'BTC_Feb_moment.csv'
 
     """
         these are dictionaries like this:
@@ -11,13 +11,13 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ma9": "BTC_FULL_1h_MA9.csv",
+        "ma9": "BTC_Feb_MA9.csv",
         # "ma12": "BTC_FULL_1h_MA12.csv",
-        "ma26": "BTC_FULL_1h_MA26.csv",
+        "ma26": "BTC_Feb_MA26.csv",
         # "ma31": "BTC_FULL_1h_MA31.csv",
         # "ma52": "BTC_FULL_1h_MA52.csv",
-        # "ICHI": "BTC_FULL_1h_ICHI.csv",
-        # "iscross": "BTC_FULL_1h_ISCROSS.csv"
+        "ICHI": "BTC_Feb_ICHI.csv",
+        "iscross": "BTC_Feb_ISCROSS.csv"
     }
     extra_moments_data_files = {
     }
@@ -30,9 +30,9 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24
+    profit_loss_period_step = 24 * 2
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 19, "loss_limit": -2.11}}
+    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 18, "loss_limit": -1.5}}
     # peridical_profit_loss_limit_enable = 1
     # peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
     # =====================================================================
@@ -49,7 +49,7 @@ class Scenario:
         "line_to_line": {"enable": 0, "options": {"line": [9, 26]}},
         "profit_loss_limit": {"enable": 0, "options": {"profit_limit": 10, "loss_limit": -1}},
     }
-    volume_buy_ma = 89
+    volume_buy_ma = 80
     # buy_method_line_to_line_options_line = [31, 52]
 
     # buy_method_price_to_line_enable = 1
@@ -93,7 +93,7 @@ class Scenario:
 
     # opening conditions intractions :
     # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
-    opening_intractions = [0, 0, 1, 0]
+    opening_intractions = [0, 0, 0, 0]
 
     # closing_conditions:
     # methods :
@@ -145,7 +145,7 @@ class Scenario:
     # example
     # dufault:11111
     # {Met1, Met2, Met3, Met4, Met5}
-    close_intraction = [1, 0, 0, 0]
+    close_intraction = [0, 0, 0, 0]
     volume_buy_ichi = 90
 
 scenario = Scenario()
