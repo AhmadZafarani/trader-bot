@@ -266,6 +266,7 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list):
             log_error(
                 "moment process failed! => sync_bot_data_with_exchange")
             moment_index -= 1
+            this_moment.decrease_momnet_id()
             continue
 
         # this part is for viewing previous moment
