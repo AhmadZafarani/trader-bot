@@ -1,7 +1,7 @@
 # YA BAGHER
 class Scenario:
-    month = "sep21"
-    strtgg = "ichi"
+    month = "jan20"
+    strtgg = "ma"
     candles_data_csv_file_name = f'{month}/BTC_{month}.csv'
 
     moment_data_csv_file_name = f'{month}/BTC_{month}_moment.csv'
@@ -32,11 +32,15 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24 * 2
+    profit_loss_period_step = 48
 
     peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 18, "loss_limit": -1.5}}
-    # peridical_profit_loss_limit_enable = 1
-    # peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
+    peridical_profit_loss_limit_enable = 1
+    peridical_profit_limit = 18.0
+    peridical_loss_limit = -1.8
+    peridical_profit_loss_limit['options']['profit_limit'] = peridical_loss_limit
+    peridical_profit_loss_limit['options']['profit_limit'] = peridical_profit_limit
+    peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
@@ -55,13 +59,17 @@ class Scenario:
     # buy_method_line_to_line_options_line = [31, 52]
 
     # buy_method_price_to_line_enable = 1
-    # buy_method_line_to_line_enable = 1
+    buy_method_line_to_line_enable = 1
+    buy_method_line_to_line_cross = 1
+    sell_method_line_to_line_enable = 0
     # sell_method_price_to_line_enable = 1
-    # sell_method_line_to_line_enable = 1
+    # sell_method_line_to_line_enable = 0
     # sell_method_profit_loss_limit = 1
     # buy_method['line_to_line']['options']['line'] = buy_method_line_to_line_options_line
     # buy_method['price_to_line']['enable'] = buy_method_price_to_line_enable
-    # buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
+    buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
+    buy_method['line_to_line']['options']['cross'] = buy_method_line_to_line_cross
+    sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
     # sell_method['price_to_line']['enable'] = sell_method_price_to_line_enable
     # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
     # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit

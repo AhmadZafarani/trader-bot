@@ -38,6 +38,9 @@ def open_output_and_calculate_variance_expected():
 
 
 v_e = open_output_and_calculate_variance_expected()
+if inp == 'only-print-profit': 
+    print(v_e[2])
+    exit(1)
 print(str(v_e)[1:-1])
 if inp != "only-print":
     xpoints = np.array(range(0, len(percent)))
