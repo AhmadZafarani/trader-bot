@@ -173,13 +173,18 @@ async def read_own_items(current_user: User = Depends(get_current_active_user)):
 
 @app.get("/single_month")
 async def month(strtgg :Strategy, month:str, profit_loss_period_step :int = 48,peridical_profit_loss_limit_enable : int = 1 ,peridical_profit_limit: float = 18,peridical_loss_limit: float = -1.8,
-    buy_method_line_to_line_enable : int = 1 , buy_method_line_to_line_cross: int = 1, volume_buy_ma:int=80 , sell_method_line_to_line_enable : int = 0,token: str = Depends(oauth2_scheme)):
+    buy_method_line_to_line_enable : int = 1 , buy_method_line_to_line_cross: int = 1, volume_buy_ma:int=80 , sell_method_line_to_line_enable : int = 0,
+    global_limit : int = 0,global_loss_limit:float=0,global_profit_limit:float=0,token: str = Depends(oauth2_scheme)):
     sed_str = f'sed -i "s/\\(month = \\).*/\\1\\"{month}\\"/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(strtgg = \\).*/\\1\\"{strtgg}\\"/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(profit_loss_period_step = \\).*/\\1{profit_loss_period_step}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_loss_limit_enable = \\).*/\\1{peridical_profit_loss_limit_enable}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_limit = \\).*/\\1{peridical_profit_limit}/" scenario.py'
+
     sed_str = f'{sed_str};sed -i "s/\\(peridical_loss_limit = \\).*/\\1{peridical_loss_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_loss_limit = \\).*/\\1{global_loss_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(buy_method_line_to_line_enable = \\).*/\\1{int(buy_method_line_to_line_enable)}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(buy_method_line_to_line_cross = \\).*/\\1{int(buy_method_line_to_line_cross)}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(volume_buy_ma = \\).*/\\1{volume_buy_ma}/" scenario.py'
@@ -192,11 +197,15 @@ async def month(strtgg :Strategy, month:str, profit_loss_period_step :int = 48,p
 
 @app.get("/all_month")
 async def all_month(profit_loss_period_step :int = 48,peridical_profit_loss_limit_enable : int = 1 ,peridical_profit_limit: float = 18,peridical_loss_limit: float = -1.8,
-    buy_method_line_to_line_enable : int = 1 , buy_method_line_to_line_cross: int = 1, volume_buy_ma:int=80 , sell_method_line_to_line_enable : int = 0,token: str = Depends(oauth2_scheme)):
+    buy_method_line_to_line_enable : int = 1 , buy_method_line_to_line_cross: int = 1, volume_buy_ma:int=80 , sell_method_line_to_line_enable : int = 0,
+    global_limit : int = 0,global_loss_limit:float=0,global_profit_limit:float=0,token: str = Depends(oauth2_scheme)):
     sed_str = f'sed -i "s/\\(profit_loss_period_step = \\).*/\\1{profit_loss_period_step}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_loss_limit_enable = \\).*/\\1{peridical_profit_loss_limit_enable}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_limit = \\).*/\\1{peridical_profit_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(peridical_loss_limit = \\).*/\\1{peridical_loss_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_loss_limit = \\).*/\\1{global_loss_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(buy_method_line_to_line_enable = \\).*/\\1{int(buy_method_line_to_line_enable)}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(buy_method_line_to_line_cross = \\).*/\\1{int(buy_method_line_to_line_cross)}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(volume_buy_ma = \\).*/\\1{volume_buy_ma}/" scenario.py'

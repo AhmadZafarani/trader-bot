@@ -16,6 +16,7 @@ this_moment = Moment(0, 0, 0)
 strategy_results = []
 working_strategies = []
 lock_all = False # used to locking all strategies 
+till_end = False
 def open_extra_files(extra_files: dict) -> list:
     files = []
     for file in extra_files:
@@ -113,6 +114,7 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
         # print('ws.sell_volume : ' ,ws.sell_volume)
         crypto1 += ws.sell_volume
     # print(f'crypto1 : {crypto1}')
+    # print(crypto1)
     price = ((start_of_profit_loss_period_balance *(1 + profit_loss/100)) - dollar) / crypto1
     for ws in working_strategies:
         if not ws.selled:
@@ -122,16 +124,33 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
             if ws.lock_method == "lock_to_fin":
                 strategies.lock_strategies.pop(ws.short_name)
 
-
+def get_global_profit_loss(price):
+    global bitcoin_balance, dollar_balance
+    money = dollar_balance + bitcoin_balance*price 
+    # print(round(100 * (money - scenario.start_of_work_dollar_balance) / scenario.start_of_work_dollar_balance,3))
+    return round( 100*(money - scenario.start_of_work_dollar_balance) / scenario.start_of_work_dollar_balance,3)
 
 def try_strategies(moment: Moment, candles: list):
-    global working_strategies, bitcoin_balance, dollar_balance, lock_all
+    global working_strategies, bitcoin_balance, dollar_balance, lock_all, till_end
 
+    if till_end : 
+        return
     for locked in list(strategies.lock_strategies):       # unlock strategies
         if strategies.lock_strategies[locked][1] != 0:
             if strategies.lock_strategies[locked][1] == moment.candle_id:
                 strategies.lock_strategies.pop(locked)
     # remove finished strategies from working_strategies
+    if scenario.global_limit :
+        if get_global_profit_loss(moment.price) >= scenario.global_profit_limit :
+            till_end = True
+            lock_all_strategies(
+            working_strategies=working_strategies, moment=moment, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_profit_limit)
+            return
+        if get_global_profit_loss(moment.price) <= scenario.global_loss_limit :
+            till_end = True
+            lock_all_strategies(
+            working_strategies=working_strategies, moment=moment, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_loss_limit)
+
     working_strategies = [ws for ws in working_strategies if ws.working]
     # lock all strategy if periodical profit loss is reached
     if scenario.peridical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
@@ -151,7 +170,7 @@ def try_strategies(moment: Moment, candles: list):
             working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar_balance=dollar_balance)
 
 
-
+    
 
     if not lock_all:
         for s in strategies.strategies:     # trying to start not locked strategies
@@ -164,6 +183,8 @@ def try_strategies(moment: Moment, candles: list):
         # print(f'all_unlocked in {moment}')
         lock_all = False
 
+
+    
 
 def buy(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance

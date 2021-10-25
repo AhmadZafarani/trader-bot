@@ -1,7 +1,7 @@
 # YA BAGHER
 class Scenario:
-    month = "jan20"
-    strtgg = "ma"
+    month = "sep21"
+    strtgg = "ichi"
     candles_data_csv_file_name = f'{month}/BTC_{month}.csv'
 
     moment_data_csv_file_name = f'{month}/BTC_{month}_moment.csv'
@@ -36,6 +36,12 @@ class Scenario:
 
     peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 18, "loss_limit": -1.5}}
     peridical_profit_loss_limit_enable = 1
+    
+    global_limit = 1
+    global_loss_limit = -1.0
+    global_profit_limit = 10.0
+    
+    
     peridical_profit_limit = 18.0
     peridical_loss_limit = -1.8
     peridical_profit_loss_limit['options']['profit_limit'] = peridical_loss_limit
