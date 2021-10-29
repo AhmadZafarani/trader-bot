@@ -34,19 +34,19 @@ class Scenario:
 
     profit_loss_period_step = 48
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 18, "loss_limit": -1.5}}
-    peridical_profit_loss_limit_enable = 1
-    
+    periodical_profit_loss_limit = {"enable": 1, "options": {
+        "profit_limit": 18, "loss_limit": -1.5}}
+    periodical_profit_loss_limit_enable = 1
+
     global_limit = 1
     global_loss_limit = -1.0
     global_profit_limit = 10.0
-    
-    
-    peridical_profit_limit = 18.0
-    peridical_loss_limit = -1.8
-    peridical_profit_loss_limit['options']['profit_limit'] = peridical_loss_limit
-    peridical_profit_loss_limit['options']['profit_limit'] = peridical_profit_limit
-    peridical_profit_loss_limit['enable'] = peridical_profit_loss_limit_enable
+
+    periodical_profit_limit = 18.0
+    periodical_loss_limit = -1.8
+    periodical_profit_loss_limit['options']['profit_limit'] = periodical_loss_limit
+    periodical_profit_loss_limit['options']['profit_limit'] = periodical_profit_limit
+    periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
@@ -54,7 +54,7 @@ class Scenario:
 
     buy_method = {
         "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
-        "line_to_line": {"enable": 1, "options": {"line": [9, 26] ,"cross":1}}
+        "line_to_line": {"enable": 1, "options": {"line": [9, 26], "cross": 1}}
     }
     sell_method = {
         "price_to_line": {"enable": 0, "options": {"line": 12, "min_percentage": 50, "red": True}},
@@ -81,8 +81,8 @@ class Scenario:
     # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
     # per_profit_limit = 20
     # per_loss_limit = -1.6
-    # peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
-    # peridical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
+    # periodical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
+    # periodical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
@@ -102,10 +102,10 @@ class Scenario:
     # default : 4
     under_cloud_condition2 = 0.05
 
-    # next_candle_lenght_min
+    # next_candle_length_min
     # values : -5 , 5
     # default : 1
-    next_candle_lenght_min = 0.2
+    next_candle_length_min = 0.2
 
     # opening conditions intractions :
     # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
@@ -159,10 +159,11 @@ class Scenario:
 
     # intraction is a 5 bit binary number
     # example
-    # dufault:11111
+    # default:11111
     # {Met1, Met2, Met3, Met4, Met5}
     close_intraction = [0, 0, 0, 0]
     volume_buy_ichi = 90
+
 
 scenario = Scenario()
 
