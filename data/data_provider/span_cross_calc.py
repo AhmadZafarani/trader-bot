@@ -1,11 +1,13 @@
 import csv
 # import matplotlib.pyplot as plt
-def iscross(input : str , out : str ):
+
+
+def iscross(input: str, out: str):
     lead1 = []
     lead2 = []
 
-    input_file = "data/" + input +"_ICHI.csv"
-    output_file = "data/" + out +"_ISCROSS.csv"
+    input_file = "data/" + input + "_ICHI.csv"
+    output_file = "data/" + out + "_ISCROSS.csv"
     with open(input_file) as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
@@ -36,7 +38,6 @@ def iscross(input : str , out : str ):
     # plt.scatter(is_cross_id , is_cross)
     # plt.show()
 
-
     with open(output_file, mode='w') as outfile:
         snpan_cross = csv.writer(outfile)
         snpan_cross.writerow(['span_iscross'])
@@ -44,4 +45,4 @@ def iscross(input : str , out : str ):
             snpan_cross.writerow([str(m)])
 
 
-iscross('test' , 'test')
+iscross('test', 'test')
