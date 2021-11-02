@@ -1,6 +1,8 @@
 # YA BAGHER
+from model.types import Directoin
 class Scenario:
-    month = "sep21"
+
+    month = "jan21"
     strtgg = "ichi"
     candles_data_csv_file_name = f'{month}/BTC_{month}.csv'
 
@@ -26,18 +28,23 @@ class Scenario:
 
     fee = 0.001
 
+    future_fee = 0.001 / 4
     start_of_work_dollar_balance = 100000
 
     start_of_work_crypto_balance = 0
+
+    start_of_work_Positoin = {"direction" : Directoin.NONE , "size" : 0 , "entry_price" : 0 , "leverage" : 1 }
+
+    start_of_work_future_dollar = 100000
 
     number_of_moments_in_a_candle = 1
 
     profit_loss_period_step = 48
 
-    peridical_profit_loss_limit = {"enable": 1, "options": {"profit_limit": 18, "loss_limit": -1.5}}
-    peridical_profit_loss_limit_enable = 1
+    peridical_profit_loss_limit = {"enable": 0, "options": {"profit_limit": 18, "loss_limit": -1.5}}
+    peridical_profit_loss_limit_enable = 0
     
-    global_limit = 1
+    global_limit = 0
     global_loss_limit = -1.0
     global_profit_limit = 10.0
     

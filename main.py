@@ -6,12 +6,6 @@ from scenario import scenario
 import os
 
 def s():
-    try : 
-        os.remove("balance_report.csv")
-        os.remove("periodical_report.csv")
-        os.remove("strategy_result.txt")
-    except : 
-        pass
     start_time = time()
 
     data_folder = Path("data")

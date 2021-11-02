@@ -28,7 +28,7 @@ from controller.logs import setup_logger
 
 
 class Strategy(ABC):
-    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list):
+    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list , feature_balance: float):
         self.moment = moment
         self.candles = candles
         self.working = False
@@ -37,6 +37,7 @@ class Strategy(ABC):
         self.buy_volume = 0
         self.sell_volume = 0
         self.dollar_balance = dollar
+        self.future_balance = feature_balance
         self.sold_volume = 0
         self.sell_time_date = "0/0/0"
         self.sell_time_hour = 0
@@ -570,8 +571,51 @@ class Moving_average(Strategy):
                     self.fin_and_before()
                     break
 
+class Dummy_Strategy_future(Strategy):
 
-if scenario.strtgg == 'ma':
-    strategies = {'moving_average' : Moving_average }
-elif scenario.strtgg == 'ichi':
-    strategies = {'ichi_cross' : ICHI_CROSS }
+    def strategy_works(self) -> bool:
+        if self.moment.hour == 13 and self.moment.minute == 0 :
+            return True
+        return False
+
+    def start_strategy(self):
+        self.short_name = 'dummy_f'
+        self.lock_hour = 10
+        self.lock_method = "lock_to_fin"
+        self.buy_id = self.moment.candle_id
+        self.buy_volume = 0.995 * self.future_balance/self.moment.price
+        print(f'{self.buy_volume * self.moment.price}')
+        self.sell_volume = self.buy_volume
+        print(f'Long added ')
+        controller.Short(self.buy_volume, self.moment.price)
+        self.buy_price = self.moment.price
+        self.C = self.candles[self.moment.candle_id - 1]
+        self.buy_time = [self.moment.hour, self.moment.minute]
+        self.buy_date = self.moment.date
+        if self.lock_method == 'lock_to_hour':
+            lock_strategies["dummy_f"] = [
+                Dummy_Strategy, self.moment.candle_id + self.lock_hour, "normal"]
+        elif self.lock_method == "lock_to_fin":
+            lock_strategies["dummy_f"] = [Dummy_Strategy, 0]
+
+    def continue_strategy(self, working_strategies, **kwargs):
+        if not (self.moment.hour == 16 and self.moment.minute==0) :
+            return
+        self.finish_txt = f'''date: {self.moment.date}
+        Candle : {self.C}
+        buy_time : {self.buy_date} {self.buy_time[0]}:{self.buy_time[1]} 
+        sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
+        '''
+        print(f'Short Added')
+        controller.Long(self.sell_volume, controller.get_this_moment().price)
+        self.selled = True
+        self.finish_strategy(self.finish_txt)
+        if self.lock_method == "lock_to_fin":
+            lock_strategies.pop("dummy_f")
+
+
+strategies = {'dummy_f' : Dummy_Strategy_future }
+# if scenario.strtgg == 'ma':
+#     strategies = {'moving_average' : Moving_average }
+# elif scenario.strtgg == 'ichi':
+#     strategies = {'ichi_cross' : ICHI_CROSS }
