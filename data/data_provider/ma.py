@@ -20,9 +20,10 @@ def moving_avrage(len: int, price_list: list):
         i += 1
     return ma
 
-def ma(value : int , input : str , out:str ) : 
+
+def ma(value: int, input: str, out: str):
     close_price = []
-    with open('data/'+ input+ '-time.csv') as csv_file:
+    with open('data/' + input + '-time.csv') as csv_file:
         csv_reader = csv.reader(csv_file)
         next(csv_reader)
         for row in csv_reader:
@@ -32,9 +33,11 @@ def ma(value : int , input : str , out:str ) :
     # moving_12 = moving_avrage(12, close_price)
     moving_9 = moving_avrage(value, close_price)
 
-    with open('data/'+ out+ '_MA' +str(value)+'.csv', mode='w') as ma_12file:
+    with open('data/' + out + '_MA' + str(value)+'.csv', mode='w') as ma_12file:
         ma12 = csv.writer(ma_12file)
         ma12.writerow(['ma'+str(value)])
         for m in moving_9:
             ma12.writerow([str(m)])
-ma(26 , 'test' , 'test')
+
+
+ma(26, 'test', 'test')

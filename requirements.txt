@@ -1,5 +1,7 @@
-ccxt
 matplotlib
 numpy
 pandas
 cryptocompare
+fastapi
+jose
+passlib

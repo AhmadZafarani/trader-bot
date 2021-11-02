@@ -1,10 +1,10 @@
 from cryptocompare import *
 import csv
-import time
 
-def h(c : str , ct : int , bs: int  , out : str ) :
+
+def h(c: str, ct: int, bs: int, out: str):
     # c = 'btc'
-    # ct = 1627689600  
+    # ct = 1627689600
     ct = ct - (ct % 3600)
     # bs = 1622419200
     bs = bs - (bs % 3600)
@@ -51,6 +51,7 @@ def h(c : str , ct : int , bs: int  , out : str ) :
             if line.get('volumeto') == 0:
                 continue
             writer.writerow([line.get('time')*1000, line.get('high'), line.get('low'),
-                            line.get('open'), line.get('close'), line.get('volumeto')])
+                             line.get('open'), line.get('close'), line.get('volumeto')])
 
-h('btc' , 1612137600 , 1609459200 , 'test' )
+
+h('btc', 1612137600, 1609459200, 'test')

@@ -15,8 +15,9 @@ def max_finder(data: list):
         maximum = max(maximum, i)
     return maximum
 
-def ichi(input : str , out : str) :
-    fd = pd.read_csv("data/" + input +"-time.csv")
+
+def ichi(input: str, out: str):
+    fd = pd.read_csv("data/" + input + "-time.csv")
     data = fd.values
     low_values = []
     high_values = []
@@ -87,18 +88,20 @@ def ichi(input : str , out : str) :
     #         else:
     #             writer.writerow([0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
 
-    with open('data/'+out +'_ICHI.csv', 'w', newline='') as file:
+    with open('data/'+out + '_ICHI.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['conversion_line', 'base_line',
-                        'lagging_span', 'leading_line1', 'leading_line2'])
+                         'lagging_span', 'leading_line1', 'leading_line2'])
         for i in range(len(data) + lag - 1):
             if i < len(data) - lag + 1:
                 writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), round(lagging_span[i + lag - 1], 3),
-                                round(leading_line1[i], 3), round(leading_line2[i], 3)])
+                                 round(leading_line1[i], 3), round(leading_line2[i], 3)])
             elif i < len(data):
                 writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), 0,
-                                round(leading_line1[i], 3), round(leading_line2[i], 3)])
+                                 round(leading_line1[i], 3), round(leading_line2[i], 3)])
             else:
                 writer.writerow(
                     [0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
-ichi(input='test' , out='test')
+
+
+ichi(input='test', out='test')

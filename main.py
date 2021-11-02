@@ -3,9 +3,17 @@ from controller.controller import data_converter, analyze_data
 from pathlib import Path
 from time import time
 from scenario import scenario
-import os
+from os import remove
 
-def s():
+
+def main():
+    try:
+        remove("balance_report.csv")
+        remove("periodical_report.csv")
+        remove("strategy_result.txt")
+    except:
+        pass
+
     start_time = time()
 
     data_folder = Path("data")
@@ -28,6 +36,6 @@ def s():
 
     print('total runtime : ', time() - start_time)
 
-if  __name__ == "__main__":
-    s()
-    
+
+if __name__ == "__main__":
+    main()
