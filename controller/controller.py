@@ -2,19 +2,15 @@
 from csv import reader
 from model.Candle import Candle
 from model.Moment import Moment
-from model.Position import Position, Direction
 import model.strategy as strategies
 from controller.view_controller import control_views, check_view_essentials, view_before_trade
 from scenario import scenario
 from controller.logs import setup_logger, get_logger
+from futures_controller import position, future_balance
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
-
-position = Position(scenario.start_of_work_position['direction'] ,scenario.start_of_work_position['size'],scenario.start_of_work_position['entry_price'],scenario.start_of_work_position['leverage'])
-future_balance = scenario.start_of_work_future_dollar 
-
 start_of_profit_loss_period_balance = 0
 this_moment = Moment(0, 0, 0)
 strategy_results = []
@@ -59,6 +55,16 @@ def data_converter(candles_file: str, extra_candle_files: dict) -> list:
     return candles
 
 
+def bundle_extra_fields_into_this_moment(moments_extra_files: list, moment_index: int):
+    for file in moments_extra_files:
+        field_names = file[0]
+        field_length = len(field_names)
+        fields = [f for f in file[moment_index]]
+
+    for j in range(field_length):
+        this_moment.__setattr__(field_names[j], float(fields[j]))
+
+
 def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files: list, candle: Candle, candles: list):
     time, price, volume = csv_reader[moment_index]        # volume MAY be used!
     price = float(price)
@@ -67,20 +73,13 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
     this_moment.update_moment(
         time, price, candle.identifier, profit_loss_percentage, moment_index)
-    position.pnl_calc(price)
-    print(this_moment)
-    print(position)
-    print(f'future_balance = {future_balance}')
-    for file in moments_extra_files:
-        field_names = file[0]
-        field_length = len(field_names)
-        fields = [f for f in file[moment_index]]
+    position.calculate_pnl(price)
 
-        for j in range(field_length):
-            this_moment.__setattr__(field_names[j], float(fields[j]))
+    bundle_extra_fields_into_this_moment(moments_extra_files, moment_index)
 
     viewed = view_before_trade(this_moment, moment_index,
                                bitcoin_balance, dollar_balance)
+
     try_strategies(this_moment, candles)
 
     if not viewed:
@@ -89,7 +88,6 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
 
 
 def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
-    # setup logger
     files = open_extra_files(moments_extra_files)
     setup_logger('log1', r'logs/cndl-mmnt.log')
     log1 = get_logger('log1')
@@ -142,7 +140,7 @@ def get_global_profit_loss(price):
 
 
 def try_strategies(moment: Moment, candles: list):
-    global working_strategies, bitcoin_balance, dollar_balance, lock_all, till_end, position , future_balance
+    global working_strategies, bitcoin_balance, dollar_balance, lock_all, till_end, position, future_balance
 
     if till_end:
         return
@@ -185,7 +183,7 @@ def try_strategies(moment: Moment, candles: list):
         for s in strategies.strategies:     # trying to start not locked strategies
             if not s in strategies.lock_strategies:
                 strtg = strategies.strategies[s](
-                    moment, bitcoin_balance, dollar_balance, candles, future_balance )
+                    moment, bitcoin_balance, dollar_balance, candles, future_balance)
                 if strtg.working:
                     working_strategies.append(strtg)
 
@@ -202,105 +200,6 @@ def buy(bitcoin: int, price: int):
     dollar_balance = round(dollar_balance, 4)
     if dollar_balance < 0:
         raise RuntimeError('dollar balance is negative')
-
-
-def Long(size: int , price: int):
-    global position , future_balance
-    size = round(size, 4 )
-    if position.direction == Direction.NONE : 
-        position.size += size
-        position.entry_price = price
-        position.direction = Direction.LONG
-        future_balance -= (size * price * (1 + scenario.future_fee))
-        future_balance = round(future_balance, 4)
-        if future_balance < 0:
-            raise RuntimeError('future_balance is negative')
-    elif position.direction == Direction.SHORT: 
-        if size < position.size :
-            position.size -= size 
-            future_balance += (size * position.entry_price) + position.pnl
-            future_balance -+ (size * price) * scenario.future_fee
-            future_balance = round(future_balance, 4)
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-        elif size == position.size :
-            position.size = 0 
-            position.direction = Direction.NONE
-            future_balance += (size * position.entry_price) + position.pnl
-            future_balance -+ (size * price) * scenario.future_fee
-            future_balance = round(future_balance, 4)
-            position.entry_price = 0 
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-        elif size > position.size : 
-            future_balance += (position.size * position.entry_price) + position.pnl
-            future_balance -+ (size * price) * scenario.future_fee
-            position.size = size - position.size
-            position.direction = Direction.LONG
-            position.entry_price = price 
-            future_balance -= ((size - position.size) * price )
-            future_balance = round(future_balance, 4)
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-    elif position.direction == Direction.LONG : 
-            position.entry_price = (position.entry_price * position.size + size * price ) / (size + position.size)
-            position.entry_price = round(position.entry_price , 4)
-            position.size += size
-            future_balance -= (size * price * (1 + scenario.future_fee))
-            future_balance = round(future_balance, 4)
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-
-
-def Short(size: int , price: int):
-    global position , future_balance
-    size = round(size, 4 )
-    if position.direction == Direction.NONE : 
-        position.size += size
-        position.entry_price = price
-        position.direction = Direction.SHORT
-        future_balance -= (size * price * (1 + scenario.future_fee))
-        future_balance = round(future_balance, 4)
-        if future_balance < 0:
-            raise RuntimeError('future_balance is negative')
-    elif position.direction == Direction.LONG: 
-        if size < position.size :
-            position.size -= size 
-            future_balance += (size * position.entry_price) + position.pnl
-            future_balance -+ (size * price) * scenario.future_fee
-            future_balance = round(future_balance, 4)
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-        elif size == position.size :
-            position.size = 0 
-            position.direction = Direction.NONE
-            future_balance += (size * position.entry_price) + position.pnl
-            future_balance -+ (size * price) * scenario.future_fee
-            future_balance = round(future_balance, 4)
-            position.entry_price = 0 
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-        elif size > position.size : 
-            future_balance += (position.size * position.entry_price) + position.pnl
-            future_balance -+ (size * price) * scenario.future_fee
-            position.size = size - position.size
-            position.direction = Direction.SHORT
-            position.entry_price = price 
-            future_balance -= ((size - position.size) * price )
-            future_balance = round(future_balance, 4)
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-    elif position.direction == Direction.SHORT : 
-            position.entry_price = (position.entry_price * position.size + size * price ) / (size + position.size)
-            position.entry_price = round(position.entry_price , 4)
-            position.size += size
-            future_balance -= (size * price * (1 + scenario.future_fee))
-            future_balance = round(future_balance, 4)
-            if future_balance < 0:
-                raise RuntimeError('future_balance is negative')
-
-
-
 
 
 def sell(bitcoin: int, price: int):

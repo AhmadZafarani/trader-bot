@@ -15,7 +15,7 @@ class Position:
         self.entry_price = entry_price
         self.leverage = leverage
 
-    def pnl_calc(self, price: int):
+    def calculate_pnl(self, price: int):
         if self.direction != Direction.NONE:
             self.pnl = self.size*(price - self.entry_price) * \
                 self.leverage*int(self.direction)

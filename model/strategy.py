@@ -619,7 +619,7 @@ class Dummy_Strategy_future(Strategy):
         '''
         print(f'Short Added')
         controller.Long(self.sell_volume, controller.get_this_moment().price)
-        self.selled = True
+        self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy_f")

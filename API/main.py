@@ -134,23 +134,16 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         fake_users_db, form_data.username, form_data.password)
 
     if not user:
-
         raise HTTPException(
-
             status_code=status.HTTP_401_UNAUTHORIZED,
-
             detail="Incorrect username or password",
-
             headers={"WWW-Authenticate": "Bearer"},
-
         )
 
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
     access_token = create_access_token(
-
         data={"sub": user.username}, expires_delta=access_token_expires
-
     )
 
     return {"access_token": access_token, "token_type": "bearer"}
@@ -167,16 +160,16 @@ async def read_own_items(current_user: User = Depends(get_current_active_user)):
 
 
 @app.get("/single_month")
-async def month(strtgg: Strategy, month: str, profit_loss_period_step: int = 48, peridical_profit_loss_limit_enable: int = 1, peridical_profit_limit: float = 18, peridical_loss_limit: float = -1.8,
+async def month(strtgg: Strategy, month: str, profit_loss_period_step: int = 48, periodical_profit_loss_limit_enable: int = 1, periodical_profit_limit: float = 18, periodical_loss_limit: float = -1.8,
                 buy_method_line_to_line_enable: int = 1, buy_method_line_to_line_cross: int = 1, volume_buy_ma: int = 80, sell_method_line_to_line_enable: int = 0,
                 global_limit: int = 0, global_loss_limit: float = 0, global_profit_limit: float = 0, token: str = Depends(oauth2_scheme)):
     sed_str = f'sed -i "s/\\(month = \\).*/\\1\\"{month}\\"/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(strtgg = \\).*/\\1\\"{strtgg}\\"/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(profit_loss_period_step = \\).*/\\1{profit_loss_period_step}/" scenario.py'
-    sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_loss_limit_enable = \\).*/\\1{peridical_profit_loss_limit_enable}/" scenario.py'
-    sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_limit = \\).*/\\1{peridical_profit_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(periodical_profit_loss_limit_enable = \\).*/\\1{periodical_profit_loss_limit_enable}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(periodical_profit_limit = \\).*/\\1{periodical_profit_limit}/" scenario.py'
 
-    sed_str = f'{sed_str};sed -i "s/\\(peridical_loss_limit = \\).*/\\1{peridical_loss_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(periodical_loss_limit = \\).*/\\1{periodical_loss_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_loss_limit = \\).*/\\1{global_loss_limit}/" scenario.py'
@@ -185,21 +178,21 @@ async def month(strtgg: Strategy, month: str, profit_loss_period_step: int = 48,
     sed_str = f'{sed_str};sed -i "s/\\(volume_buy_ma = \\).*/\\1{volume_buy_ma}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(sell_method_line_to_line_enable = \\).*/\\1{int(sell_method_line_to_line_enable)}/" scenario.py'
     os.system(sed_str)
-    result = subprocess.run(
-        ["python", "main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    resultt = subprocess.run(["python", "analyze_output/analyze.py", "only-print-profit"],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    return {"profit": resultt.stdout}
+    subprocess.run(["python", "main.py"], stdout=subprocess.PIPE,
+                   stderr=subprocess.PIPE, text=True)
+    result = subprocess.run(["python", "analyze_output/analyze.py", "only-print-profit"],
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    return {"profit": result.stdout}
 
 
 @app.get("/all_month")
-async def all_month(profit_loss_period_step: int = 48, peridical_profit_loss_limit_enable: int = 1, peridical_profit_limit: float = 18, peridical_loss_limit: float = -1.8,
+async def all_month(profit_loss_period_step: int = 48, periodical_profit_loss_limit_enable: int = 1, periodical_profit_limit: float = 18, periodical_loss_limit: float = -1.8,
                     buy_method_line_to_line_enable: int = 1, buy_method_line_to_line_cross: int = 1, volume_buy_ma: int = 80, sell_method_line_to_line_enable: int = 0,
                     global_limit: int = 0, global_loss_limit: float = 0, global_profit_limit: float = 0, token: str = Depends(oauth2_scheme)):
     sed_str = f'sed -i "s/\\(profit_loss_period_step = \\).*/\\1{profit_loss_period_step}/" scenario.py'
-    sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_loss_limit_enable = \\).*/\\1{peridical_profit_loss_limit_enable}/" scenario.py'
-    sed_str = f'{sed_str};sed -i "s/\\(peridical_profit_limit = \\).*/\\1{peridical_profit_limit}/" scenario.py'
-    sed_str = f'{sed_str};sed -i "s/\\(peridical_loss_limit = \\).*/\\1{peridical_loss_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(periodical_profit_loss_limit_enable = \\).*/\\1{periodical_profit_loss_limit_enable}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(periodical_profit_limit = \\).*/\\1{periodical_profit_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(periodical_loss_limit = \\).*/\\1{periodical_loss_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_loss_limit = \\).*/\\1{global_loss_limit}/" scenario.py'
@@ -208,10 +201,10 @@ async def all_month(profit_loss_period_step: int = 48, peridical_profit_loss_lim
     sed_str = f'{sed_str};sed -i "s/\\(volume_buy_ma = \\).*/\\1{volume_buy_ma}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(sell_method_line_to_line_enable = \\).*/\\1{int(sell_method_line_to_line_enable)}/" scenario.py'
     os.system(sed_str)
-    result = subprocess.run(
-        ["python", "main.py"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    resultt = subprocess.run(["python", "analyze_output/analyze.py", "only-print-profit"],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    subprocess.run(["python", "main.py"], stdout=subprocess.PIPE,
+                   stderr=subprocess.PIPE, text=True)
+    subprocess.run(["python", "analyze_output/analyze.py", "only-print-profit"],
+                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     subprocess.run(["bash", "all-parameters-test/all-parameters-test.sh", "1"])
     subprocess.run(["python", "all-parameters-test/join.py"])
 
