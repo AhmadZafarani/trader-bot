@@ -1,5 +1,7 @@
 # YA BAGHER
-from model.types import Directoin
+from model.Position import Direction
+
+
 class Scenario:
     month = "sep21"
     strtgg = "ichi"
@@ -32,7 +34,8 @@ class Scenario:
 
     start_of_work_crypto_balance = 0
 
-    start_of_work_Positoin = {"direction" : Directoin.NONE , "size" : 0 , "entry_price" : 0 , "leverage" : 1 }
+    start_of_work_position = {"direction": Direction.NONE,
+                              "size": 0, "entry_price": 0, "leverage": 1}
 
     start_of_work_future_dollar = 100000
 

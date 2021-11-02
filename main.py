@@ -3,7 +3,7 @@ from controller.controller import data_converter, analyze_data
 from pathlib import Path
 from time import time
 from scenario import scenario
-from os import remove
+from os import mkdir, remove
 
 
 def main():
@@ -11,6 +11,7 @@ def main():
         remove("balance_report.csv")
         remove("periodical_report.csv")
         remove("strategy_result.txt")
+        mkdir('logs')
     except:
         pass
 
