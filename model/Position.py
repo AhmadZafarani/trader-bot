@@ -17,8 +17,8 @@ class Position:
 
     def calculate_pnl(self, price: int):
         if self.direction != Direction.NONE:
-            self.pnl = self.size*(price - self.entry_price) * \
-                self.leverage*int(self.direction)
+            self.pnl = self.size * (price - self.entry_price) * \
+                self.leverage * int(self.direction)
         else:
             self.pnl = 0
         return self.pnl

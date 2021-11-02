@@ -1,9 +1,10 @@
 # YA HOSSEIN
-from controller.controller import data_converter, analyze_data
 from pathlib import Path
-from time import time
-from scenario import scenario
 from os import mkdir, remove
+from time import time
+
+from controller.controller import data_converter, analyze_data
+from scenario import scenario
 
 
 def main():

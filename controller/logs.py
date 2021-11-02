@@ -1,3 +1,4 @@
+# YA REZA
 import logging
 
 
@@ -11,7 +12,6 @@ def setup_logger(logger_name, log_file, level=logging.INFO):
 
     l.setLevel(level)
     l.addHandler(fileHandler)
-    # l.addHandler(streamHandler)
 
 
 def get_logger(name: str) -> logging.Logger:

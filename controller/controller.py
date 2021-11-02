@@ -1,21 +1,25 @@
 # YA FATEMEH
 from csv import reader
+
 from model.Candle import Candle
 from model.Moment import Moment
 import model.strategy as strategies
 from controller.view_controller import control_views, check_view_essentials, view_before_trade
 from scenario import scenario
 from controller.logs import setup_logger, get_logger
-from futures_controller import position, future_balance
+from controller.futures_controller import position, future_balance
 
 
 dollar_balance = scenario.start_of_work_dollar_balance
 bitcoin_balance = scenario.start_of_work_crypto_balance
 start_of_profit_loss_period_balance = 0
+
 this_moment = Moment(0, 0, 0)
+
 strategy_results = []
 working_strategies = []
-lock_all = False  # used to locking all strategies
+
+lock_all = False    # used to locking all strategies
 till_end = False
 
 
@@ -61,8 +65,8 @@ def bundle_extra_fields_into_this_moment(moments_extra_files: list, moment_index
         field_length = len(field_names)
         fields = [f for f in file[moment_index]]
 
-    for j in range(field_length):
-        this_moment.__setattr__(field_names[j], float(fields[j]))
+        for j in range(field_length):
+            this_moment.__setattr__(field_names[j], float(fields[j]))
 
 
 def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files: list, candle: Candle, candles: list):
@@ -70,11 +74,11 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     price = float(price)
     time = int(time) // 1000
 
+    position.calculate_pnl(price)
+
     profit_loss_percentage = profit_loss_calculator(moment_index, price)
     this_moment.update_moment(
         time, price, candle.identifier, profit_loss_percentage, moment_index)
-    position.calculate_pnl(price)
-
     bundle_extra_fields_into_this_moment(moments_extra_files, moment_index)
 
     viewed = view_before_trade(this_moment, moment_index,
@@ -118,12 +122,12 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
         return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 4)
 
 
-def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
-    crypto1 = 0
+def lock_all_strategies(working_strategies: list, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
+    crypto = 0
     for ws in working_strategies:
-        crypto1 += ws.sell_volume
+        crypto += ws.sell_volume
     price = ((start_of_profit_loss_period_balance *
-              (1 + profit_loss/100)) - dollar) / crypto1
+              (1 + profit_loss/100)) - dollar) / crypto
 
     for ws in working_strategies:
         if not ws.sold:
