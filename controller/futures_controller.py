@@ -8,7 +8,7 @@ position = Position(scenario.start_of_work_position['direction'], scenario.start
 future_balance = scenario.start_of_work_future_dollar
 
 
-def long(size: int, price: int):
+def long_position(size: int, price: int):
     global position, future_balance
     size = round(size, 4)
     if position.direction == Direction.NONE:
@@ -58,7 +58,7 @@ def long(size: int, price: int):
             raise RuntimeError('future_balance is negative')
 
 
-def Short(size: int, price: int):
+def short_position(size: int, price: int):
     global position, future_balance
     size = round(size, 4)
     if position.direction == Direction.NONE:

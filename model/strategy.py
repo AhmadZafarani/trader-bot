@@ -1,6 +1,7 @@
 # YA REZA
-from model.Moment import Moment
 from abc import ABC, abstractmethod
+
+from model.Moment import Moment
 import controller.controller as controller
 from scenario import scenario
 from controller.logs import setup_logger, get_logger
@@ -27,7 +28,7 @@ from controller.logs import setup_logger, get_logger
 
 
 class Strategy(ABC):
-    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list , feature_balance: float):
+    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list, feature_balance: float):
         self.moment = moment
         self.candles = candles
         self.working = False
@@ -42,6 +43,7 @@ class Strategy(ABC):
         self.sell_time_hour = 0
         self.sell_time_minute = 0
         self.btc_balance = btc
+
         if self.strategy_works():
             self.working = True
             self.start_strategy()
@@ -73,22 +75,6 @@ class Strategy(ABC):
 
 
 lock_strategies = {}
-# lock_all = False
-
-
-# def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
-#     crypto1 = 0
-#     for ws in working_strategies:
-#         crypto1 += ws.sell_volume
-
-#     price = ((start_of_profit_loss_period_balance *
-#               (1 + profit_loss/100)) - dollar) / crypto1
-#     for ws in working_strategies:
-#         if not ws.sold:
-#             controller.sell(ws.sell_volume, price)
-#             ws.finish_strategy(ws.finish_txt)
-#             if ws.lock_method == "lock_to_fin":
-#                 lock_strategies.pop(ws.short_name)
 
 
 class Dummy_Strategy(Strategy):
@@ -138,11 +124,10 @@ class Dummy_Strategy(Strategy):
             lock_strategies.pop("dummy")
 
 
-setup_logger('log6', r'logs/ichi.log')
-log6 = get_logger('log6')
-
-
 class ICHI_CROSS(Strategy):
+    setup_logger('log6', r'logs/ichi.log')
+    logger = get_logger('log6')
+
     def get_cross_to_span_cross_distance_ids(self):
         id1 = self.moment.candle_id
         id2 = self.moment.candle_id
@@ -220,7 +205,6 @@ class ICHI_CROSS(Strategy):
             return True
 
     def strategy_works(self) -> bool:
-        global log6
         if self.moment.candle_id <= 27:
             return False
         if self.cross_happend():
@@ -231,16 +215,16 @@ class ICHI_CROSS(Strategy):
                             return False
             else:
 
-                if not ((self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].leading_line1 and
-                         self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].leading_line2 and
-                         self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].leading_line1 and
-                         self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].leading_line2)):
+                if not (self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].leading_line1 and
+                        self.candles[self.moment.candle_id - 2].close_price > self.candles[self.moment.candle_id - 2].leading_line2 and
+                        self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].leading_line1 and
+                        self.candles[self.moment.candle_id - 2].open_price > self.candles[self.moment.candle_id - 2].leading_line2):
                     return False
                 for i in range(len(scenario.opening_intractions)):
                     if scenario.opening_intractions[i] == 1:
                         if not self.check_open_con(i):
                             return False
-            log6.info(self.candles[self.moment.candle_id-1])
+            self.logger.info(self.candles[self.moment.candle_id - 1])
             return True
 
     def start_strategy(self):
@@ -283,7 +267,6 @@ class ICHI_CROSS(Strategy):
             lock_strategies.pop("ichi_cross")
 
     def check_close_con(self, i, working_strategies, start_of_profit_loss_period_balance: int, dollar_balance: int) -> bool:
-        # global lock_all
         if i == 1:
             if 100 * abs(self.candles[self.moment.candle_id - 2].conversion_line - self.candles[self.moment.candle_id - 2].base_line) / min(self.candles[self.moment.candle_id - 2].base_line, self.candles[self.moment.candle_id - 2].conversion_line) < \
                     scenario.ten_kij_dif_max_then_kij:
@@ -383,11 +366,10 @@ class ICHI_CROSS(Strategy):
                     break
 
 
-setup_logger('log5', r'logs/moving_average.log')
-log5 = get_logger('log5')
-
-
 class Moving_average(Strategy):
+    setup_logger('log5', r'logs/moving_average.log')
+    logger = get_logger('log5')
+
     def check_open_con(self, key: str, value: dict):
         if key == 'price_to_line':
             cndl = [self.candles[self.moment.candle_id-1],
@@ -439,14 +421,13 @@ class Moving_average(Strategy):
                     return True
 
     def strategy_works(self):
-        global log5
         if self.moment.candle_id <= 26:
             return False
 
         for key, value in scenario.buy_method.items():
             if value['enable'] == 1:
                 if self.check_open_con(key=key, value=value):
-                    log5.info(self.candles[self.moment.candle_id-1])
+                    self.logger.info(self.candles[self.moment.candle_id-1])
                     return True
 
     def start_strategy(self):
@@ -486,8 +467,6 @@ class Moving_average(Strategy):
             lock_strategies.pop(self.short_name)
 
     def check_close_con(self, key: str, value: dict, working_strategies: list, start_of_profit_loss_period_balance: int, dollar_balance: int):
-        global lock_all
-
         if key == "price_to_line":
             cndl = [self.candles[self.moment.candle_id - 1],
                     self.candles[self.moment.candle_id - 2]]
@@ -509,16 +488,16 @@ class Moving_average(Strategy):
 
         if key == "line_to_line":
             moving1 = [
-                getattr(self.candles[self.moment.candle_id-2],
-                        "ma"+str(value["options"]["line"][0])),
-                getattr(self.candles[self.moment.candle_id-3],
-                        "ma"+str(value["options"]["line"][0]))
+                getattr(self.candles[self.moment.candle_id - 2],
+                        "ma" + str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id - 3],
+                        "ma" + str(value["options"]["line"][0]))
             ]
             moving2 = [
-                getattr(self.candles[self.moment.candle_id-2],
-                        "ma"+str(value["options"]["line"][1])),
-                getattr(self.candles[self.moment.candle_id-3],
-                        "ma"+str(value["options"]["line"][1]))
+                getattr(self.candles[self.moment.candle_id - 2],
+                        "ma" + str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id - 3],
+                        "ma" + str(value["options"]["line"][1]))
             ]
             if moving1[0] < moving2[0] and moving1[1] >= moving2[1]:
                 return True
@@ -582,50 +561,8 @@ class Moving_average(Strategy):
                     self.fin_and_before()
                     break
 
-class Dummy_Strategy_future(Strategy):
 
-    def strategy_works(self) -> bool:
-        if self.moment.hour == 13 and self.moment.minute == 0 :
-            return True
-        return False
-
-    def start_strategy(self):
-        self.short_name = 'dummy_f'
-        self.lock_hour = 10
-        self.lock_method = "lock_to_fin"
-        self.buy_id = self.moment.candle_id
-        self.buy_volume = 0.995 * self.future_balance/self.moment.price
-        print(f'{self.buy_volume * self.moment.price}')
-        self.sell_volume = self.buy_volume
-        print(f'Long added ')
-        controller.Short(self.buy_volume, self.moment.price)
-        self.buy_price = self.moment.price
-        self.C = self.candles[self.moment.candle_id - 1]
-        self.buy_time = [self.moment.hour, self.moment.minute]
-        self.buy_date = self.moment.date
-        if self.lock_method == 'lock_to_hour':
-            lock_strategies["dummy_f"] = [
-                Dummy_Strategy, self.moment.candle_id + self.lock_hour, "normal"]
-        elif self.lock_method == "lock_to_fin":
-            lock_strategies["dummy_f"] = [Dummy_Strategy, 0]
-
-    def continue_strategy(self, working_strategies, **kwargs):
-        if not (self.moment.hour == 16 and self.moment.minute==0) :
-            return
-        self.finish_txt = f'''date: {self.moment.date}
-        Candle : {self.C}
-        buy_time : {self.buy_date} {self.buy_time[0]}:{self.buy_time[1]} 
-        sell_time : {self.moment.date} {self.moment.hour}:{self.moment.minute} 
-        '''
-        print(f'Short Added')
-        controller.Long(self.sell_volume, controller.get_this_moment().price)
-        self.sold = True
-        self.finish_strategy(self.finish_txt)
-        if self.lock_method == "lock_to_fin":
-            lock_strategies.pop("dummy_f")
-
-
-strategies = {'dummy_f' : Dummy_Strategy_future }
+strategies = {}
 # if scenario.strtgg == 'ma':
 #     strategies = {'moving_average' : Moving_average }
 # elif scenario.strtgg == 'ichi':

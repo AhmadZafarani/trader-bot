@@ -20,7 +20,7 @@ strategy_results = []
 working_strategies = []
 
 lock_all = False    # used to locking all strategies
-till_end = False
+lock_till_end_of_period = False
 
 
 def open_extra_files(extra_files: dict) -> list:
@@ -144,10 +144,11 @@ def get_global_profit_loss(price):
 
 
 def try_strategies(moment: Moment, candles: list):
-    global working_strategies, bitcoin_balance, dollar_balance, lock_all, till_end, position, future_balance
+    global working_strategies, bitcoin_balance, dollar_balance, lock_all, lock_till_end_of_period, position, future_balance
 
-    if till_end:
+    if lock_till_end_of_period:
         return
+
     for locked in list(strategies.lock_strategies):       # unlock strategies
         if strategies.lock_strategies[locked][1] != 0:
             if strategies.lock_strategies[locked][1] == moment.candle_id:
@@ -156,12 +157,12 @@ def try_strategies(moment: Moment, candles: list):
     # remove finished strategies from working_strategies
     if scenario.global_limit:
         if get_global_profit_loss(moment.price) >= scenario.global_profit_limit:
-            till_end = True
+            lock_till_end_of_period = True
             lock_all_strategies(
                 working_strategies=working_strategies, moment=moment, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_profit_limit)
             return
         if get_global_profit_loss(moment.price) <= scenario.global_loss_limit:
-            till_end = True
+            lock_till_end_of_period = True
             lock_all_strategies(
                 working_strategies=working_strategies, moment=moment, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_loss_limit)
 
