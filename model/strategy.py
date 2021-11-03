@@ -563,7 +563,3 @@ class Moving_average(Strategy):
 
 
 strategies = {}
-# if scenario.strtgg == 'ma':
-#     strategies = {'moving_average' : Moving_average }
-# elif scenario.strtgg == 'ichi':
-#     strategies = {'ichi_cross' : ICHI_CROSS }

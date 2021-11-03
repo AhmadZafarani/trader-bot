@@ -104,4 +104,4 @@ def ichi(input: str, out: str):
                     [0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
 
 
-ichi(input='test', out='test')
+ichi(input='BTC_2021/BTC', out='BTC_2021/BTC')
