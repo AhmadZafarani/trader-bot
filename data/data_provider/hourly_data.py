@@ -53,4 +53,4 @@ def h(c : str , ct : int , bs: int  , out : str ) :
             writer.writerow([line.get('time')*1000, line.get('high'), line.get('low'),
                             line.get('open'), line.get('close'), line.get('volumeto')])
 
-h('btc' , 1612137600 , 1609459200 , 'test' )
+h('btc' , 1635933600 , 1609459200 , 'BTC_2021/BTC' )

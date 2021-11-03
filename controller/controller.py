@@ -67,9 +67,9 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     this_moment.update_moment(
         time, price, candle.identifier, profit_loss_percentage, moment_index)
     position.pnl_calc(price)
-    print(this_moment)
-    print(position)
-    print(f'future_balance = {future_balance}')
+    # print(this_moment)
+    # print(position)
+    # print(f'future_balance = {future_balance}')
     for file in moments_extra_files:
         field_names = file[0]
         field_length = len(field_names)
@@ -263,6 +263,7 @@ def Short(size: int , price: int):
         position.entry_price = price
         position.direction = Directoin.SHORT
         future_balance -= (size * price * (1 + scenario.future_fee))
+        print(future_balance)
         future_balance = round(future_balance, 4)
         if future_balance < 0:
             raise RuntimeError('future_balance is negative')

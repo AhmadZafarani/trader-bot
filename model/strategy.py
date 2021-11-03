@@ -583,10 +583,10 @@ class Dummy_Strategy_future(Strategy):
         self.lock_hour = 10
         self.lock_method = "lock_to_fin"
         self.buy_id = self.moment.candle_id
-        self.buy_volume = 0.995 * self.future_balance/self.moment.price
+        self.buy_volume = 1 * self.future_balance/self.moment.price
         print(f'{self.buy_volume * self.moment.price}')
         self.sell_volume = self.buy_volume
-        print(f'Long added ')
+        print(f'short added ')
         controller.Short(self.buy_volume, self.moment.price)
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
@@ -613,8 +613,161 @@ class Dummy_Strategy_future(Strategy):
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy_f")
 
+class Ichi_future(Strategy):
+    def check_short_con(self , key , value) -> bool:
 
-strategies = {'dummy_f' : Dummy_Strategy_future }
+        try : 
+            candle_26 = self.candles[self.moment.candle_id + 24]
+        except : 
+            print('26_false')
+            return False
+        if (self.moment.candle_id < 26) :
+            print('m26 false')
+            return False
+        candle_m26 = self.candles[self.moment.candle_id - 28]
+        candle_m1 = self.candles[self.moment.candle_id - 2]
+
+        if key == 'red_cloud' :
+            if candle_26.leading_line1 < candle_26.leading_line2 :
+                return True
+        if key == 'ten_under_kij' : 
+            if candle_m1.conversion_line < candle_m1.base_line : 
+                return True 
+        if key == 'close_under_cloud':
+            if candle_m1.close_price < min(candle_m1.leading_line1 , candle_m1.leading_line2) : 
+                return True
+        if key == 'span_under_cloud' : 
+            if candle_m26.lagging_span < min(candle_m26.leading_line1 , candle_m26.leading_line2):
+                return True 
+        return False
+
+
+    def check_long_con(self , key , value) -> bool:
+        try : 
+            candle_26 = self.candles[self.moment.candle_id + 24]
+        except : 
+            print('26_false')
+            return False
+        if (self.moment.candle_id < 26) :
+            print('m26 false')
+            return False
+        candle_m26 = self.candles[self.moment.candle_id - 28]
+        candle_m1 = self.candles[self.moment.candle_id - 2]
+
+        if key == 'green_cloud' :
+            if candle_26.leading_line1 > candle_26.leading_line2 :
+                return True
+        if key == 'kij_inder_ten' : 
+            if candle_m1.conversion_line > candle_m1.base_line : 
+                return True 
+        if key == 'close_upper_cloud':
+            if candle_m1.close_price > max(candle_m1.leading_line1 , candle_m1.leading_line2) : 
+                return True
+        if key == 'span_upper_cloud' : 
+            if candle_m26.lagging_span > max(candle_m26.leading_line1 , candle_m26.leading_line2):
+                return True 
+        return False
+
+    def strategy_works(self) -> bool:
+        flag_short = 1
+        flag_long = 1
+        if self.moment.candle_id < 77 :
+            return False
+        # chech short conditions 
+        short_conditions = scenario.ichi_future["enterance"]["short"]
+        for key,value in short_conditions.items():
+            if value["enable"] :
+                if not self.check_short_con(key,value) : 
+                    flag_short = 0
+        long_conditions = scenario.ichi_future["enterance"]["long"]
+        for key,value in long_conditions.items():
+            if value["enable"] :
+                if not self.check_long_con(key,value) : 
+                    flag_long = 0
+        if flag_short : 
+            self.direction = "short"
+            print(f'short happaend in {self.moment}\n{self.candles[self.moment.candle_id-1]}')
+            return True
+        if flag_long : 
+            print(f'long happaend in {self.moment}\n{self.candles[self.moment.candle_id-1]}')
+            self.direction = "long"
+            return True
+        return False
+
+    def calc_sl(self, close_conditioins):
+        for key, value in close_conditioins.items() : 
+            if value['enable']:  
+                if key == 'based_on_cloud' : 
+                    if self.direction == 'short':
+                        sl = max(self.candles[self.moment.candle_id - 2].leading_line1 , self.candles[self.moment.candle_id - 2].leading_line2)
+                        tp = self.moment.price - value['options']['r2r'] * (sl - self.moment.price)
+                        break
+                    elif self.direction == 'long':
+                        sl = min(self.candles[self.moment.candle_id - 2].leading_line1 , self.candles[self.moment.candle_id - 2].leading_line2)
+                        tp = self.moment.price + value['options']['r2r'] * (self.moment.price - sl)
+                        break
+                if key == 'based_on_atr' : 
+                    if self.direction == 'short' : 
+                        sl = self.moment.price + value['option']['sl'] * self.candles[self.moment.candle_id - 2].atr
+                        tp = self.moment.price - value['options']['r2r']*value['option']['sl'] * self.candles[self.moment.candle_id - 2].atr
+                    if self.direction == 'long' : 
+                        sl = self.moment.price - value['option']['sl'] * self.candles[self.moment.candle_id - 2].atr
+                        tp = self.moment.price + value['options']['r2r']*value['option']['sl'] * self.candles[self.moment.candle_id - 2].atr
+        return sl , tp                
+
+    def mnge_found(self , found_management):
+        loss_limit = 100 * abs(self.sl - self.entry_price) / self.entry_price 
+        total_risk = found_management['total_risk'] 
+        print(f'loss_limit = {loss_limit}')
+        total_found = 0.9 * self.future_balance
+
+        r = (total_risk / loss_limit)
+        print(f'r = {r}')
+        if r < 1 : 
+            found = total_found * r
+            leverage = 1 
+        else : # r > 1
+            found = total_found 
+            leverage = r
+        size = found / self.moment.price 
+        return size , leverage              
+
+
+    def start_strategy(self):
+        global lock_strategies
+        self.short_name = 'ichi_future'
+        self.finish_txt = 'EMPTY'
+        self.lock_hour = 0
+        self.lock_method = "lock_to_fin"
+        self.buy_time_date = self.moment.date
+        self.buy_time_hour = self.moment.hour
+        self.buy_time_minute = self.moment.minute
+        self.C = self.candles[self.moment.candle_id-1]
+        self.entry_price = self.moment.price
+
+
+        # stoploss_calculation 
+        close_conditions = scenario.ichi_future['close_conditions']
+        self.sl ,self.tp = self.calc_sl(close_conditions)
+        print(f'sl : {self.sl} , tp : {self.tp}')
+
+        # managing_found : 
+
+        found_management = scenario.ichi_future['found_management']
+        self.size , self.leverage = self.mnge_found(found_management)
+        print(f'size : {self.size} , leverage = {self.leverage}')
+
+        controller.buy(self.buy_volume, self.moment.price)
+        if self.lock_method == 'lock_to_hour':
+            lock_strategies[self.short_name] = [
+                Ichi_future, self.moment.candle_id + self.lock_hour]
+        elif self.lock_method == "lock_to_fin":
+            lock_strategies[self.short_name] = [Ichi_future, 0]
+
+    def continue_strategy(self, working_strategies, **kwargs):
+        pass
+# strategies = {'dummy_f' : Dummy_Strategy_future }
+strategies = {'ichi_future' : Ichi_future}
 # if scenario.strtgg == 'ma':
 #     strategies = {'moving_average' : Moving_average }
 # elif scenario.strtgg == 'ichi':

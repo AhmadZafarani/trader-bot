@@ -4,9 +4,9 @@ class Scenario:
 
     month = "jan21"
     strtgg = "ichi"
-    candles_data_csv_file_name = f'{month}/BTC_{month}.csv'
+    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
 
-    moment_data_csv_file_name = f'{month}/BTC_{month}_moment.csv'
+    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
 
     """
         these are dictionaries like this:
@@ -15,13 +15,7 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ma9": f"{month}/BTC_{month}_MA9.csv",
-        # "ma12": "BTC_FULL_1h_MA12.csv",
-        "ma26": f"{month}/BTC_{month}_MA26.csv",
-        # "ma31": "BTC_FULL_1h_MA31.csv",
-        # "ma52": "BTC_FULL_1h_MA52.csv",
-        "ICHI": f"{month}/BTC_{month}_ICHI.csv",
-        "iscross": f"{month}/BTC_{month}_ISCROSS.csv"
+        "ICHI": f"BTC_2021/BTC_ICHI.csv"
     }
     extra_moments_data_files = {
     }
@@ -33,7 +27,7 @@ class Scenario:
 
     start_of_work_crypto_balance = 0
 
-    start_of_work_Positoin = {"direction" : Directoin.NONE , "size" : 0 , "entry_price" : 0 , "leverage" : 1 }
+    start_of_work_Positoin = {"direction" : Directoin.NONE , "size" : 0 , "entry_price" : 0 , "leverage" : 10/9 }
 
     start_of_work_future_dollar = 100000
 
@@ -90,6 +84,36 @@ class Scenario:
     # per_loss_limit = -1.6
     # peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
     # peridical_profit_loss_limit["options"]["loss_limit"] = per_loss_limit
+
+# =======================================================================
+
+    #  strategy = ichi_future 
+    
+    # opening conditins 
+    ichi_future = {
+        "enterance" : {
+            "short" : {
+                "red_cloud" : {"enable" : 1 , } ,
+                "ten_under_kij" : {"enable" : 1 } , 
+                "close_under_cloud" : {"enable" : 1},
+                "span_under_cloud" : {"enable" : 1} 
+            },
+            "long" : {
+                "green_cloud" : {"enable" : 1} ,
+                "kij_inder_ten" : {"enable" : 1 } , 
+                "close_upper_cloud" : {"enable" : 1},
+                "span_upper_cloud" : {"enable" : 1} 
+            }
+        },
+        "close_conditions" : {
+            "based_on_cloud" : {"enable" : 1 , "options" : {"r2r" : 2}},
+            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1, "r2r" : 2}}
+        }, 
+        "found_management" : {
+            "total_risk" : 10
+        }
+    }
+     
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
