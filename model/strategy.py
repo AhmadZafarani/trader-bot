@@ -73,9 +73,7 @@ class Strategy(ABC):
             s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tLoss\nmore information:\t{args}\n\n'
         return s
 
-
 lock_strategies = {}
-
 
 class Dummy_Strategy(Strategy):
 
@@ -122,7 +120,6 @@ class Dummy_Strategy(Strategy):
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("dummy")
-
 
 class ICHI_CROSS(Strategy):
     setup_logger('log6', r'logs/ichi.log')
@@ -364,7 +361,6 @@ class ICHI_CROSS(Strategy):
                 if self.check_close_con(i=i, working_strategies=working_strategies, start_of_profit_loss_period_balance=kwargs['start_of_profit_loss_period_balance'], dollar_balance=kwargs["dollar_balance"]):
                     self.fin_and_before()
                     break
-
 
 class Moving_average(Strategy):
     setup_logger('log5', r'logs/moving_average.log')

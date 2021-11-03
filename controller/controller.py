@@ -144,6 +144,9 @@ def get_global_profit_loss(price):
 
 
 def try_strategies(moment: Moment, candles: list):
+    print(strategies.strategies)
+
+
     global working_strategies, bitcoin_balance, dollar_balance, lock_all, lock_till_end_of_period, position, future_balance
 
     if lock_till_end_of_period:

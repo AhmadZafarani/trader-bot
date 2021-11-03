@@ -1,7 +1,8 @@
 # YA ALI
-from model.strategy import Strategy, lock_strategies, strategies
+from model.strategy import Strategy, lock_strategies , strategies
 from controller.futures_controller import short_position, long_position
 import controller.controller as controller
+from scenario import scenario
 
 
 class Dummy_Strategy_Futures(Strategy):
@@ -100,6 +101,7 @@ class Ichi_future(Strategy):
         return False
 
     def strategy_works(self) -> bool:
+        print('h')
         flag_short = 1
         flag_long = 1
         if self.moment.candle_id < 77:
@@ -127,7 +129,7 @@ class Ichi_future(Strategy):
             return True
         return False
 
-    def calc_sl(self, close_conditioins):
+    def calculate_stoploss(self, close_conditioins):
         for key, value in close_conditioins.items():
             if value['enable']:
                 if key == 'based_on_cloud':
@@ -158,10 +160,13 @@ class Ichi_future(Strategy):
                         tp = self.moment.price + \
                             value['options']['r2r']*value['option']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
+        sl = round(sl, 2)
+        tp = round(tp, 2)
         return sl, tp
 
-    def mnge_found(self, found_management):
-        loss_limit = 100 * abs(self.sl - self.entry_price) / self.entry_price
+    def manage_found(self, found_management):  # will return size & levrage
+        loss_limit = 100 * abs(self.stop_loss -
+                               self.entry_price) / self.entry_price
         total_risk = found_management['total_risk']
         print(f'loss_limit = {loss_limit}')
         total_found = 0.9 * self.future_balance
@@ -191,16 +196,26 @@ class Ichi_future(Strategy):
 
         # stoploss_calculation
         close_conditions = scenario.ichi_future['close_conditions']
-        self.sl, self.tp = self.calc_sl(close_conditions)
+        self.stop_loss, self.take_profit = self.calculate_stoploss(
+            close_conditions)
         print(f'sl : {self.sl} , tp : {self.tp}')
 
         # managing_found :
-
         found_management = scenario.ichi_future['found_management']
-        self.size, self.leverage = self.mnge_found(found_management)
+        self.size, self.leverage = self.manage_found(found_management)
         print(f'size : {self.size} , leverage = {self.leverage}')
 
-        controller.buy(self.buy_volume, self.moment.price)
+        # change leverage if needed
+        if self.leverage != 1:
+            controller.position.change_leverage(self.leverage)
+            print('leverage changed')
+
+        # Open Positions
+        if self.direction == 'long':
+            long_position(self.size, self.entry_price)
+        elif self.direction == 'short':
+            short_position(self.size, self.entry_price)
+
         if self.lock_method == 'lock_to_hour':
             lock_strategies[self.short_name] = [
                 Ichi_future, self.moment.candle_id + self.lock_hour]
@@ -208,7 +223,6 @@ class Ichi_future(Strategy):
             lock_strategies[self.short_name] = [Ichi_future, 0]
 
     def continue_strategy(self, working_strategies, **kwargs):
+        # if self.direction == 'short' :
+        #     if self.moment.price >= self.sl
         pass
-
-
-strategies['ichi_future'] = Ichi_future
