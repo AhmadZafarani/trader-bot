@@ -24,12 +24,13 @@ class Scenario:
     fee = 0.001
 
     future_fee = 0.001 / 4
+    # future_fee = 0
     start_of_work_dollar_balance = 100000
 
     start_of_work_crypto_balance = 0
 
-    start_of_work_position = {"direction": Direction.NONE,
-                              "size": 0, "entry_price": 0, "leverage": 10 / 9}
+    start_of_work_position = {"direction":Direction.NONE,
+                              "size": 0, "entry_price": 0, "leverage": 1.25}
 
     start_of_work_future_dollar = 100000
 
@@ -109,10 +110,10 @@ class Scenario:
         },
         "close_conditions" : {
             "based_on_cloud" : {"enable" : 1 , "options" : {"r2r" : 2}},
-            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1, "r2r" : 2}}
+            "based_on_atr" : {"enable" : 0 , "options":{"sl" : 1, "r2r" : 2}}
         }, 
         "found_management" : {
-            "total_risk" : 10
+            "total_risk" : 20
         }
     }
      

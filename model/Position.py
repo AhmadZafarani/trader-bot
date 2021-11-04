@@ -18,13 +18,13 @@ class Position:
     def calculate_pnl(self, price: int):
         if self.direction != Direction.NONE:
             self.pnl = self.size * (price - self.entry_price) * \
-                self.leverage * int(self.direction)
+                self.leverage * int(self.direction.value)
         else:
             self.pnl = 0
         return self.pnl
 
     def multiply_leverage(self , new_leverage): 
-        if self.direction != Direction.NONE :
+        if self.direction == Direction.NONE :
             self.leverage = self.leverage * new_leverage 
             print(f'leverage changed ; new : {self.leverage}')
             return
