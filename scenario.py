@@ -5,9 +5,9 @@ from model.Position import Direction
 class Scenario:
     month = "sep21"
     strtgg = "ichi"
-    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
+    candles_data_csv_file_name = f'forex_data/EURUSD.csv'
 
-    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
+    moment_data_csv_file_name = f'forex_data/EURUSD_moment.csv'
 
     """
         these are dictionaries like this:
@@ -16,7 +16,8 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ICHI": f"BTC_2021/BTC_ICHI.csv"
+        "ICHI": f"forex_data/EURUSD_ICHI.csv",
+        "ATR" : f'forex_data/EURUSD_ATR.csv'
     }
     extra_moments_data_files = {
     }
@@ -110,10 +111,10 @@ class Scenario:
         },
         "close_conditions" : {
             "based_on_cloud" : {"enable" : 1 , "options" : {"r2r" : 2}},
-            "based_on_atr" : {"enable" : 0 , "options":{"sl" : 1, "r2r" : 2}}
+            "based_on_atr" : {"enable" : 0 , "options":{"sl" : 1.5, "r2r" : 2}}
         }, 
         "found_management" : {
-            "total_risk" : 20
+            "total_risk" : 2
         }
     }
      

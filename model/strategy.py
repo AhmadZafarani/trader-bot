@@ -347,7 +347,7 @@ class ICHI_CROSS(Strategy):
         self.finish_txt = f"""
         # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
         # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume , 5)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 5)})
         # fee : {0.001*(self.buy_price * self.buy_volume) + 0.001 * (self.sell_price  * self.buy_volume ) } $
         # buy Candle : {self.C}
         # buy ICHI prev : conv : {self.ICHI}
@@ -512,7 +512,7 @@ class Moving_average(Strategy):
                 self.finish_txt = f"""
                 # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
                 # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume , 5)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 5)})
                 # fee : {scenario.fee*(self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price  * self.buy_volume ) } $
                 # buy Candle : {self.C}
                 # sell Candle : {self.CC}
@@ -523,7 +523,7 @@ class Moving_average(Strategy):
                 self.finish_txt = f"""
                 # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
                 # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume , 5)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 5)})
                 # fee : {scenario.fee*(self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price  * self.buy_volume ) } $
                 # buy Candle : {self.C}
                 # sell Candle : {self.CC}
@@ -549,7 +549,7 @@ class Moving_average(Strategy):
         self.finish_txt = f"""
         # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
         # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume , 3)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 3)})
+        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume , 5)}({round(100 * (self.sell_price - self.buy_price)/self.buy_price , 5)})
         # fee : {scenario.fee*(self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price  * self.buy_volume ) } $
         # buy Candle : {self.C}
         # sell Candle : {self.CC}
@@ -617,7 +617,7 @@ class Ichi_future(Strategy):
         try:
             candle_26 = self.candles[self.moment.candle_id + 24]
         except:
-            print('26_false')
+            # print('26_false')
             return False
         if (self.moment.candle_id < 26):
             print('m26 false')
@@ -643,7 +643,7 @@ class Ichi_future(Strategy):
         try:
             candle_26 = self.candles[self.moment.candle_id + 24]
         except:
-            print('26_false')
+            # print('26_false')
             return False
         if (self.moment.candle_id < 26):
             print('m26 false')
@@ -712,20 +712,20 @@ class Ichi_future(Strategy):
                 if key == 'based_on_atr':
                     if self.direction == 'short':
                         sl = self.moment.price + \
-                            value['option']['sl'] * \
+                            value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
                         tp = self.moment.price - \
-                            value['options']['r2r']*value['option']['sl'] * \
+                            value['options']['r2r']*value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
                     if self.direction == 'long':
                         sl = self.moment.price - \
-                            value['option']['sl'] * \
+                            value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
                         tp = self.moment.price + \
-                            value['options']['r2r']*value['option']['sl'] * \
+                            value['options']['r2r']*value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
-        sl = round(sl, 2)
-        tp = round(tp, 2)
+        sl = round(sl, 5)
+        tp = round(tp, 5)
         return sl, tp
 
     def manage_found(self, found_management):  # will return size & levrage
@@ -836,7 +836,7 @@ class Ichi_future(Strategy):
             ratio : {self.ratio}
             profit/loss {100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity }
         '''
-        print(self.finish_txt)
+        # print(self.finish_txt)
         # exit(2)
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":

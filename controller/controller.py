@@ -131,7 +131,7 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
         start_of_profit_loss_period_balance = x
         return 0
     else:
-        return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 4)
+        return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 6)
 
 
 def calculate_future_liquidity(position: Position, future_balance):
@@ -159,7 +159,7 @@ def lock_all_strategies(working_strategies: list, start_of_profit_loss_period_ba
 def get_global_profit_loss(price):
     global bitcoin_balance, dollar_balance
     money = dollar_balance + bitcoin_balance*price
-    return round(100*(money - scenario.start_of_work_dollar_balance) / scenario.start_of_work_dollar_balance, 3)
+    return round(100*(money - scenario.start_of_work_dollar_balance) / scenario.start_of_work_dollar_balance, 5)
 
 
 def try_strategies(moment: Moment, candles: list):
@@ -218,29 +218,29 @@ def try_strategies(moment: Moment, candles: list):
 
 def buy(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
-    bitcoin = round(bitcoin, 4)
+    bitcoin = round(bitcoin, 6)
     bitcoin_balance += bitcoin
-    bitcoin_balance = round(bitcoin_balance, 4)
+    bitcoin_balance = round(bitcoin_balance, 6)
     dollar_balance -= (bitcoin * price * (1 + scenario.fee))
-    dollar_balance = round(dollar_balance, 4)
+    dollar_balance = round(dollar_balance, 6)
     if dollar_balance < 0:
         raise RuntimeError('dollar balance is negative')
 
 
 def sell(bitcoin: int, price: int):
     global bitcoin_balance, dollar_balance
-    bitcoin = round(bitcoin, 4)
+    bitcoin = round(bitcoin, 6)
     bitcoin_balance -= bitcoin
-    bitcoin_balance = round(bitcoin_balance, 4)
+    bitcoin_balance = round(bitcoin_balance, 6)
     if bitcoin_balance < 0:
         raise RuntimeError('bitcoin balance is negative')
     dollar_balance += (bitcoin * price * (1 - scenario.fee))
-    dollar_balance = round(dollar_balance, 4)
+    dollar_balance = round(dollar_balance, 6)
 
 
 def long_position(size: int, price: int):
     global position, future_balance
-    size = round(size, 4)
+    size = round(size, 6)
     position.calculate_pnl(price)
     get_this_moment().change_liquidity(calculate_future_liquidity(position,future_balance))
     if position.direction == Direction.NONE:
@@ -249,7 +249,7 @@ def long_position(size: int, price: int):
         position.direction = Direction.LONG
         future_balance -= size * price
         future_balance -= size * price * position.leverage * scenario.future_fee
-        future_balance = round(future_balance, 4)
+        future_balance = round(future_balance, 6)
         if future_balance < 0:
             raise RuntimeError('future_balance is negative')
     elif position.direction == Direction.SHORT:
@@ -258,7 +258,7 @@ def long_position(size: int, price: int):
             future_balance += (size * position.entry_price) + position.pnl
             future_balance - + \
                 (size * price * position.leverage) * scenario.future_fee
-            future_balance = round(future_balance, 4)
+            future_balance = round(future_balance, 6)
             if future_balance < 0:
                 raise RuntimeError('future_balance is negative')
         elif size == position.size:
@@ -267,7 +267,7 @@ def long_position(size: int, price: int):
             future_balance += (size * position.entry_price) + position.pnl
             future_balance - + \
                 (size * price * position.leverage) * scenario.future_fee
-            future_balance = round(future_balance, 4)
+            future_balance = round(future_balance, 6)
             position.entry_price = 0
             if future_balance < 0:
                 raise RuntimeError('future_balance is negative')
@@ -280,17 +280,17 @@ def long_position(size: int, price: int):
             position.direction = Direction.LONG
             position.entry_price = price
             future_balance -= ((size - position.size) * price)
-            future_balance = round(future_balance, 4)
+            future_balance = round(future_balance, 6)
             if future_balance < 0:
                 raise RuntimeError('future_balance is negative')
     elif position.direction == Direction.LONG:
         position.entry_price = (
             position.entry_price * position.size + size * price) / (size + position.size)
-        position.entry_price = round(position.entry_price, 4)
+        position.entry_price = round(position.entry_price, 6)
         position.size += size
         future_balance -= (size * price *
                            (1 + position.leverage*scenario.future_fee))
-        future_balance = round(future_balance, 4)
+        future_balance = round(future_balance, 6)
         if future_balance < 0:
             raise RuntimeError('future_balance is negative')
 
@@ -299,14 +299,14 @@ def short_position(size: int, price: int):
     global position, future_balance
     position.calculate_pnl(price)
     get_this_moment().change_liquidity(calculate_future_liquidity(position,future_balance))
-    size = round(size, 4)
+    size = round(size, 6)
     if position.direction == Direction.NONE:
         position.size += size
         position.entry_price = price
         position.direction = Direction.SHORT
         future_balance -= (size * price *
                            (1 + position.leverage*scenario.future_fee))
-        future_balance = round(future_balance, 4)
+        future_balance = round(future_balance, 6)
         if future_balance < 0:
             raise RuntimeError('future_balance is negative')
     elif position.direction == Direction.LONG:
@@ -315,7 +315,7 @@ def short_position(size: int, price: int):
             future_balance += (size * position.entry_price) + position.pnl
             future_balance - + (size * price) * \
                 position.leverage * scenario.future_fee
-            future_balance = round(future_balance, 4)
+            future_balance = round(future_balance, 6)
             if future_balance < 0:
                 raise RuntimeError('future_balance is negative')
         elif size == position.size:
@@ -324,7 +324,7 @@ def short_position(size: int, price: int):
             future_balance += (size * position.entry_price) + position.pnl
             future_balance - + (size * price) * \
                 position.leverage * scenario.future_fee
-            future_balance = round(future_balance, 4)
+            future_balance = round(future_balance, 6)
             position.entry_price = 0
             # print(get_this_moment())
             if future_balance < 0:
@@ -338,17 +338,17 @@ def short_position(size: int, price: int):
             position.direction = Direction.SHORT
             position.entry_price = price
             future_balance -= ((size - position.size) * price)
-            future_balance = round(future_balance, 4)
+            future_balance = round(future_balance, 6)
             if future_balance < 0:
                 raise RuntimeError('future_balance is negative')
     elif position.direction == Direction.SHORT:
         position.entry_price = (
             position.entry_price * position.size + size * price) / (size + position.size)
-        position.entry_price = round(position.entry_price, 4)
+        position.entry_price = round(position.entry_price, 6)
         position.size += size
         future_balance -= (size * price *
                            (1 + position.leverage * scenario.future_fee))
-        future_balance = round(future_balance, 4)
+        future_balance = round(future_balance, 6)
         if future_balance < 0:
             raise RuntimeError('future_balance is negative')
 

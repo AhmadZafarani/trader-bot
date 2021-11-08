@@ -24,8 +24,8 @@ def periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, d
     e = dollar_balance + bitcoin_balance * moment.price
 
     if (moment_index - 1) % scenario.profit_loss_period_step == scenario.profit_loss_period_step - 1:
-        p = round(e - start_of_period_balance, 4)
-        sa = f'{round(p * 100 / start_of_period_balance, 4)}'
+        p = round(e - start_of_period_balance, 5)
+        sa = f'{round(p * 100 / start_of_period_balance, 5)}'
         periodical_results.append(
             (f'{moment.date} {moment.hour}:{moment.minute}', start_of_period_balance, e, p, sa))
 

@@ -76,7 +76,7 @@ with open('data/BTC_FULL_1h_ADX.csv', 'w', newline='') as file:
         else:
             if i < 16:
                 writer.writerow(
-                    [0.0, round(DIp[i - 2], 2), round(DIn[i - 2], 2)])
+                    [0.0, round(DIp[i - 2], 5), round(DIn[i - 2], 5)])
             else:
                 writer.writerow(
-                    [round(ADX[i - 15], 2), round(DIp[i - 2], 2), round(DIn[i - 2], 2)])
+                    [round(ADX[i - 15], 5), round(DIp[i - 2], 2), round(DIn[i - 2], 5)])

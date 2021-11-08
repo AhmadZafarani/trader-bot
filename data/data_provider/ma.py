@@ -16,7 +16,7 @@ def moving_avrage(len: int, price_list: list):
             sum = 0
             for cll in price_list[i - len + 1:i+1]:
                 sum += cll
-            ma.append(round(sum/(len), 2))
+            ma.append(round(sum/(len), 5))
         i += 1
     return ma
 

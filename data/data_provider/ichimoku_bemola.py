@@ -94,14 +94,14 @@ def ichi(input: str, out: str):
                          'lagging_span', 'leading_line1', 'leading_line2'])
         for i in range(len(data) + lag - 1):
             if i < len(data) - lag + 1:
-                writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), round(lagging_span[i + lag - 1], 3),
-                                 round(leading_line1[i], 3), round(leading_line2[i], 3)])
+                writer.writerow([round(conversion_line[i], 5), round(base_line[i], 5), round(lagging_span[i + lag - 1], 5),
+                                 round(leading_line1[i], 5), round(leading_line2[i], 5)])
             elif i < len(data):
-                writer.writerow([round(conversion_line[i], 3), round(base_line[i], 3), 0,
-                                 round(leading_line1[i], 3), round(leading_line2[i], 3)])
+                writer.writerow([round(conversion_line[i], 5), round(base_line[i], 5), 0,
+                                 round(leading_line1[i], 5), round(leading_line2[i], 5)])
             else:
                 writer.writerow(
-                    [0, 0, 0, round(leading_line1[i], 3), round(leading_line2[i], 3)])
+                    [0, 0, 0, round(leading_line1[i], 5), round(leading_line2[i], 5)])
 
 
-ichi(input='BTC_2021/BTC', out='BTC_2021/BTC')
+ichi(input='forex_data/EURUSD', out='forex_data/EURUSD')

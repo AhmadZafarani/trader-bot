@@ -26,7 +26,7 @@ class Position:
     def multiply_leverage(self , new_leverage): 
         if self.direction == Direction.NONE :
             self.leverage = self.leverage * new_leverage 
-            print(f'leverage changed ; new : {self.leverage}')
+            # print(f'leverage changed ; new : {self.leverage}')
             return
         print("unable to change leverage!")
     def __str__(self):

@@ -16,7 +16,7 @@ def variance_expected(datas: list) -> list:
     eee = math.sqrt(res)
     df1 = pd.read_csv("periodical_report.csv")
     final = df1.iloc[-1][' End Of Period Balance']
-    return([round(mean, 4), round(eee, 4), round((final - 100000)/1000, 2)])
+    return([round(mean, 5), round(eee, 5), round((final - 100000)/1000, 5)])
 
 
 def open_output_and_calculate_variance_expected():
