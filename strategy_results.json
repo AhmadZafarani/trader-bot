@@ -1,0 +1,314 @@
+[
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 33697.75,
+    "closing price": 40721.45,
+    "volume": 0.5126805116038827,
+    "leverage": 1,
+    "result": "WIN",
+    "more": {
+      "Date": {
+        "Entrance": "01/05/21 20:0",
+        "Closeing": "01/08/21 11:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 30576.898,
+        "take_profit": 39939.454
+      },
+      "Found_Managment": {
+        "entry_liquidity": 100000,
+        "closing_liquidity": 103994.60499928001,
+        "ratio": 0.21595224637374671,
+        "profit/loss": 3.994604999280011
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 41286.67,
+    "closing price": 32872.63,
+    "volume": 0.23579755219580162,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "01/08/21 12:0",
+        "Closeing": "01/11/21 7:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 34230.135,
+        "take_profit": 55399.74
+      },
+      "Found_Managment": {
+        "entry_liquidity": 103994.604999,
+        "closing_liquidity": 101911.6666637475,
+        "ratio": 0.11701683616675895,
+        "profit/loss": -2.0029292243309476
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "short",
+    "entry_price": 32872.63,
+    "closing price": 40864.73,
+    "volume": 0.2182234048086627,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "01/11/21 7:0",
+        "Closeing": "02/06/21 16:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 40344.728,
+        "take_profit": 17928.434
+      },
+      "Found_Managment": {
+        "entry_liquidity": 101911.6666637475,
+        "closing_liquidity": 99871.1953731725,
+        "ratio": 0.0879876843157035,
+        "profit/loss": -2.0021959775296776
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 40864.73,
+    "closing price": 48111.18,
+    "volume": 0.443238517720646,
+    "leverage": 1,
+    "result": "WIN",
+    "more": {
+      "Date": {
+        "Entrance": "02/06/21 16:0",
+        "Closeing": "02/09/21 7:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 37259.585,
+        "take_profit": 48075.02
+      },
+      "Found_Managment": {
+        "entry_liquidity": 99871.1953731725,
+        "closing_liquidity": 103860.38727110748,
+        "ratio": 0.2267022824324678,
+        "profit/loss": 3.994336788529686
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 48111.18,
+    "closing price": 35234.62,
+    "volume": 0.17366672661930954,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "02/09/21 7:0",
+        "Closeing": "05/19/21 13:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 38542.472,
+        "take_profit": 67248.596
+      },
+      "Found_Managment": {
+        "entry_liquidity": 103860.38727110748,
+        "closing_liquidity": 101780.565216765,
+        "ratio": 0.10055940676630536,
+        "profit/loss": -2.002517137658566
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "short",
+    "entry_price": 35234.62,
+    "closing price": 45930.01,
+    "volume": 0.15271153113184063,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "05/19/21 13:0",
+        "Closeing": "08/09/21 12:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 45898.445,
+        "take_profit": 13906.97
+      },
+      "Found_Managment": {
+        "entry_liquidity": 101780.565216765,
+        "closing_liquidity": 99743.26617819001,
+        "ratio": 0.06608251729562331,
+        "profit/loss": -2.001658208751438
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 45930.01,
+    "closing price": 52591.21,
+    "volume": 0.510683888642916,
+    "leverage": 1,
+    "result": "WIN",
+    "more": {
+      "Date": {
+        "Entrance": "08/09/21 12:0",
+        "Closeing": "09/06/21 23:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 42805.0,
+        "take_profit": 52180.03
+      },
+      "Found_Managment": {
+        "entry_liquidity": 99743.26617819001,
+        "closing_liquidity": 103725.66778193999,
+        "ratio": 0.29395112335640505,
+        "profit/loss": 3.992652092057498
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 52591.21,
+    "closing price": 50590.54,
+    "volume": 0.8330500722875606,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "09/06/21 23:0",
+        "Closeing": "09/07/21 14:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 50599.0,
+        "take_profit": 56575.63
+      },
+      "Found_Managment": {
+        "entry_liquidity": 103725.66778193999,
+        "closing_liquidity": 101637.46363487499,
+        "ratio": 0.5279685374533811,
+        "profit/loss": -2.013199039079683
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "short",
+    "entry_price": 46656.07,
+    "closing price": 51462.29,
+    "volume": 0.3461107052705173,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "09/07/21 16:0",
+        "Closeing": "10/05/21 21:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 51354.565,
+        "take_profit": 37259.08
+      },
+      "Found_Managment": {
+        "entry_liquidity": 101637.463635,
+        "closing_liquidity": 99599.66632508875,
+        "ratio": 0.19860006236039401,
+        "profit/loss": -2.0049667091549734
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 51462.29,
+    "closing price": 58300.02,
+    "volume": 0.4905285022762736,
+    "leverage": 1,
+    "result": "WIN",
+    "more": {
+      "Date": {
+        "Entrance": "10/05/21 21:0",
+        "Closeing": "10/14/21 2:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 48213.56,
+        "take_profit": 57959.75
+      },
+      "Found_Managment": {
+        "entry_liquidity": 99599.66632508875,
+        "closing_liquidity": 103575.76834983501,
+        "ratio": 0.31681481686689844,
+        "profit/loss": 3.992083680048127
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 58300.02,
+    "closing price": 64177.15,
+    "volume": 0.5911707082295266,
+    "leverage": 1,
+    "result": "WIN",
+    "more": {
+      "Date": {
+        "Entrance": "10/14/21 2:0",
+        "Closeing": "10/19/21 20:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 55496.748,
+        "take_profit": 63906.564
+      },
+      "Found_Managment": {
+        "entry_liquidity": 103575.76834983501,
+        "closing_liquidity": 107708.03072820001,
+        "ratio": 0.41594265558247684,
+        "profit/loss": 3.9896034026105176
+      }
+    }
+  },
+  {
+    "mode": "future",
+    "Strategy": "Ichi_future",
+    "direction": "long",
+    "entry_price": 64177.15,
+    "closing price": 60690.94,
+    "volume": 0.5147706202499579,
+    "leverage": 1,
+    "result": "LOST",
+    "more": {
+      "Date": {
+        "Entrance": "10/19/21 20:0",
+        "Closeing": "10/22/21 16:0"
+      },
+      "Risk_Managment": {
+        "stop_loss": 60829.39,
+        "take_profit": 70872.67
+      },
+      "Found_Managment": {
+        "entry_liquidity": 107708.03072820001,
+        "closing_liquidity": 105543.54460695,
+        "ratio": 0.3834035295242189,
+        "profit/loss": -2.0095865708584597
+      }
+    }
+  }
+]

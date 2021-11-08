@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 from model.Moment import Moment
 import controller.controller as controller
+from model.Position import Position
 from scenario import scenario
 from controller.logs import setup_logger, get_logger
 """
@@ -43,6 +44,8 @@ class Strategy(ABC):
         self.sell_time_hour = 0
         self.sell_time_minute = 0
         self.btc_balance = btc
+        self.direction = ""
+        self.leverage = 0
 
         if self.strategy_works():
             self.working = True
@@ -62,16 +65,40 @@ class Strategy(ABC):
 
     def finish_strategy(self, args=''):
         controller.set_report(Strategy.report(self.buy_price, controller.get_this_moment().price,
-                                              self.__class__.__name__, self.buy_volume, self.sell_volume, args))
+                                              self.__class__.__name__, self.buy_volume, self.leverage, self.direction, args))
         self.working = False
 
     @staticmethod
-    def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, sold_volume: int, args: str) -> str:
-        if buy_price <= sell_price:
-            s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tProfit\nmore information:\t{args}\n\n'
-        else:
-            s = f'Strategy:\t{strategy_name}\nBuy Price:\t{buy_price}\nSell Price:\t{sell_price}\nBought Volume:\t{bought_volume}\nSold Volume:\t{sold_volume}\nResult:\tLoss\nmore information:\t{args}\n\n'
-        return s
+    def report(buy_price: int, sell_price: int, strategy_name: str, bought_volume: int, leverage: int, direction: str, args: dict) -> dict:
+        if scenario.mode == 'spot':
+            out = {
+                "mode": "spot", "Strategy": strategy_name, "buy_price": buy_price, "sell_price": sell_price, "volume": bought_volume, "result": "", "profit": 10000, "percentage": 10, "more": args
+            }
+            if sell_price > buy_price:
+                out["result"] = "WIN"
+                out["profit"] = bought_volume * (buy_price - sell_price)
+                out["percentage"] = round(
+                    100 * (buy_price - sell_price) / sell_price, 2)
+            else:
+                out["result"] = "LOST"
+                out["profit"] = bought_volume * (sell_price - buy_price)
+                out["percentage"] = round(
+                    100 * (buy_price - sell_price) / sell_price, 2)
+        elif scenario.mode == 'future':
+            out = {
+                "mode": "future", "Strategy": strategy_name, "direction": direction, "entry_price": buy_price, "closing price": sell_price, "volume": bought_volume, "leverage": leverage, "result": "", "more": args
+            }
+            if sell_price > buy_price : 
+                if direction == 'short' : 
+                    out['result'] = "LOST"
+                elif direction == 'long':
+                    out["result"] = 'WIN'
+            else : 
+                if direction == 'short' : 
+                    out['result'] = "WIN"
+                elif direction == 'long':
+                    out["result"] = 'LOST'       
+        return out
 
 
 lock_strategies = {}
@@ -758,6 +785,7 @@ class Ichi_future(Strategy):
         self.buy_time_minute = self.moment.minute
         self.C = self.candles[self.moment.candle_id-1]
         self.entry_price = self.moment.price
+        self.buy_price = self.entry_price
         self.entry_liquidity = self.moment.future_liquidity
         # stoploss_calculation
         close_conditions = scenario.ichi_future['close_conditions']
@@ -769,7 +797,7 @@ class Ichi_future(Strategy):
         found_management = scenario.ichi_future['found_management']
         self.size, self.leverage = self.manage_found(found_management)
         # print(f'size : {self.size} , leverage = {self.leverage}')
-
+        self.buy_volume = self.size
         # change leverage if needed
         if self.leverage != 1:
             controller.position.multiply_leverage(self.leverage)
@@ -793,7 +821,7 @@ class Ichi_future(Strategy):
         self.sell_time_date = self.moment.date
         self.sell_time_hour = self.moment.hour
         self.sell_time_minute = self.moment.minute
-
+        self.sell_price = self.closing_price
         if self.direction == 'short':
             controller.long_position(self.size, self.closing_price)
             if self.entry_price > self.closing_price:
@@ -817,27 +845,22 @@ class Ichi_future(Strategy):
 
         self.closing_liquidity = self.moment.future_liquidity
         controller.position.multiply_leverage(1 / self.leverage)
-        self.finish_txt = f'''
-        self.STATUS = {self.status}
-        Position : {self.direction}
-        entry_price : {self.entry_price}
-        closing_price : {self.closing_price}
-        size : {self.size} 
-        leverage : {self.leverage}
-        Date : 
-            Entrance : {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
-            Closeing : {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-        Risk Managment : 
-            stop_loss : {self.stop_loss}
-            take_profit : {self.take_profit}
-        Found Managment : 
-            entry liquidity : {self.entry_liquidity}
-            closing liquidity : {self.closing_liquidity}
-            ratio : {self.ratio}
-            profit/loss {100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity }
-        '''
-        # print(self.finish_txt)
-        # exit(2)
+        self.finish_txt = {
+        "Date" : {
+            "Entrance" : f'{self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}' ,
+            "Closeing" : f'{self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}'
+        },
+        "Risk_Managment" : {
+            "stop_loss" : self.stop_loss,
+            "take_profit" : self.take_profit
+        },
+        "Found_Managment" : {
+            "entry_liquidity" : self.entry_liquidity,
+            "closing_liquidity" : self.closing_liquidity,
+            "ratio" : self.ratio,
+            "profit/loss" : 100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity 
+        }
+        }
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_future")
@@ -863,3 +886,5 @@ class Ichi_future(Strategy):
 
 strategies = {'ichi_future': Ichi_future}
 # strategies = {"dummy_future" : Dummy_Strategy_Futures}
+# strategies = {'ichi_cross': ICHI_CROSS}
+# strategies = {'moving_average':Moving_average}

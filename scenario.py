@@ -3,11 +3,12 @@ from model.Position import Direction
 
 
 class Scenario:
+    mode = "future" # mode can be future or spot 
     month = "sep21"
     strtgg = "ichi"
-    candles_data_csv_file_name = f'forex_data/EURUSD.csv'
+    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
 
-    moment_data_csv_file_name = f'forex_data/EURUSD_moment.csv'
+    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
 
     """
         these are dictionaries like this:
@@ -16,8 +17,10 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ICHI": f"forex_data/EURUSD_ICHI.csv",
-        "ATR" : f'forex_data/EURUSD_ATR.csv'
+        "ICHI": f"BTC_2021/BTC_ICHI.csv",
+        "ATR" : f'BTC_2021/BTC_ATR.csv',
+        "ma9" : f'BTC_2021/BTC_MA9.csv',
+        "ma26": f'BTC_2021/BTC_MA26.csv'
     }
     extra_moments_data_files = {
     }
@@ -40,18 +43,18 @@ class Scenario:
     profit_loss_period_step = 48
 
     periodical_profit_loss_limit = {"enable": 1, "options": {
-        "profit_limit": 18, "loss_limit": -1.5}}
-    periodical_profit_loss_limit_enable = 1
+        "profit_limit": 19, "loss_limit": -1.11}}
+    # periodical_profit_loss_limit_enable = 1
 
-    global_limit = 1
-    global_loss_limit = -1.0
-    global_profit_limit = 10.0
+    global_limit = 0
+    # global_loss_limit = -1.0
+    # global_profit_limit = 10.0
 
-    periodical_profit_limit = 18.0
-    periodical_loss_limit = -1.8
-    periodical_profit_loss_limit['options']['profit_limit'] = periodical_loss_limit
-    periodical_profit_loss_limit['options']['profit_limit'] = periodical_profit_limit
-    periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
+    # periodical_profit_limit = 18.0
+    # periodical_loss_limit = -1.8
+    # periodical_profit_loss_limit['options']['profit_limit'] = periodical_loss_limit
+    # periodical_profit_loss_limit['options']['profit_limit'] = periodical_profit_limit
+    # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
@@ -70,17 +73,17 @@ class Scenario:
     # buy_method_line_to_line_options_line = [31, 52]
 
     # buy_method_price_to_line_enable = 1
-    buy_method_line_to_line_enable = 1
-    buy_method_line_to_line_cross = 1
-    sell_method_line_to_line_enable = 0
+    # buy_method_line_to_line_enable = 1
+    # buy_method_line_to_line_cross = 1
+    # sell_method_line_to_line_enable = 0
     # sell_method_price_to_line_enable = 1
     # sell_method_line_to_line_enable = 0
     # sell_method_profit_loss_limit = 1
     # buy_method['line_to_line']['options']['line'] = buy_method_line_to_line_options_line
     # buy_method['price_to_line']['enable'] = buy_method_price_to_line_enable
-    buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
-    buy_method['line_to_line']['options']['cross'] = buy_method_line_to_line_cross
-    sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
+    # buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
+    # buy_method['line_to_line']['options']['cross'] = buy_method_line_to_line_cross
+    # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
     # sell_method['price_to_line']['enable'] = sell_method_price_to_line_enable
     # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
     # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
