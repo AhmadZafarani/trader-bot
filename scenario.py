@@ -3,12 +3,13 @@ from model.Position import Direction
 
 
 class Scenario:
-    mode = "future" # mode can be future or spot 
-    month = "sep21"
+    mode = "spot" # mode can be future or spot 
+    month = "jan20"
     strtgg = "ichi"
-    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
 
-    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
+    candles_data_csv_file_name = f'jan20/BTC_jan20.csv'
+
+    moment_data_csv_file_name = f'jan20/BTC_jan20_moment.csv'
 
     """
         these are dictionaries like this:
@@ -19,8 +20,8 @@ class Scenario:
     extra_candles_data_files = {
         "ICHI": f"BTC_2021/BTC_ICHI.csv",
         "ATR" : f'BTC_2021/BTC_ATR.csv',
-        "ma9" : f'BTC_2021/BTC_MA9.csv',
-        "ma26": f'BTC_2021/BTC_MA26.csv'
+        "ma9" : f'jan20/BTC_jan20_MA9.csv',
+        "ma26": f'jan20/BTC_jan20_MA26.csv'
     }
     extra_moments_data_files = {
     }
@@ -40,15 +41,15 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 48
+    profit_loss_period_step = 24 * 2
 
     periodical_profit_loss_limit = {"enable": 1, "options": {
-        "profit_limit": 19, "loss_limit": -1.11}}
+        "profit_limit": 18, "loss_limit": -1.8}}
     # periodical_profit_loss_limit_enable = 1
 
     global_limit = 0
-    # global_loss_limit = -1.0
-    # global_profit_limit = 10.0
+    global_loss_limit = -1.0
+    global_profit_limit = 1.0
 
     # periodical_profit_limit = 18.0
     # periodical_loss_limit = -1.8
@@ -113,12 +114,11 @@ class Scenario:
             }
         },
         "close_conditions" : {
-            "based_on_cloud" : {"enable" : 1 , "options" : {"r2r" : 2}},
-            "based_on_atr" : {"enable" : 0 , "options":{"sl" : 1.5, "r2r" : 2}}
+            "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 1}},
+            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1, "r2r" : 2.2}}
         }, 
         "found_management" : {
-            "total_risk" : 2
-        }
+            "total_risk" : 2        }
     }
      
 # =======================================================================

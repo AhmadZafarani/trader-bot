@@ -83,7 +83,7 @@ def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files
     position.calculate_pnl(price)
     future_liquidity = calculate_future_liquidity(
         position=position, future_balance=future_balance)
-    profit_loss_percentage = profit_loss_calculator(moment_index, price)
+    profit_loss_percentage = profit_loss_calculator(moment_index, price , future_liquidity)
 
     
     # print(position)
@@ -124,9 +124,12 @@ def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
         control_views(strategy_results)
 
 
-def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float:
+def profit_loss_calculator(moment_index: int, this_moment_price: float , future_liquidity) -> float:
     global start_of_profit_loss_period_balance
-    x = dollar_balance + bitcoin_balance * this_moment_price
+    if scenario.mode == 'spot':
+        x = dollar_balance + bitcoin_balance * this_moment_price
+    elif scenario.mode == 'future' :
+        x = future_liquidity
     if (moment_index - 1) % scenario.profit_loss_period_step == 0:
         start_of_profit_loss_period_balance = x
         return 0
@@ -141,25 +144,42 @@ def calculate_future_liquidity(position: Position, future_balance):
         return future_balance + position.entry_price * position.size + position.pnl
 
 
-def lock_all_strategies(working_strategies: list, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
-    crypto = 0
-    for ws in working_strategies:
-        crypto += ws.sell_volume
-    price = ((start_of_profit_loss_period_balance *
-              (1 + profit_loss/100)) - dollar) / crypto
+def lock_all_strategies(working_strategies: list, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int , future_balance : int  , position:Position):
+    if scenario.mode == "spot":
+        crypto = 0
+        for ws in working_strategies:
+            crypto += ws.sell_volume
+        price = ((start_of_profit_loss_period_balance *
+                (1 + profit_loss/100)) - dollar) / crypto
 
-    for ws in working_strategies:
-        if not ws.sold:
-            sell(ws.sell_volume, price)
-            ws.finish_strategy(ws.finish_txt)
-            if ws.lock_method == "lock_to_fin":
-                strategies.lock_strategies.pop(ws.short_name)
-
-
-def get_global_profit_loss(price):
+        for ws in working_strategies:
+            if not ws.sold:
+                sell(ws.sell_volume, price)
+                ws.finish_strategy(ws.finish_txt)
+                if ws.lock_method == "lock_to_fin":
+                    strategies.lock_strategies.pop(ws.short_name)
+    elif scenario.mode == 'future' : 
+        desired_liquidity = start_of_profit_loss_period_balance * (1 + profit_loss/100)
+        desired_pnl = desired_liquidity - future_balance - position.entry_price * position.size
+        price = desired_pnl / (position.size * position.leverage * int(position.direction.value)) + position.entry_price
+        if position.direction == Direction.LONG:
+            short_position(position.size,price)
+        elif position.direction == Direction.SHORT : 
+            long_position(position.size , price)
+        for ws in working_strategies:
+            if not ws.sold:
+                ws.finish_strategy(ws.finish_txt)
+                if ws.lock_method == "lock_to_fin":
+                    strategies.lock_strategies.pop(ws.short_name)
+            
+def get_global_profit_loss(moment : Moment):
     global bitcoin_balance, dollar_balance
-    money = dollar_balance + bitcoin_balance*price
-    return round(100*(money - scenario.start_of_work_dollar_balance) / scenario.start_of_work_dollar_balance, 5)
+    if scenario.mode == 'spot':
+        money = dollar_balance + bitcoin_balance*moment.price
+        return round(100*(money - scenario.start_of_work_dollar_balance) / scenario.start_of_work_dollar_balance, 5)
+    elif scenario.mode == 'future' : 
+        money = moment.future_liquidity 
+        return round(100*(money - scenario.start_of_work_future_dollar) / scenario.start_of_work_future_dollarp, 5)
 
 
 def try_strategies(moment: Moment, candles: list):
@@ -176,15 +196,15 @@ def try_strategies(moment: Moment, candles: list):
 
     # remove finished strategies from working_strategies
     if scenario.global_limit:
-        if get_global_profit_loss(moment.price) >= scenario.global_profit_limit:
+        if get_global_profit_loss(moment) >= scenario.global_profit_limit:
             lock_till_end_of_period = True
             lock_all_strategies(
-                working_strategies=working_strategies, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_profit_limit)
+                working_strategies=working_strategies, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_profit_limit , future_balance =future_balance , position = position)
             return
-        if get_global_profit_loss(moment.price) <= scenario.global_loss_limit:
+        if get_global_profit_loss(moment) <= scenario.global_loss_limit:
             lock_till_end_of_period = True
             lock_all_strategies(
-                working_strategies=working_strategies, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_loss_limit)
+                working_strategies=working_strategies, start_of_profit_loss_period_balance=scenario.start_of_work_dollar_balance, dollar=dollar_balance, profit_loss=scenario.global_loss_limit, future_balance =future_balance , position = position)
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     # lock all strategy if periodical profit loss is reached
@@ -193,11 +213,11 @@ def try_strategies(moment: Moment, candles: list):
         if moment.profit_loss_percentage >= scenario.periodical_profit_loss_limit['options']['profit_limit']:
             lock_all = True
             lock_all_strategies(
-                working_strategies=working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'])
+                working_strategies=working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'], future_balance =future_balance , position = position)
         elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
             lock_all = True
             lock_all_strategies(
-                working_strategies=working_strategies,  start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'])
+                working_strategies=working_strategies,  start_of_profit_loss_period_balance=start_of_profit_loss_period_balance, dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'], future_balance =future_balance , position = position)
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     for ws in working_strategies:

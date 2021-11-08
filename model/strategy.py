@@ -751,8 +751,6 @@ class Ichi_future(Strategy):
                         tp = self.moment.price + \
                             value['options']['r2r']*value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
-        sl = round(sl, 5)
-        tp = round(tp, 5)
         return sl, tp
 
     def manage_found(self, found_management):  # will return size & levrage
@@ -787,6 +785,8 @@ class Ichi_future(Strategy):
         self.entry_price = self.moment.price
         self.buy_price = self.entry_price
         self.entry_liquidity = self.moment.future_liquidity
+        self.sold = False
+        self.finish_txt = "sold_buy_lock_strategy"
         # stoploss_calculation
         close_conditions = scenario.ichi_future['close_conditions']
         self.stop_loss, self.take_profit = self.calculate_stoploss(
@@ -861,6 +861,7 @@ class Ichi_future(Strategy):
             "profit/loss" : 100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity 
         }
         }
+        self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_future")
@@ -884,7 +885,7 @@ class Ichi_future(Strategy):
         return
 
 
-strategies = {'ichi_future': Ichi_future}
+# strategies = {'ichi_future': Ichi_future}
 # strategies = {"dummy_future" : Dummy_Strategy_Futures}
 # strategies = {'ichi_cross': ICHI_CROSS}
-# strategies = {'moving_average':Moving_average}
+strategies = {'moving_average':Moving_average}
