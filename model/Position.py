@@ -14,6 +14,7 @@ class Position:
         self.size = size
         self.entry_price = entry_price
         self.leverage = leverage
+        
 
     def calculate_pnl(self, price: int):
         if self.direction != Direction.NONE:
@@ -23,6 +24,12 @@ class Position:
             self.pnl = 0
         return self.pnl
 
+    def calculate_liquid_price(self):
+        if self.direction != Direction.NONE :
+            my_credit = self.entry_price * self.size 
+            self.liquid_price = -my_credit / (self.size * self.leverage * int(self.direction.value)) + self.entry_price
+        else : 
+            self.liquid_price = None
     def multiply_leverage(self , new_leverage): 
         if self.direction == Direction.NONE :
             self.leverage = self.leverage * new_leverage 

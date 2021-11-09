@@ -596,15 +596,17 @@ class Dummy_Strategy_Futures(Strategy):
         return False
 
     def start_strategy(self):
-        self.short_name = 'dummy_futures'
+        self.sold = False
+        self.short_name = 'dummy_future'
         self.lock_hour = 10
         self.lock_method = "lock_to_fin"
         self.buy_id = self.moment.candle_id
-        self.buy_volume = 0.8
+        self.finish_txt = {}
+        self.buy_volume = 0.5 * self.future_balance / self.moment.price
         self.sell_volume = self.buy_volume
         self.entry_liquidity = self.moment.future_liquidity
         self.entry_price = self.moment.price
-        controller.long_position(self.buy_volume, self.moment.price)
+        controller.short_position(self.buy_volume, self.moment.price)
 
         self.buy_price = self.moment.price
         self.C = self.candles[self.moment.candle_id - 1]
@@ -612,31 +614,25 @@ class Dummy_Strategy_Futures(Strategy):
         self.buy_date = self.moment.date
 
         if self.lock_method == 'lock_to_hour':
-            lock_strategies["dummy_futures"] = [
+            lock_strategies["dummy_future"] = [
                 Dummy_Strategy_Futures, self.moment.candle_id + self.lock_hour, "normal"]
         elif self.lock_method == "lock_to_fin":
-            lock_strategies["dummy_futures"] = [Dummy_Strategy_Futures, 0]
+            lock_strategies["dummy_future"] = [Dummy_Strategy_Futures, 0]
 
     def continue_strategy(self, working_strategies, **kwargs):
-        if not (self.moment.hour == 16 and self.moment.minute == 0):
-            return
-        self.finish_txt = f'''entry_price : {self.entry_price}
-        closing_price : {self.moment.price}
-        entry_liquidity : {self.entry_liquidity}
-        closing_liquidity : {self.moment.future_liquidity}
-        '''
-        print(controller.position)
-        print(controller.future_balance)
-        controller.short_position(
-            self.sell_volume, controller.get_this_moment().price)
-        print(controller.position)
-        print(controller.future_balance)
-        exit(0)
-        self.sold = True
-        self.finish_strategy(self.finish_txt)
-        if self.lock_method == "lock_to_fin":
-            lock_strategies.pop("dummy_futures")
-
+        return
+        # if not (self.moment.hour == 16 and self.moment.minute == 0):
+        #     return
+        # self.finish_txt = {}
+        # controller.short_position(
+        #     self.sell_volume, controller.get_this_moment().price)
+        # print(controller.position)
+        # print(controller.future_balance)
+        # exit
+        # self.sold = True
+        # self.finish_strategy(self.finish_txt)
+        # if self.lock_method == "lock_to_fin":
+        #     lock_strategies.pop("dummy_futures")
 
 class Ichi_future(Strategy):
     def check_short_con(self, key, value) -> bool:
@@ -885,7 +881,7 @@ class Ichi_future(Strategy):
         return
 
 
-strategies = {'ichi_future': Ichi_future}
-# strategies = {"dummy_future" : Dummy_Strategy_Futures}
+# strategies = {'ichi_future': Ichi_future}
+strategies = {"dummy_future" : Dummy_Strategy_Futures}
 # strategies = {'ichi_cross': ICHI_CROSS}
 # strategies = {'moving_average':Moving_average}

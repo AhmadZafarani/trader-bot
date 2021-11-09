@@ -1,1 +1,211 @@
-[]
+[
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 29233.49,
+    "closing price": 29844.51,
+    "volume": 1.7103671166186452,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 30604.03,
+    "closing price": 31541.17,
+    "volume": 0.8066748636045645,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 34103.72,
+    "closing price": 35325.91,
+    "volume": 0.3574229399021573,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 34929.87,
+    "closing price": 36015.88,
+    "volume": 0.17230355625428895,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 37941.36,
+    "closing price": 38970.42,
+    "volume": 0.07832209186755562,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 41316.91,
+    "closing price": 42984.07,
+    "volume": 0.03551215021888132,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 42984.07,
+    "closing price": 44151.07,
+    "volume": 0.016854126947494733,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 45300.17,
+    "closing price": 46285.14,
+    "volume": 0.007896314296392266,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 45652.34,
+    "closing price": 47555.46,
+    "volume": 0.003868887016525331,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 47669.82,
+    "closing price": 48929.18,
+    "volume": 0.0018293621205198595,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 49436.86,
+    "closing price": 50556.05,
+    "volume": 0.0008711392066567334,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 51039.56,
+    "closing price": 52142.35,
+    "volume": 0.00041668683076421506,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 51464.66,
+    "closing price": 52690.7,
+    "volume": 0.0002038824797443527,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 52534.75,
+    "closing price": 53863.19,
+    "volume": 9.855818291702159e-05,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 57291.92,
+    "closing price": 59448.19,
+    "volume": 4.4417319231053875e-05,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 59911.99,
+    "closing price": 61648.26,
+    "volume": 2.1173992050672996e-05,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 60427.82,
+    "closing price": 62711.51,
+    "volume": 1.0452743454918612e-05,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 62973.25,
+    "closing price": 64268.97,
+    "volume": 5.172362868360773e-06,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  },
+  {
+    "mode": "future",
+    "Strategy": "Dummy_Strategy_Futures",
+    "direction": "",
+    "entry_price": 63871.42,
+    "closing price": 66040.59,
+    "volume": 2.603973733478918e-06,
+    "leverage": 0,
+    "result": "",
+    "more": "liquid"
+  }
+]

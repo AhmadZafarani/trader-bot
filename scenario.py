@@ -7,9 +7,9 @@ class Scenario:
     month = "jan20"
     strtgg = "ichi"
 
-    candles_data_csv_file_name = f'jan20/BTC_jan20.csv'
+    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
 
-    moment_data_csv_file_name = f'jan20/BTC_jan20_moment.csv'
+    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
 
     """
         these are dictionaries like this:
@@ -19,9 +19,9 @@ class Scenario:
     """
     extra_candles_data_files = {
         "ICHI": f"BTC_2021/BTC_ICHI.csv",
-        "ATR" : f'BTC_2021/BTC_ATR.csv',
-        "ma9" : f'jan20/BTC_jan20_MA9.csv',
-        "ma26": f'jan20/BTC_jan20_MA26.csv'
+        "ATR" : f'BTC_2021/BTC_ATR.csv'
+        # "ma9" : f'BTC_2021/BTC_MA9.csv',
+        # "ma26": f'jan20/BTC_jan20_MA26.csv'
     }
     extra_moments_data_files = {
     }
@@ -35,7 +35,7 @@ class Scenario:
     start_of_work_crypto_balance = 0
 
     start_of_work_position = {"direction":Direction.NONE,
-                              "size": 0, "entry_price": 0, "leverage": 1.25}
+                              "size": 0, "entry_price": 0, "leverage": 50}
 
     start_of_work_future_dollar = 100000
 
@@ -43,7 +43,7 @@ class Scenario:
 
     profit_loss_period_step = 24 * 2
 
-    periodical_profit_loss_limit = {"enable": 1, "options": {
+    periodical_profit_loss_limit = {"enable": 0, "options": {
         "profit_limit": 0.1, "loss_limit": -0.1}}
     # periodical_profit_loss_limit_enable = 1
 
