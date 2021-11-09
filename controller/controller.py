@@ -1,5 +1,4 @@
 # YA FATEMEH
-
 import model.strategy as strategies
 from controller.exchange_controller import *
 from view.views import log_cndl_mmnt
@@ -23,24 +22,21 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
         return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 4)
 
 
-def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int,
-                        profit_loss: int, logger):
-    crypto1 = 0
-    for ws in working_strategies:
-        crypto1 += ws.sell_volume
-    # price = ((start_of_profit_loss_period_balance *
-    #           (1 + profit_loss/100)) - dollar) / crypto1  # can't o this for live
+def lock_all_strategies(working_strategies_to_lock: list, moment: Moment, logger):
+    crypto = 0
+    for ws in working_strategies_to_lock:
+        crypto += ws.sell_volume
+
     price = moment.price
-    for ws in working_strategies:
+    for ws in working_strategies_to_lock:
         if not ws.sold:
             sell(ws.sell_volume, price)
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
                 strategies.lock_strategies.pop(ws.short_name)
-    logger.warning(
-        f'all({[x.id for x in working_strategies]}) locked in {moment.get_time_string()}')
-    logger.info(
-        f'More Details for lock_all : price , Volume = {price} , {crypto1}')
+
+    logger.warning(f'all({[x.id for x in working_strategies_to_lock]}) locked in {moment.get_time_string()}')
+    logger.info(f'More Details for lock_all : price , Volume = {price} , {crypto}')
 
 
 def try_strategies(moment: Moment, candles: list, strategy_logger):
@@ -62,20 +58,12 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
             strategy_logger.warning(
                 f"periodical profit limit reached in {moment.get_time_string()}")
             lock_all = True
-            lock_all_strategies(working_strategies=working_strategies, moment=moment,
-                                start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
-                                dollar=dollar_balance,
-                                profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'],
-                                logger=strategy_logger)
+            lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment, logger=strategy_logger)
         elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
             strategy_logger.warning(
                 f"periodical loss limit reached in {moment.get_time_string()}")
             lock_all = True
-            lock_all_strategies(working_strategies=working_strategies, moment=moment,
-                                start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
-                                dollar=dollar_balance,
-                                profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'],
-                                logger=strategy_logger)
+            lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment, logger=strategy_logger)
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     for ws in working_strategies:
@@ -139,7 +127,6 @@ def set_report(r: str):
     strategy_results.append(r)
 
 
-# ================= LIVE TRADING =======================
 def calculate_indicators_and_bundle_into_candles(candles: list):
     log_debug("constructed candles are:")
     for i in range(len(candles)):
