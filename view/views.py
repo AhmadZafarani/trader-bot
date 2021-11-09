@@ -1,5 +1,4 @@
 # YA MOHAMMAD
-from os import mkdir
 from pathlib import Path
 
 result_folder = Path("results")
@@ -22,8 +21,8 @@ def view_periodical_result(periodical_result: list):
 
 
 def start_live_view():
-    mkdir(result_folder)
-    mkdir('logs')
+    result_folder.mkdir(exist_ok=True)
+    Path('logs').mkdir(exist_ok=True)
 
     with open(result_folder / 'balance_report.csv', 'w') as file:
         file.write('Dollar Balance, Crypto Balance\n')

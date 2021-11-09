@@ -145,28 +145,30 @@ class MovingAverage(Strategy):
             if moving1[0] < moving2[0] and moving1[1] >= moving2[1]:
                 return True
         if key == "profit_loss_limit":
-            profit_limit = self.buy_price * \
-                           (1 + value["options"]["profit_limit"] / 100)
-            loss_limit = self.buy_price * \
-                         (1 + value["options"]["loss_limit"] / 100)
+            profit_limit = self.buy_price * (1 + value["options"]["profit_limit"] / 100)
+            loss_limit = self.buy_price * (1 + value["options"]["loss_limit"] / 100)
             if self.moment.price >= profit_limit:
                 self.sell_price = profit_limit
+                profit = round((self.sell_price - self.buy_price) * self.buy_volume, 3)
+                fee = scenario.fee * self.buy_price * self.buy_volume + scenario.fee * self.sell_price * self.buy_volume
                 self.finish_txt = f"""
                 # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
                 # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume, 3)}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
-                # fee : {scenario.fee * (self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price * self.buy_volume)} $
+                # profit(%): {profit}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
+                # fee : {fee} $
                 # buy Candle : {self.C}
                 # sell Candle : {self.CC}
                 # """
                 return True
             elif self.moment.price <= loss_limit:
                 self.sell_price = loss_limit
+                profit = round((self.sell_price - self.buy_price) * self.buy_volume, 3)
+                fee = scenario.fee * self.buy_price * self.buy_volume + scenario.fee * self.sell_price * self.buy_volume
                 self.finish_txt = f"""
                 # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
                 # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-                # profit(%): {round((self.sell_price - self.buy_price) * self.buy_volume, 3)}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
-                # fee : {scenario.fee * (self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price * self.buy_volume)} $
+                # profit(%): {profit}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
+                # fee : {fee} $
                 # buy Candle : {self.C}
                 # sell Candle : {self.CC}
                 # """
@@ -179,11 +181,13 @@ class MovingAverage(Strategy):
         self.sell_time_hour = self.moment.hour
         self.sell_time_minute = self.moment.minute
         self.CC = self.candles[self.moment.candle_id - 1]
+        profit = round((self.sell_price - self.buy_price) * self.buy_volume, 3)
+        fee = scenario.fee * self.buy_price * self.buy_volume + scenario.fee * self.sell_price * self.buy_volume
         self.finish_txt = f"""
         # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
         # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume, 3)}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
-        # fee : {scenario.fee * (self.buy_price * self.buy_volume) + scenario.fee * (self.sell_price * self.buy_volume)} $
+        # profit(%): {profit}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
+        # fee : {fee} $
         # buy Candle : {self.C}
         # sell Candle : {self.CC}
         # """

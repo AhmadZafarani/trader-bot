@@ -1,14 +1,7 @@
 *.ipynb
-controller/__pycache__
-view/__pycache__
-model/__pycache__
-*.txt
-balance_report.csv
-periodical_report.csv
 __pycache__/
 .vscode/
 logs/*.log
 .idea/
-!api-kucoin.txt
-!requirements.txt
 venv/
+results/

@@ -1,7 +1,7 @@
 # YA RAHIM
-from model.strategy.Strategy import Strategy
-from model.Moment import Moment
 from controller import controller
+from model.Moment import Moment
+from model.strategy.Strategy import Strategy
 
 
 class DummyStrategy(Strategy):

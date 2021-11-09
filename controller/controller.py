@@ -1,5 +1,6 @@
 # YA FATEMEH
 from controller.exchange_controller import *
+from model.strategy import DummyStrategy
 from view.views import log_cndl_mmnt
 
 dollar_balance = scenario.start_of_work_dollar_balance
@@ -10,7 +11,7 @@ strategy_results = []
 working_strategies = []
 lock_all = False  # used to locking all strategies
 lock_strategies = {}
-strategies = []
+strategies = {'dummy': DummyStrategy.DummyStrategy}
 
 
 def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float:
@@ -139,7 +140,6 @@ def set_this_moment(moment: Moment):
 
 def analyze_live_data(exchange: ccxt.Exchange, candles: list):
     global this_moment
-    this_moment: Moment
     moment_index = 0
 
     loggers = analyze_first_moment(candles)
@@ -163,7 +163,6 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list):
 
 def analyze_first_moment(candles):
     global this_moment
-    this_moment: Moment
 
     calculate_indicators_and_bundle_into_this_moment()
     this_moment.set_profit_loss_percentage(profit_loss_calculator(1, this_moment.price))

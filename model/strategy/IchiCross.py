@@ -229,10 +229,11 @@ class IchiCross(Strategy):
                       self.candles[self.moment.candle_id - 2].base_line]
         self.ICHHII = [self.candles[self.moment.candle_id - 3].conversion_line,
                        self.candles[self.moment.candle_id - 3].base_line]
+        profit = round((controller.get_this_moment().price - self.buy_price) * self.buy_volume, 3)
         self.finish_txt = f"""
         # buy time: {self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}
         # sell time: {self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}
-        # profit(%): {round((controller.get_this_moment().price - self.buy_price) * self.buy_volume, 3)}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
+        # profit(%): {profit}({round(100 * (self.sell_price - self.buy_price) / self.buy_price, 3)})
         # fee : {0.001 * (self.buy_price * self.buy_volume) + 0.001 * (self.sell_price * self.buy_volume)} $
         # buy Candle : {self.C}
         # buy ICHI prev : conv : {self.ICHI}
