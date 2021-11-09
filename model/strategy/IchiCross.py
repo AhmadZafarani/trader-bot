@@ -1,9 +1,28 @@
-from model.strategy.Strategy import Strategy
+# YA SATTAR
 from controller import controller
+from model.Moment import Moment
+from model.strategy.Strategy import Strategy
 from scenario import scenario
 
 
 class IchiCross(Strategy):
+    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list, logger, name: str):
+        super().__init__(moment, btc, dollar, candles, logger, name)
+        self.sold = None
+        self.finish_txt = None
+        self.lock_seconds = None
+        self.lock_method = None
+        self.buy_time_date = None
+        self.buy_time_hour = None
+        self.buy_time_minute = None
+        self.C = None
+        self.CC = None
+        self.lock_hour = None
+        self.ICHI = None
+        self.ICHHI = None
+        self.ICHII = None
+        self.ICHHII = None
+
     def get_cross_to_span_cross_distance_ids(self):
         id1 = self.moment.candle_id
         id2 = self.moment.candle_id
@@ -111,7 +130,6 @@ class IchiCross(Strategy):
             return True
 
     def start_strategy(self):
-        global lock_strategies
         self.short_name = 'ichi_cross'
         self.sold = False
         self.lock_hour = 0
@@ -131,13 +149,12 @@ class IchiCross(Strategy):
         self.buy_price = self.moment.price
         controller.buy(self.buy_volume, self.moment.price)
         if self.lock_method == 'lock_to_hour':
-            lock_strategies["ichi_cross"] = [
+            controller.lock_strategies["ichi_cross"] = [
                 IchiCross, self.moment.candle_id + self.lock_hour]
         elif self.lock_method == "lock_to_fin":
-            lock_strategies["ichi_cross"] = [IchiCross, 0]
+            controller.lock_strategies["ichi_cross"] = [IchiCross, 0]
 
     def fin_and_before(self):
-        global lock_strategies
         self.sell_price = controller.get_this_moment().price
         self.sell_time_date = self.moment.date
         self.sell_time_hour = self.moment.hour
@@ -146,10 +163,9 @@ class IchiCross(Strategy):
         self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
-            lock_strategies.pop("ichi_cross")
+            controller.lock_strategies.pop("ichi_cross")
 
     def check_close_con(self, i) -> bool:
-        global lock_all
         if i == 1:
             if 100 * abs(self.candles[self.moment.candle_id - 2].conversion_line - self.candles[
                 self.moment.candle_id - 2].base_line) / min(self.candles[self.moment.candle_id - 2].base_line,
@@ -177,10 +193,10 @@ class IchiCross(Strategy):
                         self.moment.candle_id - 2].close_price and self.candles[
                                self.moment.candle_id - 2].conversion_line > self.candles[
                                self.moment.candle_id - 2].open_price - (
-                                       (self.candles[self.moment.candle_id - 2].open_price -
-                                        self.candles[
-                                            self.moment.candle_id - 2].close_price) * (
-                                               scenario.closing_con1_min / 100))
+                                   (self.candles[self.moment.candle_id - 2].open_price -
+                                    self.candles[
+                                        self.moment.candle_id - 2].close_price) * (
+                                           scenario.closing_con1_min / 100))
                 else:
                     return self.candles[self.moment.candle_id - 2].conversion_line > \
                            max(self.candles[self.moment.candle_id - 2].open_price,

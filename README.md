@@ -1,2 +1,0 @@
-# trader-bot
-Hello

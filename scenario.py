@@ -5,35 +5,11 @@ from model.indicators import *
 class Scenario:
     log_file_path = 'logs/cndl-mmnt.log'
 
-    candles_data_csv_file_name = 'BTC_FULL_1h.csv'
-
-    moment_data_csv_file_name = 'BTC_FULL_1h_moment.csv'
-
-    """
-        these are dictionaries like this:
-        EXTRA_DATA_NAME: EXTRA_FILE_PATH
-        ** we assumed that the files are located some where in data/ directory. **
-        ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
-    """
-    extra_candles_data_files = {
-        "ma9": "BTC_FULL_1h_MA9.csv",
-        "ma12": "BTC_FULL_1h_MA12.csv",
-        "ma26": "BTC_FULL_1h_MA26.csv",
-        "ma31": "BTC_FULL_1h_MA31.csv",
-        "ma52": "BTC_FULL_1h_MA52.csv",
-        "ICHI": "BTC_FULL_1h_ICHI.csv",
-        "iscross": "BTC_FULL_1h_ISCROSS.csv"
-    }
-    extra_moments_data_files = {
-    }
-
     fee = 0.001
 
     start_of_work_dollar_balance = 100000
 
     start_of_work_crypto_balance = 0
-
-    number_of_moments_in_a_candle = 1
 
     profit_loss_period_step = 2 * 60 * 2
 
@@ -158,8 +134,6 @@ class Scenario:
     # ================ LIVE PARAMETERS ===============================
 
     live_start_of_work_needed_candles = 30
-
-    live_trading_mode = False
 
     live_candle_indicators = [
         ma12,

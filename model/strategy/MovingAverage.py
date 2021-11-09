@@ -1,9 +1,23 @@
-from model.strategy.Strategy import Strategy
+# YA GHAFFAR
 from controller import controller
+from model.Moment import Moment
+from model.strategy.Strategy import Strategy
 from scenario import scenario
 
 
 class MovingAverage(Strategy):
+    def __init__(self, moment: Moment, btc: float, dollar: float, candles: list, logger, name: str):
+        super().__init__(moment, btc, dollar, candles, logger, name)
+        self.sold = None
+        self.finish_txt = None
+        self.lock_seconds = None
+        self.lock_method = None
+        self.buy_time_date = None
+        self.buy_time_hour = None
+        self.buy_time_minute = None
+        self.C = None
+        self.CC = None
+
     def check_open_con(self, key: str, value: dict):
         if key == 'price_to_line':
             cndl = [self.candles[self.moment.candle_id - 1],
@@ -57,7 +71,6 @@ class MovingAverage(Strategy):
                     return True
 
     def start_strategy(self):
-        global lock_strategies
         self.short_name = 'moving_average'
         self.sold = False
         self.finish_txt = 'EMPTY'
@@ -78,18 +91,17 @@ class MovingAverage(Strategy):
         self.logger.warning(
             f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
         if self.lock_method == 'lock_to_hour':
-            lock_strategies["moving_average"] = [
+            controller.lock_strategies["moving_average"] = [
                 MovingAverage, self.moment.timestamp + self.lock_seconds, self.id]
 
             self.logger.warning(
                 f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
         elif self.lock_method == "lock_to_fin":
-            lock_strategies["moving_average"] = [MovingAverage, 0]
+            controller.lock_strategies["moving_average"] = [MovingAverage, 0]
             self.logger.warning(
                 f'"{self.short_name}" locked in {self.moment.get_time_string()} until "{self.id}" finish')
 
     def fin_and_before(self):
-        global lock_strategies
         self.sell_price = controller.get_this_moment().price
         self.sell_time_date = self.moment.date
         self.sell_time_hour = self.moment.hour
@@ -99,11 +111,9 @@ class MovingAverage(Strategy):
         self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
-            lock_strategies.pop(self.short_name)
+            controller.lock_strategies.pop(self.short_name)
 
     def check_close_con(self, key: str, value: dict):
-        global lock_all
-
         if key == "price_to_line":
             cndl = [self.candles[self.moment.candle_id - 1],
                     self.candles[self.moment.candle_id - 2]]
@@ -125,16 +135,12 @@ class MovingAverage(Strategy):
                 return False
         if key == "line_to_line":
             moving1 = [
-                getattr(self.candles[self.moment.candle_id - 2],
-                        "ma" + str(value["options"]["line"][0])),
-                getattr(self.candles[self.moment.candle_id - 3],
-                        "ma" + str(value["options"]["line"][0]))
+                getattr(self.candles[self.moment.candle_id - 2], "ma" + str(value["options"]["line"][0])),
+                getattr(self.candles[self.moment.candle_id - 3], "ma" + str(value["options"]["line"][0]))
             ]
             moving2 = [
-                getattr(self.candles[self.moment.candle_id - 2],
-                        "ma" + str(value["options"]["line"][1])),
-                getattr(self.candles[self.moment.candle_id - 3],
-                        "ma" + str(value["options"]["line"][1]))
+                getattr(self.candles[self.moment.candle_id - 2], "ma" + str(value["options"]["line"][1])),
+                getattr(self.candles[self.moment.candle_id - 3], "ma" + str(value["options"]["line"][1]))
             ]
             if moving1[0] < moving2[0] and moving1[1] >= moving2[1]:
                 return True

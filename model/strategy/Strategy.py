@@ -4,7 +4,7 @@ import controller.controller as controller
 from model.Moment import Moment
 
 """
-    in order of implementing a new strategy you must do these 2 steps:
+    in order to implement a new strategy you must do these 2 steps:
         1. implement your strategy as a class (every thing out of a class would ignored) witch inherits from 
             this abstract class; Strategy
         2. register class name into the dictionary 'strategies'; witch defined in last line of this file 

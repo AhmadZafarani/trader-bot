@@ -1,5 +1,4 @@
 # YA FATEMEH
-import model.strategy as strategies
 from controller.exchange_controller import *
 from view.views import log_cndl_mmnt
 
@@ -10,6 +9,8 @@ this_moment = Moment(0, 0, 0)
 strategy_results = []
 working_strategies = []
 lock_all = False  # used to locking all strategies
+lock_strategies = {}
+strategies = []
 
 
 def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float:
@@ -33,7 +34,7 @@ def lock_all_strategies(working_strategies_to_lock: list, moment: Moment, logger
             sell(ws.sell_volume, price)
             ws.finish_strategy(ws.finish_txt)
             if ws.lock_method == "lock_to_fin":
-                strategies.lock_strategies.pop(ws.short_name)
+                lock_strategies.pop(ws.short_name)
 
     logger.warning(f'all({[x.id for x in working_strategies_to_lock]}) locked in {moment.get_time_string()}')
     logger.info(f'More Details for lock_all : price , Volume = {price} , {crypto}')
@@ -42,12 +43,12 @@ def lock_all_strategies(working_strategies_to_lock: list, moment: Moment, logger
 def try_strategies(moment: Moment, candles: list, strategy_logger):
     global working_strategies, bitcoin_balance, dollar_balance, lock_all
 
-    for locked in list(strategies.lock_strategies):  # unlock strategies
-        if strategies.lock_strategies[locked][1] != 0:
-            if strategies.lock_strategies[locked][1] <= moment.timestamp:
+    for locked in list(lock_strategies):  # unlock strategies
+        if lock_strategies[locked][1] != 0:
+            if lock_strategies[locked][1] <= moment.timestamp:
                 strategy_logger.warning(
-                    f'"{strategies.lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
-                strategies.lock_strategies.pop(locked)
+                    f'"{lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
+                lock_strategies.pop(locked)
 
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
@@ -74,12 +75,10 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
                              dollar_balance=dollar_balance)
 
     if not lock_all:
-        for s in strategies.strategies:  # trying to start not locked strategies
-            if s not in strategies.lock_strategies:
-                strategy_logger.debug(
-                    f'working on "{s}" in {moment.get_time_string()}')
-                strtg = strategies.strategies[s](
-                    moment, bitcoin_balance, dollar_balance, candles, logger=strategy_logger, name=s)
+        for s in strategies:  # trying to start not locked strategies
+            if s not in lock_strategies:
+                strategy_logger.debug(f'working on "{s}" in {moment.get_time_string()}')
+                strtg = strategies[s](moment, bitcoin_balance, dollar_balance, candles, logger=strategy_logger, name=s)
                 if strtg.working:
                     working_strategies.append(strtg)
 
@@ -90,9 +89,7 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
 
 
 def buy(bitcoin: int, price: int):
-    if scenario.live_trading_mode:
-        exchange_buy(bitcoin, price)
-    #     return
+    exchange_buy(bitcoin, price)
 
     global bitcoin_balance, dollar_balance
     bitcoin = round(bitcoin, 4)
@@ -105,9 +102,7 @@ def buy(bitcoin: int, price: int):
 
 
 def sell(bitcoin: int, price: int):
-    if scenario.live_trading_mode:
-        exchange_sell(bitcoin, price)
-    #     return
+    exchange_sell(bitcoin, price)
 
     global bitcoin_balance, dollar_balance
     bitcoin = round(bitcoin, 4)
