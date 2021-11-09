@@ -25,7 +25,7 @@ def view_strategy_result(strategy_result: str):
         file.write(strategy_result + '\n')
 
 
-def view_balance(balance: tuple):
+def view_live_balance(balance: tuple):
     with open('balance_report.csv', 'a') as file:
         file.write(f'{balance[0]}, {balance[1]}\n')
 
@@ -33,7 +33,8 @@ def view_balance(balance: tuple):
 def view_periodical_result(periodical_result: list):
     with open('periodical_report.csv', 'a') as file:
         file.write(
-            f'{periodical_result[0]}, {periodical_result[1]}, {periodical_result[2]}, {periodical_result[3]} , {round(float(100 * periodical_result[3] / periodical_result[1]), 4)}\n')
+            f'{periodical_result[0]}, {periodical_result[1]}, {periodical_result[2]}, {periodical_result[3]},'
+            f' {round(float(100 * periodical_result[3] / periodical_result[1]), 4)}\n')
 
 
 def start_live_view():
@@ -42,8 +43,6 @@ def start_live_view():
     with open('periodical_report.csv', 'w') as file:
         file.write(
             'Date, Start Of Period Balance, End Of Period Balance, Delta Balance, delta percentage\n')
-    with open('strategy_results.txt', 'w') as file:
-        pass
 
 
 def log_cndl_mmnt(logger, moment, candles):

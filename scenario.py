@@ -45,7 +45,7 @@ class Scenario:
     # strategy configuration
     # name : Moving_average
     # opening conditions
-    moving_average_lock_method = "lock_to_fin" 
+    moving_average_lock_method = "lock_to_fin"
     moving_average_lock_seconds = 0
     buy_method = {
         "price_to_line": {"enable": 0, "options": {"line": 9, "min_percentage": 50, "green": True}},
@@ -98,9 +98,9 @@ class Scenario:
     # default : 1
     next_candle_length_min = 0.2
 
-    # opening conditions intractions :
+    # opening conditions interactions :
     # {CHECK_ADX , CHECK_SLOPE ,Buy_UnderCloud, CHECK_NEXT_CANDLE}
-    opening_intractions = [0, 0, 1, 0]
+    opening_interactions = [0, 0, 1, 0]
 
     # closing_conditions:
     # methods :
@@ -124,7 +124,7 @@ class Scenario:
     # default : 15
     closing_met3_min_adx = 15
 
-    # method4 : loss_imit , profit_limit
+    # method4 : loss_limit , profit_limit
     # profit limit
     # values : (0 , 100]
     # default : 10
@@ -146,13 +146,13 @@ class Scenario:
     # # default : 10
     # loss_limit_per = -1.2
 
-    # 'intraction'
+    # 'interactions'
 
-    # intraction is a 5 bit binary number
+    # interactions is a 5 bit binary number
     # example
     # default:11111
     # {Met1, Met2, Met3, Met4, Met5}
-    close_intraction = [1, 0, 0, 0]
+    close_interactions = [1, 0, 0, 0]
     volume_buy_ichi = 90
 
     # ================ LIVE PARAMETERS ===============================

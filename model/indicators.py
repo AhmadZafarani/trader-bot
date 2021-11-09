@@ -10,16 +10,16 @@
 
 def moving_average(length: int, index: int, candles: list) -> float:
     if index < length - 1:
-        sum = 0
+        moving_sum = 0
         for cll in candles[0:index + 1]:
-            sum += cll.close_price
-        return round(sum / (index + 1), 3)
+            moving_sum += cll.close_price
+        return round(moving_sum / (index + 1), 3)
 
     if index >= length - 1:
-        sum = 0
+        moving_sum = 0
         for cll in candles[index - length + 1:index + 1]:
-            sum += cll.close_price
-        return round(sum / (length), 3)
+            moving_sum += cll.close_price
+        return round(moving_sum / length, 3)
 
 
 def ma12(index: int, candles: list) -> dict:

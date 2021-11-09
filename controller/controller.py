@@ -1,12 +1,7 @@
 # YA FATEMEH
 from csv import reader
-from time import sleep
 
-from model.Candle import Candle
-from model.Moment import Moment
 import model.strategy as strategies
-from scenario import scenario
-from controller.view_controller import *
 from controller.exchange_controller import *
 from view.views import log_cndl_mmnt
 
@@ -116,7 +111,8 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
         return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 4)
 
 
-def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int, logger):
+def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int,
+                        profit_loss: int, logger):
     crypto1 = 0
     for ws in working_strategies:
         crypto1 += ws.sell_volume
@@ -130,7 +126,7 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
             if ws.lock_method == "lock_to_fin":
                 strategies.lock_strategies.pop(ws.short_name)
     logger.warning(
-        f'all({[x.id for x in working_strategies ]}) locked in {moment.get_time_string()}')
+        f'all({[x.id for x in working_strategies]}) locked in {moment.get_time_string()}')
     logger.info(
         f'More Details for lock_all : price , Volume = {price} , {crypto1}')
 
@@ -138,7 +134,7 @@ def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profi
 def try_strategies(moment: Moment, candles: list, strategy_logger):
     global working_strategies, bitcoin_balance, dollar_balance, lock_all
 
-    for locked in list(strategies.lock_strategies):       # unlock strategies
+    for locked in list(strategies.lock_strategies):  # unlock strategies
         if strategies.lock_strategies[locked][1] != 0:
             if strategies.lock_strategies[locked][1] <= moment.timestamp:
                 strategy_logger.warning(
@@ -157,25 +153,29 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
             lock_all_strategies(working_strategies=working_strategies, moment=moment,
                                 start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                                 dollar=dollar_balance,
-                                profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'], logger=strategy_logger)
+                                profit_loss=scenario.periodical_profit_loss_limit['options']['profit_limit'],
+                                logger=strategy_logger)
         elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
             strategy_logger.warning(
                 f"periodical loss limit reached in {moment.get_time_string()}")
             lock_all = True
             lock_all_strategies(working_strategies=working_strategies, moment=moment,
                                 start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
-                                dollar=dollar_balance, profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'], logger=strategy_logger)
+                                dollar=dollar_balance,
+                                profit_loss=scenario.periodical_profit_loss_limit['options']['loss_limit'],
+                                logger=strategy_logger)
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     for ws in working_strategies:
         strategy_logger.debug(
             f'continuing "{ws.id}" in {moment.get_time_string()}')
-        ws.continue_strategy(working_strategies, start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
+        ws.continue_strategy(working_strategies,
+                             start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                              dollar_balance=dollar_balance)
 
     if not lock_all:
-        for s in strategies.strategies:     # trying to start not locked strategies
-            if not s in strategies.lock_strategies:
+        for s in strategies.strategies:  # trying to start not locked strategies
+            if s not in strategies.lock_strategies:
                 strategy_logger.debug(
                     f'working on "{s}" in {moment.get_time_string()}')
                 strtg = strategies.strategies[s](

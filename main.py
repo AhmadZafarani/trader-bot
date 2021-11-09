@@ -1,13 +1,11 @@
-# YA HOSSEIN
+# YA HUSSEIN
 from pathlib import Path
 from time import time, sleep
 
 from controller.controller import data_converter, analyze_data, calculate_indicators_and_bundle_into_candles, \
     set_this_moment, analyze_live_data
-from scenario import scenario
 from controller.exchange_controller import connect_to_exchange, get_n_past_candles, get_current_data_from_exchange, \
     get_time_from_exchange, configure_market, SERVER_SIDE_ERROR
-from model.Moment import Moment
 from controller.view_controller import *
 
 
@@ -21,12 +19,12 @@ def main():
     extra_candle_files = {}
     for ecdf in scenario.extra_candles_data_files:
         extra_candle_files[ecdf] = data_folder / \
-            scenario.extra_candles_data_files[ecdf]
+                                   scenario.extra_candles_data_files[ecdf]
 
     extra_moment_files = {}
     for emdf in scenario.extra_moments_data_files:
         extra_moment_files[emdf] = data_folder / \
-            scenario.extra_moments_data_files[emdf]
+                                   scenario.extra_moments_data_files[emdf]
 
     candles = data_converter(candles_file, extra_candle_files)
 

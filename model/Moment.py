@@ -1,5 +1,6 @@
 # YA ALI
 from datetime import datetime
+
 from pytz import timezone
 
 
@@ -35,5 +36,5 @@ class Moment:
     def get_time_string(self):
         return f'{self.date} - {self.hour}:{self.minute}:{self.second}'
 
-    def decrease_momnet_id(self):
+    def decrease_moment_id(self):
         self.moment_id -= 1

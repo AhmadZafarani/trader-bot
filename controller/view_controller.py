@@ -1,9 +1,9 @@
 # YA ZEYNAB
 import logging
 
-from view.views import *
 from model.Moment import Moment
 from scenario import scenario
+from view.views import *
 
 start_of_period_balance = 0
 periodical_results = []
@@ -22,7 +22,7 @@ def check_view_essentials(moment: Moment, moment_index: int, bitcoin_balance: fl
 
 
 def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float) -> bool:
-    global start_of_period_balance, scenario
+    global start_of_period_balance
     e = dollar_balance + bitcoin_balance * moment.price
 
     if (moment_index - 1) % scenario.profit_loss_period_step == scenario.profit_loss_period_step - 1:
@@ -42,11 +42,12 @@ def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float,
     return True
 
 
-def control_live_view(loggers: list, candles: list, moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float, strategy_results: list):
+def control_live_view(loggers: list, candles: list, moment: Moment, moment_index: int, bitcoin_balance: float,
+                      dollar_balance: float, strategy_results: list):
     global start_of_period_balance
 
     t = (dollar_balance, bitcoin_balance)
-    view_balance(t)
+    view_live_balance(t)
 
     if (moment_index - 1) % scenario.profit_loss_period_step == 0:
         start_of_period_balance = dollar_balance + bitcoin_balance * moment.price
@@ -80,15 +81,15 @@ def control_start_live_view():
 
 
 def setup_logger(logger_name: str, log_file: str, level=logging.INFO, format_log='%(message)s'):
-    l = logging.getLogger(logger_name)
+    lg = logging.getLogger(logger_name)
     formatter = logging.Formatter(format_log)
-    fileHandler = logging.FileHandler(log_file, mode='w')
-    fileHandler.setFormatter(formatter)
-    streamHandler = logging.StreamHandler()
-    streamHandler.setFormatter(formatter)
+    file_handler = logging.FileHandler(log_file, mode='w')
+    file_handler.setFormatter(formatter)
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(formatter)
 
-    l.setLevel(level)
-    l.addHandler(fileHandler)
+    lg.setLevel(level)
+    lg.addHandler(file_handler)
 
 
 def get_logger(name: str) -> logging.Logger:

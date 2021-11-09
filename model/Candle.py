@@ -17,6 +17,7 @@ class Candle:
         self.open_price = open_price
         self.close_price = close_price
         self.traded_volume = traded_volume
+        self.timestamp = -1
 
     def set_timestamp(self, timestamp: int):
         self.timestamp = timestamp

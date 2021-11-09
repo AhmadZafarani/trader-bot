@@ -1,10 +1,12 @@
 # YA SAJJAD
 from time import sleep
+
 import ccxt
 from cryptography.fernet import Fernet
 
-from model.Candle import Candle
 from controller.view_controller import *
+from model.Candle import Candle
+
 SERVER_SIDE_ERROR = -1
 
 
@@ -26,7 +28,7 @@ def connect_to_exchange() -> ccxt.Exchange:
         'password': password,
     })
     exchange.set_sandbox_mode(False)
-    exchange.load_markets(params={'timeout': 20000})
+    exchange.load_markets()
     print("connected to KUCOIN")
     return exchange
 
@@ -50,7 +52,6 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int, handle
         log_debug(
             "couldn't fetch all of your candles. we will try again after 5 seconds.")
         sleep(5)
-        # TODO Change sleep time
     return build_candle_objects_from_fetched_data(candles, n, start_index)
 
 
@@ -79,18 +80,19 @@ def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
 
 
 def exchange_buy(crypto: float, price: float):
-    # print(f"exchange buy with price: {price} and volume: {crypto} .")
+    print(f"exchange buy with price: {price} and volume: {crypto} .")
     pass
 
 
 def exchange_sell(crypto: float, price: float):
-    # print(f"exchange sell with price: {price} and volume: {crypto} .")
+    print(f"exchange sell with price: {price} and volume: {crypto} .")
     pass
 
 
 def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
     # not available for all exchanges
     try:
+        exchange: ccxt.kucoin
         return exchange.fetch_time()
     except Exception as e:
         log_error("error in get_time_from_exchange" + str(e))
@@ -110,7 +112,8 @@ def configure_market(exchange: ccxt.Exchange):
 
         if not market_state:
             log_warning(
-                f"market isn't active right now. we will try again {scenario.live_try_again_time_inactive_market} seconds later.")
+                f"market isn't active right now. we will try again {scenario.live_try_again_time_inactive_market}"
+                f" seconds later.")
             sleep(scenario.live_try_again_time_inactive_market)
             exchange.load_markets(reload=True)
             continue
@@ -123,6 +126,7 @@ def configure_market(exchange: ccxt.Exchange):
 
 def get_current_price(exchange: ccxt.Exchange) -> float:
     try:
+        exchange: ccxt.kucoin
         trades = exchange.fetch_trades(scenario.live_market)
         price = trades[-1]['price']
         log_info(f"now {scenario.live_market} price is: {price}")
