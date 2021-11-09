@@ -885,7 +885,7 @@ class Ichi_future(Strategy):
         return
 
 
-# strategies = {'ichi_future': Ichi_future}
+strategies = {'ichi_future': Ichi_future}
 # strategies = {"dummy_future" : Dummy_Strategy_Futures}
 # strategies = {'ichi_cross': ICHI_CROSS}
-strategies = {'moving_average':Moving_average}
+# strategies = {'moving_average':Moving_average}

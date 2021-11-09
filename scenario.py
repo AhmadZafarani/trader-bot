@@ -3,7 +3,7 @@ from model.Position import Direction
 
 
 class Scenario:
-    mode = "spot" # mode can be future or spot 
+    mode = "future" # mode can be future or spot 
     month = "jan20"
     strtgg = "ichi"
 
@@ -44,7 +44,7 @@ class Scenario:
     profit_loss_period_step = 24 * 2
 
     periodical_profit_loss_limit = {"enable": 1, "options": {
-        "profit_limit": 18, "loss_limit": -1.8}}
+        "profit_limit": 0.1, "loss_limit": -0.1}}
     # periodical_profit_loss_limit_enable = 1
 
     global_limit = 0
@@ -52,8 +52,8 @@ class Scenario:
     global_profit_limit = 1.0
 
     # periodical_profit_limit = 18.0
-    # periodical_loss_limit = -1.8
-    # periodical_profit_loss_limit['options']['profit_limit'] = periodical_loss_limit
+    # periodical_loss_limit = -1.5
+    # periodical_profit_loss_limit['options']['loss_limit'] = periodical_loss_limit
     # periodical_profit_loss_limit['options']['profit_limit'] = periodical_profit_limit
     # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
@@ -114,11 +114,12 @@ class Scenario:
             }
         },
         "close_conditions" : {
-            "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 1}},
-            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1, "r2r" : 2.2}}
+            "based_on_cloud" : {"enable" : 1 , "options" : {"r2r" : 1}},
+            "based_on_atr" : {"enable" : 0 , "options":{"sl" : 1, "r2r" : 2.2}}
         }, 
         "found_management" : {
-            "total_risk" : 2        }
+            "total_risk" : 2 
+        }
     }
      
 # =======================================================================
