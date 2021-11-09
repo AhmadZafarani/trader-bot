@@ -38,3 +38,6 @@ class Moment:
 
     def decrease_moment_id(self):
         self.moment_id -= 1
+
+    def set_profit_loss_percentage(self, profit_loss_percentage: float):
+        self.profit_loss_percentage = profit_loss_percentage

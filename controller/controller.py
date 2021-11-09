@@ -1,5 +1,4 @@
 # YA FATEMEH
-from csv import reader
 
 import model.strategy as strategies
 from controller.exchange_controller import *
@@ -12,93 +11,6 @@ this_moment = Moment(0, 0, 0)
 strategy_results = []
 working_strategies = []
 lock_all = False  # used to locking all strategies
-
-
-def open_extra_files(extra_files: dict) -> list:
-    files = []
-    for file in extra_files:
-        csv_file = open(extra_files[file])
-        files.append(list(reader(csv_file)))
-    return files
-
-
-def candle_maker(candles_data: list, i: int, files: list) -> Candle:
-    fields = [f for f in candles_data[i]]
-    c = Candle(i, float(fields[0]), float(fields[1]), float(
-        fields[2]), float(fields[3]), float(fields[4]))
-
-    for file in files:  # extract extra fields from extra files
-        field_names = file[0]
-        field_length = len(field_names)
-        fields = [f for f in file[i]]
-
-        for j in range(field_length):
-            c.__setattr__(field_names[j], float(fields[j]))
-    return c
-
-
-# read data from candles csv file and make candles list
-def data_converter(candles_file: str, extra_candle_files: dict) -> list:
-    files = open_extra_files(extra_candle_files)
-
-    candles = []
-    with open(candles_file) as csvfile:
-        csv_reader = reader(csvfile, delimiter=',')
-        candles_data = list(csv_reader)
-        candles_number = len(candles_data)
-        for i in range(1, candles_number):
-            c = candle_maker(candles_data, i, files)
-            candles.append(c)
-    return candles
-
-
-def analyze_each_moment(csv_reader: list, moment_index: int, moments_extra_files: list, candle: Candle, candles: list):
-    # volume MAY be used!
-    candle_time, price, volume = csv_reader[moment_index]
-    price = float(price)
-    candle_time = int(candle_time) // 1000
-
-    profit_loss_percentage = profit_loss_calculator(moment_index, price)
-    this_moment.update_moment(
-        candle_time, price, candle.identifier, profit_loss_percentage, moment_index)
-    for file in moments_extra_files:
-        field_names = file[0]
-        field_length = len(field_names)
-        fields = [f for f in file[moment_index]]
-
-        for j in range(field_length):
-            this_moment.__setattr__(field_names[j], float(fields[j]))
-
-    viewed = view_before_trade(this_moment, moment_index,
-                               bitcoin_balance, dollar_balance)
-    try_strategies(this_moment, candles)
-    if not viewed:
-        check_view_essentials(this_moment, moment_index,
-                              bitcoin_balance, dollar_balance)
-
-
-def analyze_data(candles: list, csv_file_name: str, moments_extra_files: dict):
-    files = open_extra_files(moments_extra_files)
-
-    control_logs()
-
-    with open(csv_file_name) as csvfile:
-        csv_reader = reader(csvfile, delimiter=',')
-        moments_data = list(csv_reader)
-        moment_index = 1
-        for c in candles:  # the i th moment of candle
-            log_info(c)
-
-            for _ in range(scenario.number_of_moments_in_a_candle):
-                analyze_each_moment(
-                    moments_data, moment_index, files, c, candles)
-                moment_index += 1
-
-                log_info(f"    {this_moment}")
-
-            print('Analyzing :', round(100 * c.identifier / len(candles), 2), '%')
-
-        control_views(strategy_results)
 
 
 def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float:
@@ -245,35 +157,38 @@ def set_this_moment(moment: Moment):
 
 def analyze_live_data(exchange: ccxt.Exchange, candles: list):
     global this_moment
+    this_moment: Moment
     moment_index = 0
 
-    calculate_indicators_and_bundle_into_this_moment()
-    this_moment.profit_loss_percentage = profit_loss_calculator(1, this_moment.price)
-
-    loggers = control_start_live_view()
-    log_cndl_mmnt(loggers[0], this_moment, candles)
-
-    try_strategies(this_moment, candles, strategy_logger=loggers[1])
-
+    loggers = analyze_first_moment(candles)
     while True:
         log_info(f"working strategies are: {working_strategies}")
         sleep_till_end_of_moment()
-
         moment_index += 1
 
         ret = sync_bot_data_with_exchange(exchange, candles, moment_index)
         if ret == SERVER_SIDE_ERROR:
-            log_error(
-                "moment process failed! => sync_bot_data_with_exchange")
+            log_error("moment process failed! => sync_bot_data_with_exchange")
             moment_index -= 1
-            this_moment.decrease_momnet_id()
+            this_moment.decrease_moment_id()
             continue
 
         # this part is for viewing previous moment
         control_live_view(loggers, candles, this_moment, moment_index,
                           bitcoin_balance, dollar_balance, strategy_results)
-
         try_strategies(this_moment, candles, strategy_logger=loggers[1])
+
+
+def analyze_first_moment(candles):
+    global this_moment
+    this_moment: Moment
+
+    calculate_indicators_and_bundle_into_this_moment()
+    this_moment.set_profit_loss_percentage(profit_loss_calculator(1, this_moment.price))
+    loggers = control_start_live_view()
+    log_cndl_mmnt(loggers[0], this_moment, candles)
+    try_strategies(this_moment, candles, strategy_logger=loggers[1])
+    return loggers
 
 
 def sleep_till_end_of_moment():
@@ -283,8 +198,6 @@ def sleep_till_end_of_moment():
 
 
 def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_index: int):
-    global this_moment
-
     while True:
         ret = sync_last_candles(exchange, candles)
         if ret == SERVER_SIDE_ERROR:

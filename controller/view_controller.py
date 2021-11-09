@@ -7,18 +7,6 @@ from view.views import *
 
 start_of_period_balance = 0
 periodical_results = []
-balance = []
-
-
-def control_views(strategy_results: list):
-    view_balance(balance)
-    view_strategy_results(strategy_results)
-    view_periodical_results(periodical_results)
-
-
-def check_view_essentials(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float):
-    balance.append((dollar_balance, bitcoin_balance))
-    __periodical_data(moment, moment_index, bitcoin_balance, dollar_balance)
 
 
 def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float) -> bool:
@@ -34,15 +22,7 @@ def __periodical_data(moment: Moment, moment_index: int, bitcoin_balance: float,
     return False
 
 
-def view_before_trade(moment: Moment, moment_index: int, bitcoin_balance: float, dollar_balance: float) -> bool:
-    global start_of_period_balance
-    if (moment_index - 1) % scenario.profit_loss_period_step != 0:
-        return False
-    start_of_period_balance = dollar_balance + bitcoin_balance * moment.price
-    return True
-
-
-def control_live_view(loggers: list, candles: list, moment: Moment, moment_index: int, bitcoin_balance: float,
+def control_live_view(loggers: tuple, candles: list, moment: Moment, moment_index: int, bitcoin_balance: float,
                       dollar_balance: float, strategy_results: list):
     global start_of_period_balance
 
@@ -64,22 +44,20 @@ def control_live_view(loggers: list, candles: list, moment: Moment, moment_index
     log_cndl_mmnt(loggers[0], moment, candles)
 
 
-def control_start_live_view():
+def control_start_live_view() -> tuple:
     setup_logger('cndl-mmnt-sync', r'logs/cndl-mmnt-sync.log',
                  level=logging.INFO)
-    log19 = get_logger('cndl-mmnt-sync')
+    log1 = get_logger('cndl-mmnt-sync')
 
     setup_logger('strategy-logs', r'logs/strategy-logs.log',
                  level=logging.INFO, format_log='%(asctime)s - %(message)s')
-    log20 = get_logger('strategy-logs')
+    log2 = get_logger('strategy-logs')
 
     start_live_view()
-    return [log19, log20]
+    return log1, log2
 
 
 # ============= LOG CONTROL =========================================
-
-
 def setup_logger(logger_name: str, log_file: str, level=logging.INFO, format_log='%(message)s'):
     lg = logging.getLogger(logger_name)
     formatter = logging.Formatter(format_log)

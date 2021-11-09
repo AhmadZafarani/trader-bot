@@ -86,7 +86,8 @@ lock_strategies = {}
 # lock_all = False
 
 
-# def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int, dollar: int, profit_loss: int):
+# def lock_all_strategies(working_strategies: list, moment: Moment, start_of_profit_loss_period_balance: int,
+# dollar: int, profit_loss: int):
 #     crypto1 = 0
 #     for ws in working_strategies:
 #         crypto1 += ws.sell_volume

@@ -1,7 +1,6 @@
+pandas
 pytz
 ccxt
 matplotlib
 numpy
-pandas
-cryptocompare
 cryptography

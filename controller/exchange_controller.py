@@ -34,6 +34,7 @@ def connect_to_exchange() -> ccxt.Exchange:
 
 
 def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int, handle_failure=True):
+    candles = []
     while True:
         # multiply to ensure fetch more than `n` candles
         try:
@@ -95,7 +96,7 @@ def get_time_from_exchange(exchange: ccxt.Exchange) -> int:
         exchange: ccxt.kucoin
         return exchange.fetch_time()
     except Exception as e:
-        log_error("error in get_time_from_exchange" + str(e))
+        log_error("error in get_time_from_exchange => " + str(e))
         return SERVER_SIDE_ERROR
 
 
@@ -132,5 +133,5 @@ def get_current_price(exchange: ccxt.Exchange) -> float:
         log_info(f"now {scenario.live_market} price is: {price}")
         return price
     except Exception as e:
-        log_error("error in get_current_price" + str(e))
+        log_error("error in get_current_price => " + str(e))
         return SERVER_SIDE_ERROR
