@@ -634,6 +634,8 @@ class Dummy_Strategy_Futures(Strategy):
         # if self.lock_method == "lock_to_fin":
         #     lock_strategies.pop("dummy_futures")
 
+
+last_trade_cloud_color = -3
 class Ichi_future(Strategy):
     def check_short_con(self, key, value) -> bool:
 
@@ -693,6 +695,16 @@ class Ichi_future(Strategy):
         flag_long = 1
         if self.moment.candle_id < 77:
             return False
+
+        # only 1 trade in a clou
+        if scenario.ichi_future['enterance']['options']['only_one_in_a_cloud'] : 
+            try :
+                if self.candles[self.moment.candle_id+24].cloud_number == last_trade_cloud_color : 
+                    return False
+            except Exception as ex : 
+                # print(ex)
+                pass
+
         # chech short conditions
         short_conditions = scenario.ichi_future["enterance"]["short"]
         for key, value in short_conditions.items():
@@ -769,6 +781,7 @@ class Ichi_future(Strategy):
         return size, leverage
 
     def start_strategy(self):
+        global last_trade_cloud_color
         global lock_strategies
         self.short_name = 'ichi_future'
         self.finish_txt = 'EMPTY'
@@ -783,6 +796,8 @@ class Ichi_future(Strategy):
         self.entry_liquidity = self.moment.future_liquidity
         self.sold = False
         self.finish_txt = "sold_buy_lock_strategy"
+
+        last_trade_cloud_color = self.candles[self.moment.candle_id + 24].cloud_number
         # stoploss_calculation
         close_conditions = scenario.ichi_future['close_conditions']
         self.stop_loss, self.take_profit = self.calculate_stoploss(
@@ -881,7 +896,7 @@ class Ichi_future(Strategy):
         return
 
 
-# strategies = {'ichi_future': Ichi_future}
-strategies = {"dummy_future" : Dummy_Strategy_Futures}
+strategies = {'ichi_future': Ichi_future}
+# strategies = {"dummy_future" : Dummy_Strategy_Futures}
 # strategies = {'ichi_cross': ICHI_CROSS}
 # strategies = {'moving_average':Moving_average}

@@ -19,7 +19,8 @@ class Scenario:
     """
     extra_candles_data_files = {
         "ICHI": f"BTC_2021/BTC_ICHI.csv",
-        "ATR" : f'BTC_2021/BTC_ATR.csv'
+        "ATR" : f'BTC_2021/BTC_ATR.csv',
+        "cloud_number" : "BTC_2021/BTC_Cloud_num.csv"
         # "ma9" : f'BTC_2021/BTC_MA9.csv',
         # "ma26": f'jan20/BTC_jan20_MA26.csv'
     }
@@ -35,7 +36,7 @@ class Scenario:
     start_of_work_crypto_balance = 0
 
     start_of_work_position = {"direction":Direction.NONE,
-                              "size": 0, "entry_price": 0, "leverage": 50}
+                              "size": 0, "entry_price": 0, "leverage": 1.25}
 
     start_of_work_future_dollar = 100000
 
@@ -111,14 +112,15 @@ class Scenario:
                 "kij_inder_ten" : {"enable" : 1 } , 
                 "close_upper_cloud" : {"enable" : 1},
                 "span_upper_cloud" : {"enable" : 1} 
-            }
+            },
+            "options" : {'only_one_in_a_cloud' : 1 , 'on_border' : 1}
         },
         "close_conditions" : {
-            "based_on_cloud" : {"enable" : 1 , "options" : {"r2r" : 1}},
-            "based_on_atr" : {"enable" : 0 , "options":{"sl" : 1, "r2r" : 2.2}}
+            "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 1}},
+            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1, "r2r" : 2.2}}
         }, 
         "found_management" : {
-            "total_risk" : 2 
+            "total_risk" : 5
         }
     }
      
