@@ -47,8 +47,7 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
     for locked in list(lock_strategies):  # unlock strategies
         if lock_strategies[locked][1] != 0:
             if lock_strategies[locked][1] <= moment.timestamp:
-                strategy_logger.warning(
-                    f'"{lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
+                strategy_logger.warning(f'"{lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
                 lock_strategies.pop(locked)
 
     # remove finished strategies from working_strategies
@@ -57,20 +56,17 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
     # lock all strategy if periodical profit loss is reached
     if scenario.periodical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
         if moment.profit_loss_percentage >= scenario.periodical_profit_loss_limit['options']['profit_limit']:
-            strategy_logger.warning(
-                f"periodical profit limit reached in {moment.get_time_string()}")
+            strategy_logger.warning(f"periodical profit limit reached in {moment.get_time_string()}")
             lock_all = True
             lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment, logger=strategy_logger)
         elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
-            strategy_logger.warning(
-                f"periodical loss limit reached in {moment.get_time_string()}")
+            strategy_logger.warning(f"periodical loss limit reached in {moment.get_time_string()}")
             lock_all = True
             lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment, logger=strategy_logger)
 
     working_strategies = [ws for ws in working_strategies if ws.working]
     for ws in working_strategies:
-        strategy_logger.debug(
-            f'continuing "{ws.id}" in {moment.get_time_string()}')
+        strategy_logger.debug(f'continuing "{ws.id}" in {moment.get_time_string()}')
         ws.continue_strategy(working_strategies,
                              start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                              dollar_balance=dollar_balance)
@@ -84,8 +80,7 @@ def try_strategies(moment: Moment, candles: list, strategy_logger):
                     working_strategies.append(strtg)
 
     if lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
-        strategy_logger.warning(
-            f'all strategies unlocked in {moment.get_time_string()}')
+        strategy_logger.warning(f'all strategies unlocked in {moment.get_time_string()}')
         lock_all = False
 
 
@@ -173,8 +168,7 @@ def analyze_first_moment(candles):
 
 
 def sleep_till_end_of_moment():
-    print(
-        f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
+    print(f"moment index: {this_moment.moment_id} => sleeping {scenario.live_sleep_between_each_moment} seconds.")
     sleep(scenario.live_sleep_between_each_moment)
 
 

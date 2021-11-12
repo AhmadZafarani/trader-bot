@@ -8,6 +8,12 @@ from controller.view_controller import *
 from model.Candle import Candle
 
 SERVER_SIDE_ERROR = -1
+global_exchange = ccxt.kucoin()
+
+
+def set_global_exchange(exchange: ccxt.Exchange):
+    global global_exchange
+    global_exchange = exchange
 
 
 def read_api_key() -> tuple:
@@ -27,9 +33,10 @@ def connect_to_exchange() -> ccxt.Exchange:
         'secret': secret,
         'password': password,
     })
-    exchange.set_sandbox_mode(False)
+    exchange.set_sandbox_mode(True)
     exchange.load_markets()
     print("connected to KUCOIN")
+    set_global_exchange(exchange)
     return exchange
 
 
@@ -50,8 +57,7 @@ def get_n_past_candles(exchange: ccxt.Exchange, n: int, start_index: int, handle
 
         if len(candles) >= n:
             break
-        log_debug(
-            "couldn't fetch all of your candles. we will try again after 5 seconds.")
+        log_warning("couldn't fetch all of your candles. we will try again after 5 seconds.")
         sleep(5)
     return build_candle_objects_from_fetched_data(candles, n, start_index)
 
@@ -81,8 +87,10 @@ def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
 
 
 def exchange_buy(crypto: float, price: float):
+    order = global_exchange.create_limit_buy_order(scenario.live_market, crypto, price)
+    print(order)
+    print(global_exchange.fetch_open_orders())
     print(f"exchange buy with price: {price} and volume: {crypto} .")
-    pass
 
 
 def exchange_sell(crypto: float, price: float):
@@ -108,8 +116,7 @@ def configure_market(exchange: ccxt.Exchange):
         if ret == SERVER_SIDE_ERROR:
             sleep(scenario.live_try_again_time_inactive_market)
             continue
-        log_debug(
-            f"market was at state: {market_state} in time: {ret}")
+        log_debug(f"market was at state: {market_state} in time: {ret}")
 
         if not market_state:
             log_warning(

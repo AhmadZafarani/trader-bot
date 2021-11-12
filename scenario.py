@@ -152,7 +152,7 @@ class Scenario:
     # in seconds
     live_try_again_time_inactive_market = 30
 
-    live_timeframe = '5m'
+    live_timeframe = '1h'
 
     live_timeframe_in_seconds = 5 * 60
 

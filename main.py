@@ -15,8 +15,7 @@ def live_main():
 
     configure_market(exchange)
 
-    candles = get_n_past_candles(exchange,
-                                 scenario.live_start_of_work_needed_candles, 1)
+    candles = get_n_past_candles(exchange, scenario.live_start_of_work_needed_candles, 1)
     calculate_indicators_and_bundle_into_candles(candles)
 
     p, t = get_time_and_price(exchange)
