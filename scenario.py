@@ -154,7 +154,7 @@ class Scenario:
 
     live_timeframe = '1h'
 
-    live_timeframe_in_seconds = 5 * 60
+    live_timeframe_in_seconds = 60 * 60
 
     # fill 4 last characters with what I have send in the Group
     live_api_encryption_key = b'alLePDlzw1-Q_LuB0qGWHcyqgflACUlEdPL0sFI2XgM='

@@ -142,3 +142,7 @@ def get_current_price(exchange: ccxt.Exchange) -> float:
     except Exception as e:
         log_error("error in get_current_price => " + str(e))
         return SERVER_SIDE_ERROR
+
+
+def get_current_balance(exchange: ccxt.Exchange) -> tuple:
+    pass
