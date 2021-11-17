@@ -104,4 +104,4 @@ def ichi(input: str, out: str):
                     [0, 0, 0, round(leading_line1[i], 5), round(leading_line2[i], 5)])
 
 
-ichi(input='forex_data/EURUSD', out='forex_data/EURUSD')
+ichi(input='forex_data/EURO_USD_2021/EUROUSD', out='forex_data/EURO_USD_2021/EUROUSD')

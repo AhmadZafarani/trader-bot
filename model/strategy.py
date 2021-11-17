@@ -1,5 +1,6 @@
 # YA REZA
 from abc import ABC, abstractmethod
+from logging import setLoggerClass
 
 from model.Moment import Moment
 import controller.controller as controller
@@ -88,16 +89,16 @@ class Strategy(ABC):
             out = {
                 "mode": "future", "Strategy": strategy_name, "direction": direction, "entry_price": buy_price, "closing price": sell_price, "volume": bought_volume, "leverage": leverage, "result": "", "more": args
             }
-            if sell_price > buy_price : 
-                if direction == 'short' : 
+            if sell_price > buy_price:
+                if direction == 'short':
                     out['result'] = "LOST"
                 elif direction == 'long':
                     out["result"] = 'WIN'
-            else : 
-                if direction == 'short' : 
+            else:
+                if direction == 'short':
                     out['result'] = "WIN"
                 elif direction == 'long':
-                    out["result"] = 'LOST'       
+                    out["result"] = 'LOST'
         return out
 
 
@@ -636,6 +637,8 @@ class Dummy_Strategy_Futures(Strategy):
 
 
 last_trade_cloud_color = -3
+
+
 class Ichi_future(Strategy):
     def check_short_con(self, key, value) -> bool:
 
@@ -693,15 +696,15 @@ class Ichi_future(Strategy):
     def strategy_works(self) -> bool:
         flag_short = 1
         flag_long = 1
-        if self.moment.candle_id < 77:
+        if self.moment.candle_id < 77 + 26:
             return False
 
         # only 1 trade in a clou
-        if scenario.ichi_future['enterance']['options']['only_one_in_a_cloud'] : 
-            try :
-                if self.candles[self.moment.candle_id+24].cloud_number == last_trade_cloud_color : 
+        if scenario.ichi_future['enterance']['options']['only_one_in_a_cloud']:
+            try:
+                if self.candles[self.moment.candle_id+24].cloud_number == last_trade_cloud_color:
                     return False
-            except Exception as ex : 
+            except Exception as ex:
                 # print(ex)
                 pass
 
@@ -753,6 +756,7 @@ class Ichi_future(Strategy):
                             value['options']['r2r']*value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
                     if self.direction == 'long':
+
                         sl = self.moment.price - \
                             value['options']['sl'] * \
                             self.candles[self.moment.candle_id - 2].atr
@@ -783,8 +787,9 @@ class Ichi_future(Strategy):
     def start_strategy(self):
         global last_trade_cloud_color
         global lock_strategies
+        self.close_via_span = 0
         self.short_name = 'ichi_future'
-        self.finish_txt = 'EMPTY'
+        self.finish_txt = {}
         self.lock_hour = 0
         self.lock_method = "lock_to_fin"
         self.buy_time_date = self.moment.date
@@ -857,26 +862,41 @@ class Ichi_future(Strategy):
         self.closing_liquidity = self.moment.future_liquidity
         controller.position.multiply_leverage(1 / self.leverage)
         self.finish_txt = {
-        "Date" : {
-            "Entrance" : f'{self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}' ,
-            "Closeing" : f'{self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}'
-        },
-        "Risk_Managment" : {
-            "stop_loss" : self.stop_loss,
-            "take_profit" : self.take_profit
-        },
-        "Found_Managment" : {
-            "entry_liquidity" : self.entry_liquidity,
-            "closing_liquidity" : self.closing_liquidity,
-            "ratio" : self.ratio,
-            "profit/loss" : 100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity 
-        }
+            "Date": {
+                "Entrance": f'{self.buy_time_date} {self.buy_time_hour}:{self.buy_time_minute}',
+                "Closeing": f'{self.sell_time_date} {self.sell_time_hour}:{self.sell_time_minute}'
+            },
+            "Risk_Managment": {
+                "stop_loss": self.stop_loss,
+                "take_profit": self.take_profit
+            },
+            "Found_Managment": {
+                "entry_liquidity": self.entry_liquidity,
+                "closing_liquidity": self.closing_liquidity,
+                "ratio": self.ratio,
+                "profit/loss": 100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity
+            },
+            "close_via_span": self.close_via_span
         }
         self.sold = True
         self.finish_strategy(self.finish_txt)
         if self.lock_method == "lock_to_fin":
             lock_strategies.pop("ichi_future")
             # print(f'strategy {self.short_name} unlocked in {self.moment}')
+
+    def check_span_close_conditions(self):
+        # 26 previus candle
+        m26_candle = self.candles[self.moment.candle_id - 28]
+        # 27 previus candle
+        m27_candle = self.candles[self.moment.candle_id - 29]
+        if self.direction == 'short':
+            if (m27_candle.lagging_span >= min(m27_candle.open_price, m27_candle.close_price) and m27_candle.lagging_span <= max(m27_candle.close_price, m27_candle.open_price)) and \
+                 (m26_candle.lagging_span > max(m26_candle.open_price, m26_candle.close_price)):
+                return True
+        if self.direction == 'long':
+            if (m27_candle.lagging_span >= min(m27_candle.open_price, m27_candle.close_price) and m27_candle.lagging_span <= max(m27_candle.close_price, m27_candle.open_price)) and \
+                 (m26_candle.lagging_span < min(m26_candle.open_price, m26_candle.close_price)):
+                return True
 
     def continue_strategy(self, working_strategies, **kwargs):
         if self.direction == 'short':
@@ -886,12 +906,20 @@ class Ichi_future(Strategy):
             elif self.moment.price <= self.take_profit:
                 self.closing_price = self.take_profit
                 self.strategy_pre_finish()
+            elif scenario.ichi_future["close_conditions"]["span_close_signal"]["enable"] and self.check_span_close_conditions():
+                self.closing_price = self.moment.price
+                self.close_via_span = 1
+                self.strategy_pre_finish()
         elif self.direction == 'long':
             if self.moment.price <= self.stop_loss:
                 self.closing_price = self.stop_loss
                 self.strategy_pre_finish()
             elif self.moment.price >= self.take_profit:
                 self.closing_price = self.take_profit
+                self.strategy_pre_finish()
+            elif scenario.ichi_future["close_conditions"]["span_close_signal"]["enable"] and self.check_span_close_conditions():
+                self.closing_price = self.moment.price
+                self.close_via_span = 1
                 self.strategy_pre_finish()
         return
 

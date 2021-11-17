@@ -22,6 +22,7 @@ class Scenario:
         "ATR" : f'BTC_2021/BTC_ATR.csv',
         "cloud_number" : "BTC_2021/BTC_Cloud_num.csv"
         # "ma9" : f'BTC_2021/BTC_MA9.csv',
+        # "ma26" : f'BTC_2021/BTC_MA26.csv'
         # "ma26": f'jan20/BTC_jan20_MA26.csv'
     }
     extra_moments_data_files = {
@@ -42,10 +43,10 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24 * 2
+    profit_loss_period_step = 24 * 30
 
     periodical_profit_loss_limit = {"enable": 0, "options": {
-        "profit_limit": 0.1, "loss_limit": -0.1}}
+        "profit_limit": 18, "loss_limit": -1.11}}
     # periodical_profit_loss_limit_enable = 1
 
     global_limit = 0
@@ -113,14 +114,15 @@ class Scenario:
                 "close_upper_cloud" : {"enable" : 1},
                 "span_upper_cloud" : {"enable" : 1} 
             },
-            "options" : {'only_one_in_a_cloud' : 1 , 'on_border' : 1}
+            "options" : {'only_one_in_a_cloud' : 1, 'on_border' : 0}
         },
         "close_conditions" : {
-            "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 1}},
-            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1, "r2r" : 2.2}}
+            "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 2}},
+            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1,"r2r" : 2.2}},
+            "span_close_signal" : {"enable" : 1}
         }, 
         "found_management" : {
-            "total_risk" : 5
+            "total_risk" : 4
         }
     }
      
