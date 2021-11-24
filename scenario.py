@@ -114,12 +114,13 @@ class Scenario:
                 "close_upper_cloud" : {"enable" : 1},
                 "span_upper_cloud" : {"enable" : 1} 
             },
-            "options" : {'only_one_in_a_cloud' : 0, 'on_border' : 0}
+            "options" : {'only_one_in_a_cloud' : 1, 'on_border' : 0}
         },
         "close_conditions" : {
             "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 2}},
-            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1,"r2r" : 2.2}},
-            "span_close_signal" : {"enable" : 0}
+            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1.7,"r2r" : 3}},
+            "span_close_signal" : {"enable" : 0},
+            "cross_close_signal" : {"enable" : 0}
         }, 
         "found_management" : {
             "total_risk" : 4

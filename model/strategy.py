@@ -788,6 +788,7 @@ class Ichi_future(Strategy):
         global last_trade_cloud_color
         global lock_strategies
         self.close_via_span = 0
+        self.close_via_cross = 0
         self.short_name = 'ichi_future'
         self.finish_txt = {}
         self.lock_hour = 0
@@ -876,7 +877,9 @@ class Ichi_future(Strategy):
                 "ratio": self.ratio,
                 "profit/loss": 100*(self.closing_liquidity - self.entry_liquidity) / self.entry_liquidity
             },
-            "close_via_span": self.close_via_span
+            "close_via_span": self.close_via_span,
+            "close_via_cross" : self.close_via_cross
+
         }
         self.sold = True
         self.finish_strategy(self.finish_txt)
@@ -898,6 +901,14 @@ class Ichi_future(Strategy):
                  (m26_candle.lagging_span < min(m26_candle.open_price, m26_candle.close_price)):
                 return True
 
+    def check_cross_close_conditions(self):
+        if self.direction == 'short':
+            if self.candles[self.moment.candle_id - 2].conversion_line > self.candles[self.moment.candle_id - 2].base_line:
+                return True
+        elif self.direction == 'long':
+            if self.candles[self.moment.candle_id - 2].conversion_line < self.candles[self.moment.candle_id - 2].base_line:
+                return True
+
     def continue_strategy(self, working_strategies, **kwargs):
         if self.direction == 'short':
             if self.moment.price >= self.stop_loss:
@@ -910,6 +921,10 @@ class Ichi_future(Strategy):
                 self.closing_price = self.moment.price
                 self.close_via_span = 1
                 self.strategy_pre_finish()
+            elif scenario.ichi_future["close_conditions"]["cross_close_signal"]["enable"] and self.check_cross_close_conditions():
+                self.closing_price = self.moment.price
+                self.close_via_cross = 1
+                self.strategy_pre_finish()
         elif self.direction == 'long':
             if self.moment.price <= self.stop_loss:
                 self.closing_price = self.stop_loss
@@ -921,6 +936,11 @@ class Ichi_future(Strategy):
                 self.closing_price = self.moment.price
                 self.close_via_span = 1
                 self.strategy_pre_finish()
+            elif scenario.ichi_future["close_conditions"]["cross_close_signal"]["enable"] and self.check_cross_close_conditions():
+                self.closing_price = self.moment.price
+                self.close_via_cross = 1
+                self.strategy_pre_finish()
+
         return
 
 

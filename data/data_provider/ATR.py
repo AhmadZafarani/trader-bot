@@ -1,7 +1,7 @@
 import pandas as pd
 import csv
 
-fd = pd.read_csv("data/forex_data/EURO_USD_2021/EUROUSD-time.csv")
+fd = pd.read_csv("data/forex_data/EURO_USD_12-4/EURO_USD-time.csv")
 length = 14
 data = fd.values
 TR = []
@@ -24,7 +24,7 @@ for i in range(1, len(data)):
     current_atr = (ATR[i-1] * (length - 1) + TR[i]) / length
     ATR.append(current_atr)
 
-with open('data/forex_data/EURO_USD_2021/EUROUSD_ATR.csv', 'w', newline='') as file:
+with open('data/forex_data/EURO_USD_12-4/EURO_USD_ATR.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['atr'])
     for i in range(len(data)):

@@ -28,16 +28,16 @@ for result in results :
 array_of_losts = [x['number'] for x in array_of_lostss ]
 array_of_ends_in =  [x['ends_in'] for x in array_of_lostss ]
 Max_Consecutive_LOSTs = max(array_of_losts)
-close_via_span = 0
-close_via_span_win = 0
-close_via_span_loss = 0 
+close_via_cross = 0
+close_via_cross_win = 0
+close_via_cross_loss = 0 
 for result in results : 
-    if result['more']['close_via_span'] : 
-        close_via_span += 1 
+    if result['more']['close_via_cross'] : 
+        close_via_cross += 1 
         if result['result'] == 'WIN' :
-            close_via_span_win += 1
+            close_via_cross_win += 1
         elif result['result'] == 'LOST' : 
-            close_via_span_loss += 1
+            close_via_cross_loss += 1
 
 # print(Max_Consecutive_LOSTs)
 print(f'''TOTAL : {out['TOTAL']}
@@ -47,7 +47,7 @@ LOSTs : {out['LOSTs']}
 Consecutive_LOSTs : {Max_Consecutive_LOSTs}''')# print(json.dumps(dict(out) , indent=2))
 print(f'Max_Consecutive_LOSTs ends in : {array_of_ends_in[array_of_losts.index(Max_Consecutive_LOSTs)]}')
 # printing result
-print(f'close_via_span:{close_via_span} (WIN : {close_via_span_win})')
+print(f'close_via_cross:{close_via_cross} (WIN : {close_via_cross_win})')
 
 
 # Special_analyze 1 
