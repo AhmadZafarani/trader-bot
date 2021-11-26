@@ -1,6 +1,8 @@
 # YA FATEMEH
-from controller.exchange_controller import *
+from time import sleep
+from controller.exchange_controller import exchange_controller, SERVER_SIDE_ERROR
 from model.strategy import DummyStrategy
+from controller.view_controller import *
 from view.views import log_cndl_mmnt
 
 dollar_balance: float
@@ -109,20 +111,19 @@ def unlock_strategies(moment: Moment, strategy_logger):
 
 
 def buy(bitcoin: int, price: int):
-    exchange_buy(bitcoin, price)
-
-    global bitcoin_balance, dollar_balance
-    bitcoin = round(bitcoin, 4)
-    bitcoin_balance += bitcoin
-    bitcoin_balance = round(bitcoin_balance, 4)
-    dollar_balance -= (bitcoin * price * (1 + scenario.fee))
-    dollar_balance = round(dollar_balance, 4)
-    if dollar_balance < 0:
-        raise RuntimeError('dollar balance is negative')
+    global dollar_balance
+    if dollar_balance < bitcoin * price * (1 + scenario.fee):
+        log_error('current dollar balance is less than requested order. buy order will not send to exchange')
+        return
+    current_price = exchange_controller.get_current_price()
+    if abs(price - current_price) / current_price > 0.01:
+        log_error('you are ordering with a far price from current price. buy order will not send to exchange')
+        return
+    exchange_controller.exchange_buy(bitcoin, price)
 
 
 def sell(bitcoin: int, price: int):
-    exchange_sell(bitcoin, price)
+    exchange_controller.exchange_sell(bitcoin, price)
 
     global bitcoin_balance, dollar_balance
     bitcoin = round(bitcoin, 4)
@@ -157,7 +158,7 @@ def set_this_moment(moment: Moment):
     this_moment = moment
 
 
-def analyze_live_data(exchange: ccxt.Exchange, candles: list):
+def analyze_live_data(candles: list):
     global this_moment
     moment_index = 0
 
@@ -167,7 +168,7 @@ def analyze_live_data(exchange: ccxt.Exchange, candles: list):
         sleep_till_end_of_moment()
         moment_index += 1
 
-        ret = sync_bot_data_with_exchange(exchange, candles, moment_index)
+        ret = sync_bot_data_with_exchange(candles, moment_index)
         if ret == SERVER_SIDE_ERROR:
             log_error("moment process failed! => sync_bot_data_with_exchange")
             moment_index -= 1
@@ -196,18 +197,18 @@ def sleep_till_end_of_moment():
     sleep(scenario.live_sleep_between_each_moment)
 
 
-def sync_bot_data_with_exchange(exchange: ccxt.Exchange, candles: list, moment_index: int):
+def sync_bot_data_with_exchange(candles: list, moment_index: int):
     while True:
-        ret = sync_last_candles(exchange, candles)
+        ret = sync_last_candles(candles)
         if ret == SERVER_SIDE_ERROR:
             return SERVER_SIDE_ERROR
 
-        t, p = get_current_data_from_exchange(exchange)
+        t, p = exchange_controller.get_current_data_from_exchange()
         if t == SERVER_SIDE_ERROR and p == SERVER_SIDE_ERROR:
             return SERVER_SIDE_ERROR
 
-        this_moment.update_moment(
-            t / 1000.0, p, candles[-1].identifier, profit_loss_calculator(moment_index + 1, p), moment_index)
+        this_moment.update_moment(t / 1000.0, p, candles[-1].identifier, profit_loss_calculator(moment_index + 1, p),
+                                  moment_index)
         calculate_indicators_and_bundle_into_this_moment()
         return
 
@@ -218,9 +219,9 @@ def calculate_indicators_and_bundle_into_this_moment():
     log_debug(f"constructed this_moment: {this_moment}")
 
 
-def sync_last_candles(exchange: ccxt.Exchange, candles: list):
-    new_candles = get_n_past_candles(
-        exchange, scenario.live_start_of_work_needed_candles, 1, handle_failure=False)
+def sync_last_candles(candles: list):
+    new_candles = exchange_controller.get_n_past_candles(scenario.live_start_of_work_needed_candles, 1,
+                                                         handle_failure=False)
     if new_candles == SERVER_SIDE_ERROR:
         return SERVER_SIDE_ERROR
 
