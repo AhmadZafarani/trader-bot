@@ -1,8 +1,9 @@
 # YA FATEMEH
 from time import sleep
+
 from controller.exchange_controller import exchange_controller, SERVER_SIDE_ERROR
-from model.strategy import DummyStrategy
 from controller.view_controller import *
+from model.strategy import DummyStrategy
 from view.views import log_cndl_mmnt
 
 dollar_balance: float
@@ -111,7 +112,7 @@ def unlock_strategies(moment: Moment, strategy_logger):
 
 
 def buy(bitcoin: int, price: int):
-    global dollar_balance
+    global dollar_balance, bitcoin_balance
     if dollar_balance < bitcoin * price * (1 + scenario.fee):
         log_error('current dollar balance is less than requested order. buy order will not send to exchange')
         return
@@ -119,20 +120,20 @@ def buy(bitcoin: int, price: int):
     if abs(price - current_price) / current_price > 0.01:
         log_error('you are ordering with a far price from current price. buy order will not send to exchange')
         return
+
     exchange_controller.exchange_buy(bitcoin, price)
+    dollar_balance, bitcoin_balance = exchange_controller.get_current_balance()
 
 
 def sell(bitcoin: int, price: int):
-    exchange_controller.exchange_sell(bitcoin, price)
+    global dollar_balance, bitcoin_balance
+    current_price = exchange_controller.get_current_price()
+    if abs(price - current_price) / current_price > 0.01:
+        log_error('you are ordering with a far price from current price. sell order will not send to exchange')
+        return
 
-    global bitcoin_balance, dollar_balance
-    bitcoin = round(bitcoin, 4)
-    bitcoin_balance -= bitcoin
-    bitcoin_balance = round(bitcoin_balance, 4)
-    if bitcoin_balance < 0:
-        raise RuntimeError('bitcoin balance is negative')
-    dollar_balance += (bitcoin * price * (1 - scenario.fee))
-    dollar_balance = round(dollar_balance, 4)
+    exchange_controller.exchange_sell(bitcoin, price)
+    dollar_balance, bitcoin_balance = exchange_controller.get_current_balance()
 
 
 def get_this_moment() -> Moment:

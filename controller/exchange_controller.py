@@ -84,8 +84,10 @@ class ExchangeController:
         print(f"exchange buy with price: {price} and volume: {crypto} .")
 
     def exchange_sell(self, crypto: float, price: float):
+        order = self.exchange.create_limit_sell_order(scenario.live_market, crypto, price)
+        print(order)
+        print(self.exchange.fetch_open_orders())
         print(f"exchange sell with price: {price} and volume: {crypto} .")
-        pass
 
     def get_time_from_exchange(self) -> int:
         # not available for all exchanges

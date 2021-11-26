@@ -1,8 +1,8 @@
 # YA HUSSEIN
 from time import sleep
 
-from controller.controller import calculate_indicators_and_bundle_into_candles, \
-    set_this_moment, analyze_live_data, set_start_of_work_balance
+from controller.controller import calculate_indicators_and_bundle_into_candles, set_this_moment, analyze_live_data, \
+    set_start_of_work_balance
 from controller.exchange_controller import exchange_controller, SERVER_SIDE_ERROR
 from controller.view_controller import *
 
@@ -21,7 +21,7 @@ def live_main():
     set_this_moment(this_moment)
     set_start_of_work_balance(cb, db)
 
-    analyze_live_data(exchange_controller, candles)
+    analyze_live_data(candles)
 
 
 def get_current_data() -> tuple:
