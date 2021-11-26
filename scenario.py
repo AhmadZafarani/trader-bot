@@ -7,10 +7,6 @@ class Scenario:
 
     fee = 0.001
 
-    start_of_work_dollar_balance = 100000
-
-    start_of_work_crypto_balance = 0
-
     profit_loss_period_step = 2 * 60 * 2
 
     periodical_profit_loss_limit = {"enable": 1, "options": {
@@ -133,7 +129,7 @@ class Scenario:
 
     # ================ LIVE PARAMETERS ===============================
 
-    live_start_of_work_needed_candles = 30
+    live_start_of_work_needed_candles = 10
 
     live_candle_indicators = [
         ma12,
@@ -147,12 +143,16 @@ class Scenario:
     # in seconds
     live_sleep_between_each_moment = 28
 
+    live_quote = 'USDT'
+
+    live_base = 'BTC'
+
     live_market = 'BTC/USDT'
 
     # in seconds
     live_try_again_time_inactive_market = 30
 
-    live_timeframe = '1h'
+    live_timeframe = '1d'
 
     live_timeframe_in_seconds = 60 * 60
 

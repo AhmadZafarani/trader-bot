@@ -3,8 +3,8 @@ from controller.exchange_controller import *
 from model.strategy import DummyStrategy
 from view.views import log_cndl_mmnt
 
-dollar_balance = scenario.start_of_work_dollar_balance
-bitcoin_balance = scenario.start_of_work_crypto_balance
+dollar_balance: float
+bitcoin_balance: float
 start_of_profit_loss_period_balance = 0
 this_moment = Moment(0, 0, 0)
 strategy_results = []
@@ -204,3 +204,9 @@ def sync_last_candles(exchange: ccxt.Exchange, candles: list):
     for c in new_candles:
         candles.append(c)
     calculate_indicators_and_bundle_into_candles(candles)
+
+
+def set_start_of_work_balance(crypto: float, dollar: float):
+    global bitcoin_balance, dollar_balance
+    bitcoin_balance = crypto
+    dollar_balance = dollar

@@ -77,13 +77,14 @@ def build_candle_objects_from_fetched_data(candles: list, n: int, start_index: i
     return candle_objects
 
 
-def get_current_data_from_exchange(exchange: ccxt.Exchange) -> tuple:
+def get_current_data_from_exchange(exchange: ccxt.Exchange):
     ret1 = get_time_from_exchange(exchange)
     ret2 = get_current_price(exchange)
-    if ret1 == SERVER_SIDE_ERROR or ret2 == SERVER_SIDE_ERROR:
-        return SERVER_SIDE_ERROR, SERVER_SIDE_ERROR
+    ret3 = get_current_balance(exchange)
+    if ret1 == SERVER_SIDE_ERROR or ret2 == SERVER_SIDE_ERROR or ret3 == SERVER_SIDE_ERROR:
+        return SERVER_SIDE_ERROR
     else:
-        return ret1, ret2
+        return ret1, ret2, ret3
 
 
 def exchange_buy(crypto: float, price: float):
@@ -144,5 +145,19 @@ def get_current_price(exchange: ccxt.Exchange) -> float:
         return SERVER_SIDE_ERROR
 
 
-def get_current_balance(exchange: ccxt.Exchange) -> tuple:
-    pass
+def get_current_balance(exchange: ccxt.Exchange):
+    try:
+        balance = exchange.fetch_balance()
+        try:
+            dollar_balance = balance[scenario.live_quote]['free']
+        except KeyError:
+            dollar_balance = 0
+        try:
+            crypto_balance = balance[scenario.live_base]['free']
+        except KeyError:
+            crypto_balance = 0
+        log_info(f"now we have {dollar_balance} dollars and {crypto_balance} crypto.")
+        return dollar_balance, crypto_balance
+    except Exception as e:
+        log_error("error in get_current_balance => " + str(e))
+        return SERVER_SIDE_ERROR
