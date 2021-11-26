@@ -9,10 +9,7 @@ class Scenario:
 
     profit_loss_period_step = 2 * 60 * 2
 
-    periodical_profit_loss_limit = {"enable": 1, "options": {
-        "profit_limit": 3, "loss_limit": -1}}
-    # periodical_profit_loss_limit_enable = 1
-    # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
+    periodical_profit_loss_limit = {"enable": True, "options": {"profit_limit": 3, "loss_limit": -1}}
     # =====================================================================
     # strategy configuration
     # name : Moving_average

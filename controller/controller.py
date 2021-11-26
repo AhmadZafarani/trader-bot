@@ -7,7 +7,9 @@ dollar_balance: float
 bitcoin_balance: float
 start_of_profit_loss_period_balance = 0
 this_moment = Moment(0, 0, 0)
+
 strategy_results = []
+
 working_strategies = []
 lock_all = False  # used to locking all strategies
 lock_strategies = {}
@@ -24,7 +26,7 @@ def profit_loss_calculator(moment_index: int, this_moment_price: float) -> float
         return round((x - start_of_profit_loss_period_balance) * 100 / start_of_profit_loss_period_balance, 4)
 
 
-def lock_all_strategies(working_strategies_to_lock: list, moment: Moment, logger):
+def lock_all_strategies(working_strategies_to_lock: list, moment: Moment, logger) -> list:
     crypto = 0
     for ws in working_strategies_to_lock:
         crypto += ws.sell_volume
@@ -34,54 +36,76 @@ def lock_all_strategies(working_strategies_to_lock: list, moment: Moment, logger
         if not ws.sold:
             sell(ws.sell_volume, price)
             ws.finish_strategy(ws.finish_txt)
+            working_strategies.remove(ws)
             if ws.lock_method == "lock_to_fin":
                 lock_strategies.pop(ws.short_name)
 
     logger.warning(f'all({[x.id for x in working_strategies_to_lock]}) locked in {moment.get_time_string()}')
-    logger.info(f'More Details for lock_all : price , Volume = {price} , {crypto}')
+    logger.info(f'More Details for lock_all : Price = {price}, Volume = {crypto}')
+
+    return [ws for ws in working_strategies_to_lock if ws.working]
 
 
 def try_strategies(moment: Moment, candles: list, strategy_logger):
-    global working_strategies, bitcoin_balance, dollar_balance, lock_all
+    global working_strategies, lock_all
 
-    for locked in list(lock_strategies):  # unlock strategies
-        if lock_strategies[locked][1] != 0:
-            if lock_strategies[locked][1] <= moment.timestamp:
-                strategy_logger.warning(f'"{lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
-                lock_strategies.pop(locked)
+    unlock_strategies(moment, strategy_logger)
 
     # remove finished strategies from working_strategies
     working_strategies = [ws for ws in working_strategies if ws.working]
 
-    # lock all strategy if periodical profit loss is reached
-    if scenario.periodical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
-        if moment.profit_loss_percentage >= scenario.periodical_profit_loss_limit['options']['profit_limit']:
-            strategy_logger.warning(f"periodical profit limit reached in {moment.get_time_string()}")
-            lock_all = True
-            lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment, logger=strategy_logger)
-        elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
-            strategy_logger.warning(f"periodical loss limit reached in {moment.get_time_string()}")
-            lock_all = True
-            lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment, logger=strategy_logger)
+    lock_all_if_reached_periodical_profit_loss(moment, strategy_logger)
 
-    working_strategies = [ws for ws in working_strategies if ws.working]
+    continue_strategies(moment, strategy_logger)
+
+    # trying to start not locked strategies
+    if not lock_all:
+        start_strategies(candles, moment, strategy_logger)
+    elif moment.moment_id % scenario.profit_loss_period_step == 0:
+        strategy_logger.warning(f'all strategies unlocked in {moment.get_time_string()}')
+        lock_all = False
+
+
+def continue_strategies(moment: Moment, strategy_logger):
+    global working_strategies
+
     for ws in working_strategies:
         strategy_logger.debug(f'continuing "{ws.id}" in {moment.get_time_string()}')
         ws.continue_strategy(working_strategies,
                              start_of_profit_loss_period_balance=start_of_profit_loss_period_balance,
                              dollar_balance=dollar_balance)
 
-    if not lock_all:
-        for s in strategies:  # trying to start not locked strategies
-            if s not in lock_strategies:
-                strategy_logger.debug(f'working on "{s}" in {moment.get_time_string()}')
-                strtg = strategies[s](moment, bitcoin_balance, dollar_balance, candles, logger=strategy_logger, name=s)
-                if strtg.working:
-                    working_strategies.append(strtg)
 
-    if lock_all and moment.moment_id % scenario.profit_loss_period_step == 0:
-        strategy_logger.warning(f'all strategies unlocked in {moment.get_time_string()}')
-        lock_all = False
+def start_strategies(candles: list, moment: Moment, strategy_logger):
+    global working_strategies
+
+    for s in strategies:
+        if s not in lock_strategies:
+            strategy_logger.debug(f'working on "{s}" in {moment.get_time_string()}')
+            strtg = strategies[s](moment, bitcoin_balance, dollar_balance, candles, logger=strategy_logger, name=s)
+            if strtg.working:
+                working_strategies.append(strtg)
+
+
+def lock_all_if_reached_periodical_profit_loss(moment, strategy_logger):
+    global lock_all, working_strategies
+
+    if scenario.periodical_profit_loss_limit["enable"] and not lock_all and len(working_strategies) > 0:
+        if moment.profit_loss_percentage >= scenario.periodical_profit_loss_limit['options']['profit_limit']:
+            strategy_logger.warning(f"periodical profit limit reached in {moment.get_time_string()}")
+        elif moment.profit_loss_percentage <= scenario.periodical_profit_loss_limit['options']['loss_limit']:
+            strategy_logger.warning(f"periodical loss limit reached in {moment.get_time_string()}")
+
+        lock_all = True
+        working_strategies = lock_all_strategies(working_strategies_to_lock=working_strategies, moment=moment,
+                                                 logger=strategy_logger)
+
+
+def unlock_strategies(moment: Moment, strategy_logger):
+    for locked in lock_strategies:
+        if lock_strategies[locked][1] != 0 and lock_strategies[locked][1] <= moment.timestamp:
+            strategy_logger.warning(f'"{lock_strategies[locked][2]}" unlocked in {moment.get_time_string()}')
+            lock_strategies.pop(locked)
 
 
 def buy(bitcoin: int, price: int):

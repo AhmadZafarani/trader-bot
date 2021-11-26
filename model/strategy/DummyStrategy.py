@@ -33,11 +33,9 @@ class DummyStrategy(Strategy):
         self.lock_seconds = 60
         self.finish_txt = 'EMPTY'
         self.lock_method = "lock_to_fin"
-        self.logger.warning(
-            f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
+        self.logger.warning(f'"{self.id}" - Volume:{self.buy_volume} & price={self.buy_price}')
         if self.lock_method == 'lock_to_hour':
-            controller.lock_strategies["dummy"] = [
-                DummyStrategy, self.moment.timestamp + self.lock_seconds, self.id]
+            controller.lock_strategies["dummy"] = [DummyStrategy, self.moment.timestamp + self.lock_seconds, self.id]
 
             self.logger.warning(
                 f'"{self.short_name}"" locked in {self.moment.get_time_string()} for {self.lock_seconds}s')
