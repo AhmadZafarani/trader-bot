@@ -118,7 +118,7 @@ class Scenario:
         },
         "close_conditions" : {
             "based_on_cloud" : {"enable" : 0 , "options" : {"r2r" : 2}},
-            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1.7,"r2r" : 3}},
+            "based_on_atr" : {"enable" : 1 , "options":{"sl" : 1,"r2r" : 2.2}},
             "span_close_signal" : {"enable" : 0},
             "cross_close_signal" : {"enable" : 0}
         }, 
