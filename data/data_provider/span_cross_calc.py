@@ -45,4 +45,4 @@ def iscross(input: str, out: str):
             snpan_cross.writerow([str(m)])
 
 
-iscross('test', 'test')
+# iscross('test', 'test')

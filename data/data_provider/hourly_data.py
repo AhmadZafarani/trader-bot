@@ -54,4 +54,4 @@ def h(c: str, ct: int, bs: int, out: str):
                              line.get('open'), line.get('close'), line.get('volumeto')])
 
 
-h('btc', 1635933600, 1609459200, 'BTC_2021/BTC')
+# h('btc', 1635933600, 1609459200, 'BTC_2021/BTC')

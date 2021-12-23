@@ -24,4 +24,4 @@ def cloud_number_generateor(ichi_file : str , out : str):
     final.to_csv("data/" + out + "_Cloud_num.csv" , index=False)
     
         
-cloud_number_generateor("forex_data/EURO_USD_12-4/EURO_USD" , 'forex_data/EURO_USD_12-4/EURO_USD')
+# cloud_number_generateor("forex_data/EURO_USD_12-4/EURO_USD" , 'forex_data/EURO_USD_12-4/EURO_USD')
