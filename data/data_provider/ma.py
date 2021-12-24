@@ -40,4 +40,4 @@ def ma(value: int, input: str, out: str):
             ma12.writerow([str(m)])
 
 
-ma(9, 'BTC_2021/BTC', 'BTC_2021/BTC')
+# ma(9, 'BTC_2021/BTC', 'BTC_2021/BTC')
