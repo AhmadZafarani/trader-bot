@@ -26,7 +26,7 @@ def get_month_name(month_name: int):
 time = 1577836800
 
 i = 1
-coin = "BNB_"
+coin = "ETH_"
 
 for month in months:
     try:
@@ -34,11 +34,11 @@ for month in months:
     except:
         pass
     
-    data_folder = 'final_test/BNB_USDT/' + month + "/"
-    output_folder = 'final_test/BNB_USDT/' + month + "/"
+    data_folder = 'final_test/ETH_USDT/' + month + "/"
+    output_folder = 'final_test/ETH_USDT/' + month + "/"
     
     # generating a specific month data in data/..
-    h('bnb', time + (24 * 60 * 60 * get_month_name(int(i % 12))),
+    h('eth', time + (24 * 60 * 60 * get_month_name(int(i % 12))),
       time, data_folder + coin + month)
 
     # generating andicator data : input1: data folder input2: output folder
