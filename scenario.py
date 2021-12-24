@@ -3,21 +3,24 @@ from model.Position import Direction
 
 
 class Scenario:
-    # month = "jan20" # choose your month . it is for final monhy test and it is sometimes automaticaly filled
+    # month = "jan20"
+    # choose your month . it is for final monhy test and it is sometimes automaticaly filled
     # : ETH_USDT, BTC_USDT, EURO_USD, XAU_USD, BNB_USD
-    month_asset = f'ETH_USDT/jan20'
-    asset = month_asset.split("/")[0]   # choose your asset . it is for final monhy test and it is sometimes automaticaly filled
-    strtgg = "ichi_future" # choose your strategy . it is for final monhy test and it is sometimes automaticaly filled
+    month_asset = "BTC_USDT-jan20"
+    month_asset_path = month_asset.replace("-", "/")
+    asset = month_asset.split("-")[0] 
+      # choose your asset . it is for final monhy test and it is sometimes automaticaly filled
+    strtgg = "ichi_future"
     # : ma, ichi_cross, ichi_future
     if strtgg == "ichi_future":
         mode = "future" # mode can be future or spot 
     else :
         mode = 'spot' 
-    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
-    # candles_data_csv_file_name = f'final_test/{month_asset}/{asset}.csv'
+    # candles_data_csv_file_name = f'BTC_2021/BTC.csv'
+    candles_data_csv_file_name = f'final_test/{month_asset_path}/{asset}.csv'
 
-    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
-    # moment_data_csv_file_name = f'final_test/{month_asset}/{asset}_moment.csv'
+    # moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
+    moment_data_csv_file_name = f'final_test/{month_asset_path}/{asset}_moment.csv'
 
     """
         these are dictionaries like this:
@@ -26,16 +29,16 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ICHI" : "BTC_2021/BTC_ICHI.csv",
-        "ATR" : "BTC_2021/BTC_ATR.csv",
-        "cloud_number" : "BTC_2021/BTC_Cloud_num.csv"
+        # "ICHI" : "BTC_2021/BTC_ICHI.csv",
+        # "ATR" : "BTC_2021/BTC_ATR.csv",
+        # "cloud_number" : "BTC_2021/BTC_Cloud_num.csv"
     
-        # "ICHI": f'final_test/{month_asset}/{asset}_ICHI.csv',
-        # "ATR" : f'final_test/{month_asset}/{asset}_ATR.csv',
-        # "cloud_number" : f'final_test/{month_asset}/{asset}_Cloud_num.csv',
-        # "ma9" : f'final_test/{month_asset}/{asset}_MA9.csv',
-        # "ma26" : f'final_test/{month_asset}/{asset}_MA26.csv',
-        # "iscross" : f'final_test/{month_asset}/{asset}_ISCROSS.csv'
+        "ICHI": f'final_test/{month_asset_path}/{asset}_ICHI.csv',
+        "ATR" : f'final_test/{month_asset_path}/{asset}_ATR.csv',
+        "cloud_number" : f'final_test/{month_asset_path}/{asset}_Cloud_num.csv',
+        "ma9" : f'final_test/{month_asset_path}/{asset}_MA9.csv',
+        "ma26" : f'final_test/{month_asset_path}/{asset}_MA26.csv',
+        "iscross" : f'final_test/{month_asset_path}/{asset}_ISCROSS.csv'
     }
     extra_moments_data_files = {
     }
@@ -59,7 +62,7 @@ class Scenario:
 
     periodical_profit_loss_limit = {"enable": 0, "options": {
         "profit_limit": 18, "loss_limit": -1.11}}
-    periodical_profit_loss_limit_enable = 1
+    periodical_profit_loss_limit_enable = 0
 
     global_limit = 0
     global_loss_limit = 0.0
@@ -87,13 +90,13 @@ class Scenario:
     volume_buy_ma = 80
     # buy_method_line_to_line_options_line = [31, 52]
 
-    buy_method_price_to_line_enable = 1
+    buy_method_price_to_line_enable = 0
     buy_method_line_to_line_enable = 1
     buy_method_line_to_line_cross = 1
     sell_method_line_to_line_enable = 0
-    sell_method_price_to_line_enable = 1
+    sell_method_price_to_line_enable = 0
     sell_method_line_to_line_enable = 0
-    sell_method_profit_loss_limit = 1
+    sell_method_profit_loss_limit = 0
     # buy_method['line_to_line']['options']['line'] = buy_method_line_to_line_options_line
     buy_method['price_to_line']['enable'] = buy_method_price_to_line_enable
     buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
@@ -138,16 +141,16 @@ class Scenario:
             "total_risk" : 4
         }
     }
-    # ichi_future_total_risk = 4 
-    # ichi_future_sl = 1 
-    # ichi_future_r2r = 2.2 
-    # ichi_future_span_close_signal = 0
-    # ichi_cross_close_signal = 0 
-    # ichi_future["close_conditions"]['based_on_atr']['options']['sl'] = ichi_future_sl
-    # ichi_future["close_conditions"]['based_on_atr']['options']['r2r'] = ichi_future_r2r 
-    # ichi_future["close_conditions"]['span_close_signal']['enable'] = ichi_future_span_close_signal 
-    # ichi_future["close_conditions"]['cross_close_signal']['enable'] = ichi_cross_close_signal
-    # ichi_future['found_management']['total_risk'] = ichi_future_total_risk
+    ichi_future_total_risk = 4
+    ichi_future_sl = 1
+    ichi_future_r2r = 2.2
+    ichi_future_span_close_signal = 0
+    ichi_cross_close_signal = 0
+    ichi_future["close_conditions"]['based_on_atr']['options']['sl'] = ichi_future_sl
+    ichi_future["close_conditions"]['based_on_atr']['options']['r2r'] = ichi_future_r2r 
+    ichi_future["close_conditions"]['span_close_signal']['enable'] = ichi_future_span_close_signal 
+    ichi_future["close_conditions"]['cross_close_signal']['enable'] = ichi_cross_close_signal
+    ichi_future['found_management']['total_risk'] = ichi_future_total_risk
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
@@ -227,7 +230,7 @@ class Scenario:
     # default:11111
     # {Met1, Met2, Met3, Met4, Met5}
     close_intraction = [0, 0, 0, 0]
-    volume_buy_ichi = 90
+    volume_buy_ichi = 80
 
 
 scenario = Scenario()

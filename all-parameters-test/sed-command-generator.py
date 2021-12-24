@@ -11,13 +11,19 @@ num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
 
 if len(sys.argv) > 1:
     name_of_predefined_list = sys.argv[1]
+    test_or_train = sys.argv[2]
 # this will be used for automatic tests in API 
 # the name should be used obtained by command line argument 
 pre_defined_test_variable_lists = {
-    "BTC_USDT" : [
-    ('month_asset',  ['BTC_USDT/jan20', 'BTC_USDT/feb20', 'BTC_USDT/mar20', 'BTC_USDT/apr20', 'BTC_USDT/jun20', 'BTC_USDT/jul20', 'BTC_USDT/aug20', 'BTC_USDT/oct20', 'BTC_USDT/nov20',
-                'BTC_USDT/jan21', 'BTC_USDT/feb21', 'BTC_USDT/mar21', 'BTC_USDT/aug21', 'BTC_USDT/sep21'
+    "BTC_USDT" : {"TRAIN" : [
+    ('month_asset',  ['BTC_USDT-jan20', 'BTC_USDT-feb20', 'BTC_USDT-mar20', 'BTC_USDT-apr20', 'BTC_USDT-jun20', 'BTC_USDT-jul20', 'BTC_USDT-aug20', 'BTC_USDT-oct20', 'BTC_USDT-nov20',
+                'BTC_USDT-jan21', 'BTC_USDT-feb21', 'BTC_USDT-mar21', 'BTC_USDT-aug21', 'BTC_USDT-sep21'
+                ])],
+                    "TEST" : [
+    ('month_asset',  ['BTC_USDT-jan20'
                 ])]
+                
+                }
 }
 
 """
@@ -27,7 +33,7 @@ pre_defined_test_variable_lists = {
     and the values should all be generated and placed in a list
 """
 if len(sys.argv) > 1 : 
-    test_variables_list = pre_defined_test_variable_lists[name_of_predefined_list]
+    test_variables_list = pre_defined_test_variable_lists[name_of_predefined_list][test_or_train]
 else:     
     test_variables_list = [
     ('month',  ['jan20', 'feb20', 'mar20', 'apr20', 'jun20', 'jul20', 'aug20', 'oct20', 'nov20',
