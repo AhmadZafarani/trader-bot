@@ -8,6 +8,7 @@ from csv import writer
 run_time = 0.2
 num_of_runs_in_colab = 12 * 3600 * int(1 / run_time)
 
+pre_defined_test_variable_lists = [[]]
 
 """
     modify below list in order to test different scenarios.

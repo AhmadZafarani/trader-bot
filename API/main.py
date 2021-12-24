@@ -220,6 +220,7 @@ async def all_month_spot(ichi_future_total_risk: int = 4, ichi_future_sl: int = 
     sed_str = f'{sed_str};sed -i "s/\\(ichi_cross_close_signal = \\).*/\\1{ichi_cross_close_signal}/" scenario.py'
     strtgg = 'ichi_future'
     sed_str = f'{sed_str};sed -i "s/\\(strtgg = \\).*/\\1\\"{strtgg}\\"/" scenario.py'
+    # sed_str = f'{sed_str};sed -i "s/\\(asset = \\).*/\\1\\"{asset}\\"/" scenario.py'
 
     sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'
