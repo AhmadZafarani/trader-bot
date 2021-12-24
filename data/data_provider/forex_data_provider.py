@@ -9,11 +9,12 @@ from dateutil.relativedelta import relativedelta
 # print(time.mktime(d.timetuple()))
 # d = d + relativedelta(months=1)
 # print(d.strftime('%d/%m/%Y'))
+
 fx = ForexConnect()
 fx.login("D291167397", "hBgw3", "fxcorporate.com/Hosts.jsp", "Demo")
-    
 
 def forex_data(pair: str, current_time, base_time, output: str):
+    
     data0 = fx.get_history(pair, "H1", base_time, current_time)
 
     data = []
@@ -21,10 +22,10 @@ def forex_data(pair: str, current_time, base_time, output: str):
     for i in range(len(data0)):
         hold = []
         hold.append(str(data0[i][0]))
-        hold.append((data0[i][1] + data0[i][5]) / 2.0)
-        hold.append((data0[i][2] + data0[i][6]) / 2.0)
-        hold.append((data0[i][3] + data0[i][7]) / 2.0)
-        hold.append((data0[i][4] + data0[i][8]) / 2.0)
+        hold.append((data0[i][2] + data0[i][6]) / 2.0) #high
+        hold.append((data0[i][3] + data0[i][7]) / 2.0) #low
+        hold.append((data0[i][1] + data0[i][5]) / 2.0) #open
+        hold.append((data0[i][4] + data0[i][8]) / 2.0) #close
         hold.append(data0[i][9])
         data.append(hold)
 
@@ -58,5 +59,3 @@ def forex_data(pair: str, current_time, base_time, output: str):
                 continue
             writer.writerow(
                 [int(line[0]) * 1000, round(line[3], 6), round(line[5], 6)])
-
-
