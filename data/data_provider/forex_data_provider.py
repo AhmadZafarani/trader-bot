@@ -9,11 +9,11 @@ from dateutil.relativedelta import relativedelta
 # print(time.mktime(d.timetuple()))
 # d = d + relativedelta(months=1)
 # print(d.strftime('%d/%m/%Y'))
-
+fx = ForexConnect()
+fx.login("D291167397", "hBgw3", "fxcorporate.com/Hosts.jsp", "Demo")
+    
 
 def forex_data(pair: str, current_time, base_time, output: str):
-    fx = ForexConnect()
-    fx.login("D291167397", "hBgw3", "fxcorporate.com/Hosts.jsp", "Demo")
     data0 = fx.get_history(pair, "H1", base_time, current_time)
 
     data = []
