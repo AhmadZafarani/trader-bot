@@ -63,6 +63,16 @@ class Strategy(str, Enum):
     ichi = "ichi"
     ma = "ma"
 
+class Asset(str, Enum):
+    BTC_USDT = "BTC_USDT"
+    BNB_USDT = "BNB_USDT"
+    ETH_USDT = "ETH_USDT"
+    EUR_USDT = "EUR_USDT"
+    GBP_USDT = "GBP_USDT"
+    AAPL_USDT = "AAPL_USDT"
+    TSLA_USDT = "TSLA_USDT"
+    ALL = "ALL"
+
 
 app = FastAPI()
 
@@ -210,9 +220,9 @@ async def all_month(strtgg: Strategy, profit_loss_period_step: int = 48, periodi
     subprocess.run(["python", "all-parameters-test/join.py"])
 
     return FileResponse('all-parameters-test/final.csv', media_type='application/octet-stream', filename='final.csv')
-@app.get("/all_month_future")
-async def all_month_spot(ichi_future_total_risk: int = 4, ichi_future_sl: int = 1, ichi_future_r2r: float = 2.2, ichi_future_span_close_signal: int = 0,
-                    ichi_cross_close_signal: int = 0, global_limit: int = 0, global_loss_limit: float = 0, global_profit_limit: float = 0, token: str = Depends(oauth2_scheme)):
+@app.get("/train_test_ihci_future")
+async def all_month_spot(asset :Asset, ichi_future_total_risk: int = 4, ichi_future_sl: int = 1, ichi_future_r2r: float = 2.2, ichi_future_span_close_signal: int = 0,
+                    ichi_cross_close_signal: int = 0, global_limit: int = 0, global_loss_limit: float = 0, global_profit_limit: float = 0 , token: str = Depends(oauth2_scheme)):
     sed_str = f'sed -i "s/\\(ichi_future_total_risk = \\).*/\\1{ichi_future_total_risk}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(ichi_future_sl = \\).*/\\1{ichi_future_sl}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(ichi_future_r2r = \\).*/\\1{ichi_future_r2r}/" scenario.py'
@@ -220,7 +230,6 @@ async def all_month_spot(ichi_future_total_risk: int = 4, ichi_future_sl: int = 
     sed_str = f'{sed_str};sed -i "s/\\(ichi_cross_close_signal = \\).*/\\1{ichi_cross_close_signal}/" scenario.py'
     strtgg = 'ichi_future'
     sed_str = f'{sed_str};sed -i "s/\\(strtgg = \\).*/\\1\\"{strtgg}\\"/" scenario.py'
-    # sed_str = f'{sed_str};sed -i "s/\\(asset = \\).*/\\1\\"{asset}\\"/" scenario.py'
 
     sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'

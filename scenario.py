@@ -3,21 +3,21 @@ from model.Position import Direction
 
 
 class Scenario:
-    month = "jan20" # choose your month . it is for final monhy test and it is sometimes automaticaly filled
-    asset = "ETH_USDT" # choose your asset . it is for final monhy test and it is sometimes automaticaly filled
+    # month = "jan20" # choose your month . it is for final monhy test and it is sometimes automaticaly filled
     # : ETH_USDT, BTC_USDT, EURO_USD, XAU_USD, BNB_USD
-    month_asset = f'{asset}/{month}'
-    strtgg = "ma" # choose your strategy . it is for final monhy test and it is sometimes automaticaly filled
+    month_asset = f'ETH_USDT/jan20'
+    asset = month_asset.split("/")[0]   # choose your asset . it is for final monhy test and it is sometimes automaticaly filled
+    strtgg = "ichi_future" # choose your strategy . it is for final monhy test and it is sometimes automaticaly filled
     # : ma, ichi_cross, ichi_future
     if strtgg == "ichi_future":
         mode = "future" # mode can be future or spot 
     else :
         mode = 'spot' 
-    # candles_data_csv_file_name = f'final_test//BTC.csv'
-    candles_data_csv_file_name = f'final_test/{month_asset}/{asset}.csv'
+    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
+    # candles_data_csv_file_name = f'final_test/{month_asset}/{asset}.csv'
 
-    # moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
-    moment_data_csv_file_name = f'final_test/{month_asset}/{asset}_moment.csv'
+    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
+    # moment_data_csv_file_name = f'final_test/{month_asset}/{asset}_moment.csv'
 
     """
         these are dictionaries like this:
@@ -26,12 +26,16 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ICHI": f'final_test/{month_asset}/{asset}_ICHI.csv',
-        "ATR" : f'final_test/{month_asset}/{asset}_ATR.csv',
-        "cloud_number" : f'final_test/{month_asset}/{asset}_Cloud_num.csv',
-        "ma9" : f'final_test/{month_asset}/{asset}_MA9.csv',
-        "ma26" : f'final_test/{month_asset}/{asset}_MA26.csv',
-        "iscross" : f'final_test/{month_asset}/{asset}_ISCROSS.csv'
+        "ICHI" : "BTC_2021/BTC_ICHI.csv",
+        "ATR" : "BTC_2021/BTC_ATR.csv",
+        "cloud_number" : "BTC_2021/BTC_Cloud_num.csv"
+    
+        # "ICHI": f'final_test/{month_asset}/{asset}_ICHI.csv',
+        # "ATR" : f'final_test/{month_asset}/{asset}_ATR.csv',
+        # "cloud_number" : f'final_test/{month_asset}/{asset}_Cloud_num.csv',
+        # "ma9" : f'final_test/{month_asset}/{asset}_MA9.csv',
+        # "ma26" : f'final_test/{month_asset}/{asset}_MA26.csv',
+        # "iscross" : f'final_test/{month_asset}/{asset}_ISCROSS.csv'
     }
     extra_moments_data_files = {
     }
@@ -134,16 +138,16 @@ class Scenario:
             "total_risk" : 4
         }
     }
-    ichi_future_total_risk = 4 
-    ichi_future_sl = 1 
-    ichi_future_r2r = 2.2 
-    ichi_future_span_close_signal = 0
-    ichi_cross_close_signal = 0 
-    ichi_future["close_conditions"]['based_on_atr']['options']['sl'] = ichi_future_sl
-    ichi_future["close_conditions"]['based_on_atr']['options']['r2r'] = ichi_future_r2r 
-    ichi_future["close_conditions"]['span_close_signal']['enable'] = ichi_future_span_close_signal 
-    ichi_future["close_conditions"]['cross_close_signal']['enable'] = ichi_cross_close_signal
-    ichi_future['found_management']['total_risk'] = ichi_future_total_risk
+    # ichi_future_total_risk = 4 
+    # ichi_future_sl = 1 
+    # ichi_future_r2r = 2.2 
+    # ichi_future_span_close_signal = 0
+    # ichi_cross_close_signal = 0 
+    # ichi_future["close_conditions"]['based_on_atr']['options']['sl'] = ichi_future_sl
+    # ichi_future["close_conditions"]['based_on_atr']['options']['r2r'] = ichi_future_r2r 
+    # ichi_future["close_conditions"]['span_close_signal']['enable'] = ichi_future_span_close_signal 
+    # ichi_future["close_conditions"]['cross_close_signal']['enable'] = ichi_cross_close_signal
+    # ichi_future['found_management']['total_risk'] = ichi_future_total_risk
 # =======================================================================
     # strategy configuration
     # name : ichi_cross
