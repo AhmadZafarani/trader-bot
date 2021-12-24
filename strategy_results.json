@@ -144,14 +144,14 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 35251.36,
-    "closing price": 34784.69,
+    "closing price": 33239.0,
     "volume": 3.046169990763477,
     "leverage": 2.31216079722923,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "01/20/21 5:0",
-        "Closeing": "01/21/21 2:0"
+        "Closeing": "01/21/21 9:0"
       },
       "Risk_Managment": {
         "stop_loss": 35861.20270717233,
@@ -159,12 +159,12 @@
       },
       "Found_Managment": {
         "entry_liquidity": 134227.043707,
-        "closing_liquidity": 138258.03809183443,
+        "closing_liquidity": 145961.434961232,
         "ratio": 2.31216079722923,
-        "profit/loss": 3.0031164164157245
+        "profit/loss": 8.74219600622855
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -173,7 +173,7 @@
     "direction": "long",
     "entry_price": 32630.48,
     "closing price": 32055.71,
-    "volume": 3.389666056815591,
+    "volume": 3.578529888889161,
     "leverage": 2.5995343009355514,
     "result": "LOST",
     "more": {
@@ -186,10 +186,10 @@
         "take_profit": 33735.09409913559
       },
       "Found_Managment": {
-        "entry_liquidity": 138258.038092,
-        "closing_liquidity": 132637.86503469598,
+        "entry_liquidity": 145961.434961,
+        "closing_liquidity": 140028.11943868,
         "ratio": 2.5995343009355514,
-        "profit/loss": -4.064988289190272
+        "profit/loss": -4.064988484050827
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -201,7 +201,7 @@
     "direction": "long",
     "entry_price": 33378.93,
     "closing price": 34544.49,
-    "volume": 3.1789602610988426,
+    "volume": 3.356084079124166,
     "leverage": 2.535308284774607,
     "result": "WIN",
     "more": {
@@ -214,10 +214,10 @@
         "take_profit": 34537.50541177133
       },
       "Found_Managment": {
-        "entry_liquidity": 132637.865035,
-        "closing_liquidity": 144225.92673720804,
+        "entry_liquidity": 140028.119439,
+        "closing_liquidity": 152261.84004823322,
         "ratio": 2.535308284774607,
-        "profit/loss": 8.736616575628855
+        "profit/loss": 8.736617086800596
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -229,7 +229,7 @@
     "direction": "short",
     "entry_price": 31896.97,
     "closing price": 32733.81,
-    "volume": 3.6172947270414713,
+    "volume": 3.8188414773691672,
     "leverage": 1.9942097485362837,
     "result": "LOST",
     "more": {
@@ -242,10 +242,10 @@
         "take_profit": 30489.428309834133
       },
       "Found_Managment": {
-        "entry_liquidity": 144225.926737,
-        "closing_liquidity": 138384.98503934251,
+        "entry_liquidity": 152261.840048,
+        "closing_liquidity": 146095.45670518148,
         "ratio": 1.9942097485362837,
-        "profit/loss": -4.04985554941769
+        "profit/loss": -4.04985473765101
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -257,7 +257,7 @@
     "direction": "long",
     "entry_price": 33469.67,
     "closing price": 32483.74,
-    "volume": 3.307710773102932,
+    "volume": 3.492008297781245,
     "leverage": 2.3759411241006654,
     "result": "LOST",
     "more": {
@@ -270,10 +270,10 @@
         "take_profit": 34709.3181251676
       },
       "Found_Managment": {
-        "entry_liquidity": 138384.985039,
-        "closing_liquidity": 132767.3866081015,
+        "entry_liquidity": 146095.456705,
+        "closing_liquidity": 140164.860391492,
         "ratio": 2.3759411241006654,
-        "profit/loss": -4.059398806391706
+        "profit/loss": -4.0593981820278096
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -285,7 +285,7 @@
     "direction": "short",
     "entry_price": 33974.05,
     "closing price": 32302.31,
-    "volume": 3.1263246297218026,
+    "volume": 3.300515785218424,
     "leverage": 2.541286344354524,
     "result": "WIN",
     "more": {
@@ -298,10 +298,10 @@
         "take_profit": 32797.592098417335
       },
       "Found_Managment": {
-        "entry_liquidity": 132767.386608,
-        "closing_liquidity": 144366.56801653758,
+        "entry_liquidity": 140164.860391,
+        "closing_liquidity": 152410.31914087804,
         "ratio": 2.541286344354524,
-        "profit/loss": 8.736468876038463
+        "profit/loss": 8.736468409927035
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -313,7 +313,7 @@
     "direction": "long",
     "entry_price": 35160.24,
     "closing price": 36403.47,
-    "volume": 3.284768659531335,
+    "volume": 3.467787913643366,
     "leverage": 2.8761664638914106,
     "result": "WIN",
     "more": {
@@ -326,10 +326,10 @@
         "take_profit": 36236.012615682936
       },
       "Found_Managment": {
-        "entry_liquidity": 144366.568017,
-        "closing_liquidity": 156967.02173786162,
+        "entry_liquidity": 152410.319141,
+        "closing_liquidity": 165712.83819452324,
         "ratio": 2.8761664638914106,
-        "profit/loss": 8.72809674285381
+        "profit/loss": 8.728096055764182
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -341,7 +341,7 @@
     "direction": "long",
     "entry_price": 39423.08,
     "closing price": 42984.07,
-    "volume": 3.185281753490595,
+    "volume": 3.3627578199369506,
     "leverage": 3.0698606549416256,
     "result": "WIN",
     "more": {
@@ -354,10 +354,10 @@
         "take_profit": 40553.1739781796
       },
       "Found_Managment": {
-        "entry_liquidity": 156967.021738,
-        "closing_liquidity": 170659.65398950162,
+        "entry_liquidity": 165712.838195,
+        "closing_liquidity": 180168.3898996504,
         "ratio": 3.0698606549416256,
-        "profit/loss": 8.723254158670686
+        "profit/loss": 8.723253950692751
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -368,27 +368,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 47555.46,
-    "closing price": 47669.82,
-    "volume": 2.870915835784156,
+    "closing price": 46547.5,
+    "volume": 3.0308762005456367,
     "leverage": 2.3552611737640934,
-    "result": "WIN",
+    "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "02/11/21 14:0",
-        "Closeing": "02/12/21 13:0"
+        "Closeing": "02/12/21 15:0"
       },
       "Risk_Managment": {
         "stop_loss": 46747.81351850175,
         "take_profit": 49332.282259296146
       },
       "Found_Managment": {
-        "entry_liquidity": 170659.65399,
-        "closing_liquidity": 171525.76013178573,
+        "entry_liquidity": 180168.3899,
+        "closing_liquidity": 172855.568884812,
         "ratio": 2.3552611737640934,
-        "profit/loss": 0.5075049207802169
+        "profit/loss": -4.05888126060675
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -397,7 +397,7 @@
     "direction": "long",
     "entry_price": 47551.25,
     "closing price": 48929.18,
-    "volume": 2.88574134445677,
+    "volume": 2.908113984553508,
     "leverage": 3.818264747684375,
     "result": "WIN",
     "more": {
@@ -410,10 +410,10 @@
         "take_profit": 48647.169292274775
       },
       "Found_Managment": {
-        "entry_liquidity": 171525.760132,
-        "closing_liquidity": 186456.29255013744,
+        "entry_liquidity": 172855.568885,
+        "closing_liquidity": 187901.85694517492,
         "ratio": 3.818264747684375,
-        "profit/loss": 8.704542342005917
+        "profit/loss": 8.704543427342603
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -425,7 +425,7 @@
     "direction": "long",
     "entry_price": 48562.31,
     "closing price": 47911.1,
-    "volume": 3.071621470230721,
+    "volume": 3.095435236832844,
     "leverage": 3.1153833770582984,
     "result": "LOST",
     "more": {
@@ -438,10 +438,10 @@
         "take_profit": 49934.045919074975
       },
       "Found_Managment": {
-        "entry_liquidity": 186456.29255,
-        "closing_liquidity": 178852.8213032845,
+        "entry_liquidity": 187901.856945,
+        "closing_liquidity": 180239.4366731075,
         "ratio": 3.1153833770582984,
-        "profit/loss": -4.077883960219029
+        "profit/loss": -4.0778842723919135
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -452,27 +452,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 48442.06,
-    "closing price": 48575.07,
-    "volume": 2.953678209440309,
+    "closing price": 50556.05,
+    "volume": 2.976577572019026,
     "leverage": 3.1547279058710838,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "02/16/21 3:0",
-        "Closeing": "02/16/21 22:0"
+        "Closeing": "02/17/21 7:0"
       },
       "Risk_Managment": {
         "stop_loss": 47827.84461984189,
         "take_profit": 49793.333836347825
       },
       "Found_Managment": {
-        "entry_liquidity": 178852.821303,
-        "closing_liquidity": 180261.00567323162,
+        "entry_liquidity": 180239.436673,
+        "closing_liquidity": 195958.35776545465,
         "ratio": 3.1547279058710838,
-        "profit/loss": 0.7873425534875756
+        "profit/loss": 8.721133056453551
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -480,27 +480,27 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 53478.83,
-    "closing price": 54087.67,
-    "volume": 2.6965587044144383,
+    "closing price": 49950.0,
+    "volume": 2.931378383034932,
     "leverage": 1.4659804717265714,
-    "result": "LOST",
+    "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "02/22/21 15:0",
-        "Closeing": "02/23/21 0:0"
+        "Closeing": "02/23/21 6:0"
       },
       "Risk_Managment": {
         "stop_loss": 54938.0262452819,
         "take_profit": 50268.59826037983
       },
       "Found_Managment": {
-        "entry_liquidity": 180261.005673,
-        "closing_liquidity": 177186.43197450097,
+        "entry_liquidity": 195958.357765,
+        "closing_liquidity": 213130.87322279136,
         "ratio": 1.4659804717265714,
-        "profit/loss": -1.7056232916376959
+        "profit/loss": 8.763349343019723
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -508,52 +508,52 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 47073.73,
-    "closing price": 46270.0,
-    "volume": 3.0112155034240966,
+    "closing price": 44629.17,
+    "volume": 3.6220775064648585,
     "leverage": 1.7536693774504448,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "02/26/21 0:0",
-        "Closeing": "02/26/21 21:0"
+        "Closeing": "02/28/21 4:0"
       },
       "Risk_Managment": {
         "stop_loss": 48147.44960998573,
         "take_profit": 44711.546858031405
       },
       "Found_Managment": {
-        "entry_liquidity": 177186.431975,
-        "closing_liquidity": 182414.04880362458,
+        "entry_liquidity": 213130.873223,
+        "closing_liquidity": 231792.95233814346,
         "ratio": 1.7536693774504448,
-        "profit/loss": 2.9503482689702523
+        "profit/loss": 8.756159458708368
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
     "mode": "future",
     "Strategy": "Ichi_future",
     "direction": "short",
-    "entry_price": 45397.23,
-    "closing price": 43391.14,
-    "volume": 3.2145406017768043,
-    "leverage": 2.080075273818941,
-    "result": "WIN",
+    "entry_price": 44629.17,
+    "closing price": 46217.19,
+    "volume": 4.155003596759698,
+    "leverage": 1.985179790914023,
+    "result": "LOST",
     "more": {
       "Date": {
-        "Entrance": "02/28/21 3:0",
-        "Closeing": "02/28/21 16:0"
+        "Entrance": "02/28/21 4:0",
+        "Closeing": "03/01/21 1:0"
       },
       "Risk_Managment": {
-        "stop_loss": 46270.222060843116,
-        "take_profit": 43476.64746614516
+        "stop_loss": 45528.41691364003,
+        "take_profit": 42650.82678999192
       },
       "Found_Managment": {
-        "entry_liquidity": 182414.048804,
-        "closing_liquidity": 198371.6283377873,
-        "ratio": 2.080075273818941,
-        "profit/loss": 8.74799920204248
+        "entry_liquidity": 231792.95233814346,
+        "closing_liquidity": 222406.19566234597,
+        "ratio": 1.985179790914023,
+        "profit/loss": -4.049629887842287
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -565,7 +565,7 @@
     "direction": "long",
     "entry_price": 49188.0,
     "closing price": 48262.83,
-    "volume": 3.2263418449703183,
+    "volume": 3.6172431595023182,
     "leverage": 2.4143089955457335,
     "result": "LOST",
     "more": {
@@ -578,10 +578,10 @@
         "take_profit": 50980.870758459634
       },
       "Found_Managment": {
-        "entry_liquidity": 198371.628338,
-        "closing_liquidity": 190317.0302162,
+        "entry_liquidity": 222406.195662,
+        "closing_liquidity": 213375.70891380002,
         "ratio": 2.4143089955457335,
-        "profit/loss": -4.060357919770671
+        "profit/loss": -4.060357545939954
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -593,7 +593,7 @@
     "direction": "short",
     "entry_price": 47108.28,
     "closing price": 48056.18,
-    "volume": 3.2319928507854674,
+    "volume": 3.62357885134418,
     "leverage": 2.068432699712841,
     "result": "LOST",
     "more": {
@@ -606,10 +606,10 @@
         "take_profit": 45104.09168844627
       },
       "Found_Managment": {
-        "entry_liquidity": 190317.030216,
-        "closing_liquidity": 182605.934158938,
+        "entry_liquidity": 213375.708914,
+        "closing_liquidity": 204730.341879414,
         "ratio": 2.068432699712841,
-        "profit/loss": -4.051711004690601
+        "profit/loss": -4.051710983685811
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -621,7 +621,7 @@
     "direction": "long",
     "entry_price": 50383.09,
     "closing price": 49755.24,
-    "volume": 2.8994797128798573,
+    "volume": 3.25077865417147,
     "leverage": 3.4547711287168266,
     "result": "LOST",
     "more": {
@@ -634,10 +634,10 @@
         "take_profit": 51666.449086553075
       },
       "Found_Managment": {
-        "entry_liquidity": 182605.934159,
-        "closing_liquidity": 175143.98062653997,
+        "entry_liquidity": 204730.341879,
+        "closing_liquidity": 196364.3031957545,
         "ratio": 3.4547711287168266,
-        "profit/loss": -4.086369682796125
+        "profit/loss": -4.086369712697504
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -649,7 +649,7 @@
     "direction": "short",
     "entry_price": 56355.14,
     "closing price": 54088.76,
-    "volume": 2.486289351807129,
+    "volume": 2.787526436041149,
     "leverage": 2.2539821725286937,
     "result": "WIN",
     "more": {
@@ -662,10 +662,10 @@
         "take_profit": 54154.92192354719
       },
       "Found_Managment": {
-        "entry_liquidity": 175143.980627,
-        "closing_liquidity": 190457.95590276067,
+        "entry_liquidity": 196364.303196,
+        "closing_liquidity": 213533.70878184043,
         "ratio": 2.2539821725286937,
-        "profit/loss": 8.743649208461507
+        "profit/loss": 8.743649077960407
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -677,7 +677,7 @@
     "direction": "long",
     "entry_price": 58284.41,
     "closing price": 57293.79,
-    "volume": 2.6141873053600437,
+    "volume": 2.930920412947476,
     "leverage": 2.7410621057564253,
     "result": "LOST",
     "more": {
@@ -690,10 +690,10 @@
         "take_profit": 60155.59273213463
       },
       "Found_Managment": {
-        "entry_liquidity": 190457.955903,
-        "closing_liquidity": 182709.12430043652,
+        "entry_liquidity": 213533.708782,
+        "closing_liquidity": 204846.03436534002,
         "ratio": 2.7410621057564253,
-        "profit/loss": -4.068526077487643
+        "profit/loss": -4.0685259794411985
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -705,7 +705,7 @@
     "direction": "short",
     "entry_price": 57129.99,
     "closing price": 57760.48,
-    "volume": 2.558503851304718,
+    "volume": 2.868490393434342,
     "leverage": 3.9132027671182024,
     "result": "LOST",
     "more": {
@@ -718,10 +718,10 @@
         "take_profit": 55845.252300680026
       },
       "Found_Managment": {
-        "entry_liquidity": 182709.1243,
-        "closing_liquidity": 175222.014430212,
+        "entry_liquidity": 204846.034365,
+        "closing_liquidity": 196451.793124345,
         "ratio": 3.9132027671182024,
-        "profit/loss": -4.097830307311036
+        "profit/loss": -4.097829507257112
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -732,27 +732,27 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 52534.03,
-    "closing price": 52255.41,
-    "volume": 2.6683201639775214,
+    "closing price": 53569.85,
+    "volume": 2.991611998911943,
     "leverage": 2.4179599571111003,
-    "result": "WIN",
+    "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "03/24/21 23:0",
-        "Closeing": "03/26/21 2:0"
+        "Closeing": "03/26/21 8:0"
       },
       "Risk_Managment": {
         "stop_loss": 53403.09368892504,
         "take_profit": 50622.089884364905
       },
       "Found_Managment": {
-        "entry_liquidity": 175222.01443,
-        "closing_liquidity": 177363.126790241,
+        "entry_liquidity": 196451.793124,
+        "closing_liquidity": 188474.96825354203,
         "ratio": 2.4179599571111003,
-        "profit/loss": 1.2219425551098995
+        "profit/loss": -4.060449000545901
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -761,7 +761,7 @@
     "direction": "long",
     "entry_price": 54682.64,
     "closing price": 56167.46,
-    "volume": 2.5947997651905617,
+    "volume": 2.757364578652384,
     "leverage": 3.3971428976456397,
     "result": "WIN",
     "more": {
@@ -774,10 +774,10 @@
         "take_profit": 56099.14571229575
       },
       "Found_Managment": {
-        "entry_liquidity": 177363.12679,
-        "closing_liquidity": 192820.45137491997,
+        "entry_liquidity": 188474.968254,
+        "closing_liquidity": 204900.698870396,
         "ratio": 3.3971428976456397,
-        "profit/loss": 8.715072216347206
+        "profit/loss": 8.715072759295929
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -789,7 +789,7 @@
     "direction": "long",
     "entry_price": 59251.99,
     "closing price": 58553.12,
-    "volume": 2.6033954488279636,
+    "volume": 2.76649879769439,
     "leverage": 3.6753418479117097,
     "result": "LOST",
     "more": {
@@ -802,10 +802,10 @@
         "take_profit": 60670.681195476864
       },
       "Found_Managment": {
-        "entry_liquidity": 192820.451375,
-        "closing_liquidity": 184930.46441174747,
+        "entry_liquidity": 204900.69887,
+        "closing_liquidity": 196516.40027385947,
         "ratio": 3.6753418479117097,
-        "profit/loss": -4.091882840740776
+        "profit/loss": -4.091883845384037
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -817,7 +817,7 @@
     "direction": "short",
     "entry_price": 58455.36,
     "closing price": 57051.94,
-    "volume": 2.530894883370832,
+    "volume": 2.6894560262600384,
     "leverage": 5.234881028047083,
     "result": "WIN",
     "more": {
@@ -830,10 +830,10 @@
         "take_profit": 57472.70697456553
       },
       "Found_Managment": {
-        "entry_liquidity": 184930.464412,
-        "closing_liquidity": 200962.32377439193,
+        "entry_liquidity": 196516.400274,
+        "closing_liquidity": 213552.6583374175,
         "ratio": 5.234881028047083,
-        "profit/loss": 8.669128373935795
+        "profit/loss": 8.669127889409774
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -845,7 +845,7 @@
     "direction": "long",
     "entry_price": 59356.23,
     "closing price": 58800.01,
-    "volume": 2.708559135565045,
+    "volume": 2.878250971626736,
     "leverage": 5.51304810381434,
     "result": "LOST",
     "more": {
@@ -858,10 +858,10 @@
         "take_profit": 60303.68196153579
       },
       "Found_Managment": {
-        "entry_liquidity": 200962.323774,
-        "closing_liquidity": 192646.8524999415,
+        "entry_liquidity": 213552.658337,
+        "closing_liquidity": 204716.2203970435,
         "ratio": 5.51304810381434,
-        "profit/loss": -4.13782599538905
+        "profit/loss": -4.137826243310921
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -873,7 +873,7 @@
     "direction": "short",
     "entry_price": 57510.84,
     "closing price": 58285.99,
-    "volume": 2.67979883444582,
+    "volume": 2.8476888238391234,
     "leverage": 4.960687532703257,
     "result": "LOST",
     "more": {
@@ -886,10 +886,10 @@
         "take_profit": 56490.62780428403
       },
       "Found_Managment": {
-        "entry_liquidity": 192646.8525,
-        "closing_liquidity": 184702.06269910198,
+        "entry_liquidity": 204716.220397,
+        "closing_liquidity": 196273.687758322,
         "ratio": 4.960687532703257,
-        "profit/loss": -4.12401744321155
+        "profit/loss": -4.1240174434178485
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -900,27 +900,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 57978.35,
-    "closing price": 58109.08,
-    "volume": 2.548565976079002,
+    "closing price": 59229.5,
+    "volume": 2.708234197875586,
     "leverage": 5.039870779730993,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "04/09/21 2:0",
-        "Closeing": "04/10/21 1:0"
+        "Closeing": "04/10/21 4:0"
       },
       "Risk_Managment": {
         "stop_loss": 57518.19256712951,
         "take_profit": 58990.69635231507
       },
       "Found_Managment": {
-        "entry_liquidity": 184702.062699,
-        "closing_liquidity": 186568.28665808632,
+        "entry_liquidity": 196273.687758,
+        "closing_liquidity": 213298.47253062893,
         "ratio": 5.039870779730993,
-        "profit/loss": 1.0103969234645809
+        "profit/loss": 8.67400259662927
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -928,27 +928,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 60101.68,
-    "closing price": 60002.43,
-    "volume": 2.4833686733282665,
+    "closing price": 62711.51,
+    "volume": 2.839168190053922,
     "leverage": 5.146513823156437,
-    "result": "LOST",
+    "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "04/11/21 23:0",
-        "Closeing": "04/12/21 0:0"
+        "Closeing": "04/13/21 9:0"
       },
       "Risk_Managment": {
         "stop_loss": 59634.55462491929,
         "take_profit": 61129.35582517756
       },
       "Found_Managment": {
-        "entry_liquidity": 186568.286658,
-        "closing_liquidity": 184742.6378486888,
+        "entry_liquidity": 213298.472531,
+        "closing_liquidity": 231794.30099148647,
         "ratio": 5.146513823156437,
-        "profit/loss": -0.9785418744064457
+        "profit/loss": 8.671336574057438
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -957,7 +957,7 @@
     "direction": "short",
     "entry_price": 61414.83,
     "closing price": 62164.89,
-    "volume": 2.406488958435609,
+    "volume": 3.019391908970521,
     "leverage": 3.9144161618121633,
     "result": "LOST",
     "more": {
@@ -970,10 +970,10 @@
         "take_profit": 60034.16304569793
       },
       "Found_Managment": {
-        "entry_liquidity": 184742.637849,
-        "closing_liquidity": 177172.14231227653,
+        "entry_liquidity": 231794.300991,
+        "closing_liquidity": 222295.693825192,
         "ratio": 3.9144161618121633,
-        "profit/loss": -4.097860474911718
+        "profit/loss": -4.0978605277171205
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -985,7 +985,7 @@
     "direction": "short",
     "entry_price": 55220.29,
     "closing price": 56266.83,
-    "volume": 2.566768733912843,
+    "volume": 3.2204929575704875,
     "leverage": 2.3181114746729725,
     "result": "LOST",
     "more": {
@@ -998,10 +998,10 @@
         "take_profit": 53124.020871835855
       },
       "Found_Managment": {
-        "entry_liquidity": 177172.142312,
-        "closing_liquidity": 169982.57967985948,
+        "entry_liquidity": 222295.693825,
+        "closing_liquidity": 213275.03940382152,
         "ratio": 2.3181114746729725,
-        "profit/loss": -4.057953207722529
+        "profit/loss": -4.057952840184073
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1013,7 +1013,7 @@
     "direction": "long",
     "entry_price": 57020.76,
     "closing price": 55679.99,
-    "volume": 2.3848518284217888,
+    "volume": 2.9922440795808405,
     "leverage": 2.745091551184103,
     "result": "LOST",
     "more": {
@@ -1026,10 +1026,10 @@
         "take_profit": 58848.686969443166
       },
       "Found_Managment": {
-        "entry_liquidity": 169982.57968,
-        "closing_liquidity": 163066.621559144,
+        "entry_liquidity": 213275.039404,
+        "closing_liquidity": 204597.673181168,
         "ratio": 2.745091551184103,
-        "profit/loss": -4.068627581647252
+        "profit/loss": -4.068627180696353
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1041,7 +1041,7 @@
     "direction": "short",
     "entry_price": 54563.37,
     "closing price": 55433.39,
-    "volume": 2.390858505389238,
+    "volume": 2.999780595384779,
     "leverage": 2.838342126384904,
     "result": "LOST",
     "more": {
@@ -1054,10 +1054,10 @@
         "take_profit": 52871.68649385566
       },
       "Found_Managment": {
-        "entry_liquidity": 163066.621559,
-        "closing_liquidity": 156428.2456080885,
+        "entry_liquidity": 204597.673181,
+        "closing_liquidity": 196268.5855818715,
         "ratio": 2.838342126384904,
-        "profit/loss": -4.0709593952736824
+        "profit/loss": -4.070959102139959
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1069,7 +1069,7 @@
     "direction": "short",
     "entry_price": 53996.73,
     "closing price": 54866.62,
-    "volume": 2.3175958337921574,
+    "volume": 2.9078588363702766,
     "leverage": 2.8892652180966727,
     "result": "LOST",
     "more": {
@@ -1082,10 +1082,10 @@
         "take_profit": 52352.12077193813
       },
       "Found_Managment": {
-        "entry_liquidity": 156428.245608,
-        "closing_liquidity": 150058.124655026,
+        "entry_liquidity": 196268.585582,
+        "closing_liquidity": 188276.0737100165,
         "ratio": 2.8892652180966727,
-        "profit/loss": -4.072231922192067
+        "profit/loss": -4.072231859359007
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1097,7 +1097,7 @@
     "direction": "short",
     "entry_price": 49333.01,
     "closing price": 47598.87,
-    "volume": 2.43339094298118,
+    "volume": 3.053145530102461,
     "leverage": 3.4343925629085126,
     "result": "WIN",
     "more": {
@@ -1110,10 +1110,10 @@
         "take_profit": 48068.942249887165
       },
       "Found_Managment": {
-        "entry_liquidity": 150058.124655,
-        "closing_liquidity": 163134.40030397018,
+        "entry_liquidity": 188276.07371,
+        "closing_liquidity": 204682.7172349007,
         "ratio": 3.4343925629085126,
-        "profit/loss": 8.714140389954872
+        "profit/loss": 8.714141527176576
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1125,7 +1125,7 @@
     "direction": "long",
     "entry_price": 52832.0,
     "closing price": 54700.34,
-    "volume": 2.4702362250757117,
+    "volume": 3.099374882419746,
     "leverage": 2.5539658919497588,
     "result": "WIN",
     "more": {
@@ -1138,10 +1138,10 @@
         "take_profit": 54652.39079482408
       },
       "Found_Managment": {
-        "entry_liquidity": 163134.400304,
-        "closing_liquidity": 177386.06630872004,
+        "entry_liquidity": 204682.717235,
+        "closing_liquidity": 222564.1088600001,
         "ratio": 2.5539658919497588,
-        "profit/loss": 8.736150056739799
+        "profit/loss": 8.73615118391757
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1153,7 +1153,7 @@
     "direction": "long",
     "entry_price": 55952.19,
     "closing price": 57694.27,
-    "volume": 2.53625198669078,
+    "volume": 3.182204076158592,
     "leverage": 3.9751864454942627,
     "result": "WIN",
     "more": {
@@ -1166,10 +1166,10 @@
         "take_profit": 57190.82189500985
       },
       "Found_Managment": {
-        "entry_liquidity": 177386.066309,
-        "closing_liquidity": 192819.75455398692,
+        "entry_liquidity": 222564.10886,
+        "closing_liquidity": 241928.5665187037,
         "ratio": 3.9751864454942627,
-        "profit/loss": 8.700620384749957
+        "profit/loss": 8.700620130483198
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1181,7 +1181,7 @@
     "direction": "long",
     "entry_price": 57945.55,
     "closing price": 56783.94,
-    "volume": 2.6620819656246253,
+    "volume": 3.3400813904639786,
     "leverage": 4.856976609878403,
     "result": "LOST",
     "more": {
@@ -1194,10 +1194,10 @@
         "take_profit": 58995.42295792798
       },
       "Found_Managment": {
-        "entry_liquidity": 192819.754554,
-        "closing_liquidity": 184872.834009345,
+        "entry_liquidity": 241928.566519,
+        "closing_liquidity": 231957.66467707252,
         "ratio": 4.856976609878403,
-        "profit/loss": -4.121424468689194
+        "profit/loss": -4.1214239332685105
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1209,7 +1209,7 @@
     "direction": "short",
     "entry_price": 55682.71,
     "closing price": 53799.33,
-    "volume": 2.656089604963552,
+    "volume": 3.3325628681075328,
     "leverage": 2.9929636473618655,
     "result": "WIN",
     "more": {
@@ -1222,10 +1222,10 @@
         "take_profit": 54045.5105357435
       },
       "Found_Managment": {
-        "entry_liquidity": 184872.834009,
-        "closing_liquidity": 201003.31638332905,
+        "entry_liquidity": 231957.664677,
+        "closing_liquidity": 252196.37975516036,
         "ratio": 2.9929636473618655,
-        "profit/loss": 8.725177206697532
+        "profit/loss": 8.725176254185302
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1237,7 +1237,7 @@
     "direction": "long",
     "entry_price": 56797.09,
     "closing price": 55753.57,
-    "volume": 2.831177673123747,
+    "volume": 3.5522436766390677,
     "leverage": 3.3377828889017835,
     "result": "LOST",
     "more": {
@@ -1250,10 +1250,10 @@
         "take_profit": 58294.53428752958
       },
       "Found_Managment": {
-        "entry_liquidity": 201003.316383,
-        "closing_liquidity": 192795.45642241897,
+        "entry_liquidity": 252196.379755,
+        "closing_liquidity": 241898.079437462,
         "ratio": 3.3377828889017835,
-        "profit/loss": -4.083445043733227
+        "profit/loss": -4.083444943794372
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1265,7 +1265,7 @@
     "direction": "long",
     "entry_price": 57519.24,
     "closing price": 59060.57,
-    "volume": 2.681474322984796,
+    "volume": 3.36441273475797,
     "leverage": 3.4013831255719675,
     "result": "WIN",
     "more": {
@@ -1278,10 +1278,10 @@
         "take_profit": 59007.36789772067
       },
       "Found_Managment": {
-        "entry_liquidity": 192795.456422,
-        "closing_liquidity": 209597.51176033358,
+        "entry_liquidity": 241898.079437,
+        "closing_liquidity": 262979.4150777931,
         "ratio": 3.4013831255719675,
-        "profit/loss": 8.714964372166762
+        "profit/loss": 8.714966108808458
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1293,7 +1293,7 @@
     "direction": "long",
     "entry_price": 58858.6,
     "closing price": 57899.65,
-    "volume": 2.8488276888678974,
+    "volume": 3.5743889943423732,
     "leverage": 3.7151222609522936,
     "result": "LOST",
     "more": {
@@ -1306,10 +1306,10 @@
         "take_profit": 60252.782058135635
       },
       "Found_Managment": {
-        "entry_liquidity": 209597.51176,
-        "closing_liquidity": 201018.94025676,
+        "entry_liquidity": 262979.415078,
+        "closing_liquidity": 252215.98828762997,
         "ratio": 3.7151222609522936,
-        "profit/loss": -4.092878503759583
+        "profit/loss": -4.092878063166115
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1321,7 +1321,7 @@
     "direction": "short",
     "entry_price": 56771.88,
     "closing price": 54600.0,
-    "volume": 2.832655043405292,
+    "volume": 3.554097391708712,
     "leverage": 3.1558310589232623,
     "result": "WIN",
     "more": {
@@ -1334,10 +1334,10 @@
         "take_profit": 55188.80240594635
       },
       "Found_Managment": {
-        "entry_liquidity": 201018.940257,
-        "closing_liquidity": 218550.01127695403,
+        "entry_liquidity": 252215.988288,
+        "closing_liquidity": 274212.00507051963,
         "ratio": 3.1558310589232623,
-        "profit/loss": 8.72110408976427
+        "profit/loss": 8.721103262257452
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1349,7 +1349,7 @@
     "direction": "short",
     "entry_price": 55479.13,
     "closing price": 52942.79,
-    "volume": 3.151455493653199,
+    "volume": 3.9540923597179702,
     "leverage": 3.2672303889063747,
     "result": "WIN",
     "more": {
@@ -1362,10 +1362,10 @@
         "take_profit": 53984.84803672706
       },
       "Found_Managment": {
-        "entry_liquidity": 218550.011277,
-        "closing_liquidity": 237603.89597490657,
+        "entry_liquidity": 274212.005071,
+        "closing_liquidity": 298118.6808929557,
         "ratio": 3.2672303889063747,
-        "profit/loss": 8.718317874510111
+        "profit/loss": 8.718318446986176
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1377,7 +1377,7 @@
     "direction": "short",
     "entry_price": 48929.74,
     "closing price": 46762.99,
-    "volume": 3.8848176340197194,
+    "volume": 4.874232822704555,
     "leverage": 2.57694500932539,
     "result": "WIN",
     "more": {
@@ -1390,10 +1390,10 @@
         "take_profit": 47258.84011489644
       },
       "Found_Managment": {
-        "entry_liquidity": 237603.895975,
-        "closing_liquidity": 258359.9677329251,
+        "entry_liquidity": 298118.680893,
+        "closing_liquidity": 324161.06689725607,
         "ratio": 2.57694500932539,
-        "profit/loss": 8.735577197820449
+        "profit/loss": 8.735576692559953
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1405,7 +1405,7 @@
     "direction": "short",
     "entry_price": 35195.24,
     "closing price": 36663.99,
-    "volume": 5.723605807221493,
+    "volume": 7.18133765554655,
     "leverage": 1,
     "result": "LOST",
     "more": {
@@ -1418,10 +1418,10 @@
         "take_profit": 32017.428260160286
       },
       "Found_Managment": {
-        "entry_liquidity": 258359.967733,
-        "closing_liquidity": 247962.61752304397,
+        "entry_liquidity": 324161.066897,
+        "closing_liquidity": 311115.6395633035,
         "ratio": 0.9746269991929173,
-        "profit/loss": -4.024365810689791
+        "profit/loss": -4.024365868045964
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1432,27 +1432,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 37571.6,
-    "closing price": 36537.16,
-    "volume": 5.279788298033622,
+    "closing price": 40549.99,
+    "volume": 6.624485293423756,
     "leverage": 1.359226090492477,
-    "result": "LOST",
+    "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "05/24/21 14:0",
-        "Closeing": "05/25/21 12:0"
+        "Closeing": "05/26/21 7:0"
       },
       "Risk_Managment": {
         "stop_loss": 36465.92375488357,
         "take_profit": 40004.08773925614
       },
       "Found_Managment": {
-        "entry_liquidity": 247962.617523,
-        "closing_liquidity": 238598.8810883032,
+        "entry_liquidity": 311115.639563,
+        "closing_liquidity": 338388.09551286005,
         "ratio": 1.359226090492477,
-        "profit/loss": -3.7762693942478056
+        "profit/loss": 8.766018959435002
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -1461,7 +1461,7 @@
     "direction": "long",
     "entry_price": 39864.02,
     "closing price": 38825.44,
-    "volume": 4.78825529563752,
+    "volume": 6.790847395982643,
     "leverage": 2.126818914229097,
     "result": "LOST",
     "more": {
@@ -1474,10 +1474,10 @@
         "take_profit": 41513.44757304354
       },
       "Found_Managment": {
-        "entry_liquidity": 238598.881088,
-        "closing_liquidity": 228928.062287845,
+        "entry_liquidity": 338388.095513,
+        "closing_liquidity": 324672.649941693,
         "ratio": 2.126818914229097,
-        "profit/loss": -4.0531702227841535
+        "profit/loss": -4.053170236533946
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1489,7 +1489,7 @@
     "direction": "short",
     "entry_price": 36975.93,
     "closing price": 35351.65,
-    "volume": 4.953018080421507,
+    "volume": 7.0245189222718665,
     "leverage": 2.0430166571590447,
     "result": "WIN",
     "more": {
@@ -1502,10 +1502,10 @@
         "take_profit": 35383.24507078129
       },
       "Found_Managment": {
-        "entry_liquidity": 228928.062288,
-        "closing_liquidity": 248956.80548298144,
+        "entry_liquidity": 324672.649942,
+        "closing_liquidity": 353078.0155437137,
         "ratio": 2.0430166571590447,
-        "profit/loss": 8.748924441506235
+        "profit/loss": 8.74892468053225
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1517,7 +1517,7 @@
     "direction": "short",
     "entry_price": 34466.38,
     "closing price": 35040.94,
-    "volume": 5.778542579359946,
+    "volume": 8.19530256543333,
     "leverage": 2.4075847360175815,
     "result": "LOST",
     "more": {
@@ -1530,10 +1530,10 @@
         "take_profit": 33206.594043300094
       },
       "Found_Managment": {
-        "entry_liquidity": 248956.805483,
-        "closing_liquidity": 238848.686377123,
+        "entry_liquidity": 353078.015544,
+        "closing_liquidity": 338742.37785148295,
         "ratio": 2.4075847360175815,
-        "profit/loss": -4.060189913774917
+        "profit/loss": -4.06018983380476
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1545,7 +1545,7 @@
     "direction": "long",
     "entry_price": 36879.23,
     "closing price": 36197.77,
-    "volume": 5.181207663543951,
+    "volume": 7.348144261168142,
     "leverage": 2.716750094053886,
     "result": "LOST",
     "more": {
@@ -1558,10 +1558,10 @@
         "take_profit": 38073.808863585255
       },
       "Found_Managment": {
-        "entry_liquidity": 238848.686377,
-        "closing_liquidity": 229132.51524334803,
+        "entry_liquidity": 338742.377851,
+        "closing_liquidity": 324962.613629664,
         "ratio": 2.716750094053886,
-        "profit/loss": -4.067919016442035
+        "profit/loss": -4.0679186078681875
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1573,7 +1573,7 @@
     "direction": "short",
     "entry_price": 36707.94,
     "closing price": 37684.66,
-    "volume": 4.99363386216715,
+    "volume": 7.082121494804666,
     "leverage": 2.354370642060255,
     "result": "LOST",
     "more": {
@@ -1586,10 +1586,10 @@
         "take_profit": 35335.89659175684
       },
       "Found_Managment": {
-        "entry_liquidity": 229132.515243,
-        "closing_liquidity": 219832.348660262,
+        "entry_liquidity": 324962.61363,
+        "closing_liquidity": 311772.839396703,
         "ratio": 2.354370642060255,
-        "profit/loss": -4.0588593778909825
+        "profit/loss": -4.058858982564302
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1601,7 +1601,7 @@
     "direction": "short",
     "entry_price": 35634.46,
     "closing price": 34440.43,
-    "volume": 4.935275543055795,
+    "volume": 6.99935600308241,
     "leverage": 3.6031555198532366,
     "result": "WIN",
     "more": {
@@ -1614,10 +1614,10 @@
         "take_profit": 34764.15827066257
       },
       "Found_Managment": {
-        "entry_liquidity": 219832.34866,
-        "closing_liquidity": 238979.57458016547,
+        "entry_liquidity": 311772.839397,
+        "closing_liquidity": 338928.00774561334,
         "ratio": 3.6031555198532366,
-        "profit/loss": 8.709921918625005
+        "profit/loss": 8.70992110830892
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1628,27 +1628,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 36488.03,
-    "closing price": 36475.95,
-    "volume": 5.239626794430941,
+    "closing price": 35528.73,
+    "volume": 7.430996033406024,
     "leverage": 2.0071624256373886,
     "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "06/09/21 17:0",
-        "Closeing": "06/10/21 21:0"
+        "Closeing": "06/12/21 3:0"
       },
       "Risk_Managment": {
         "stop_loss": 35760.87350217122,
         "take_profit": 38087.77429522331
       },
       "Found_Managment": {
-        "entry_liquidity": 238979.57458,
-        "closing_liquidity": 238700.85345498472,
+        "entry_liquidity": 338928.007746,
+        "closing_liquidity": 325200.816606986,
         "ratio": 2.0071624256373886,
-        "profit/loss": -0.11662968498672158
+        "profit/loss": -4.050179042536221
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -1657,7 +1657,7 @@
     "direction": "short",
     "entry_price": 34981.48,
     "closing price": 35629.65,
-    "volume": 5.45890804974518,
+    "volume": 7.4370968091001295,
     "leverage": 3.023634200397359,
     "result": "LOST",
     "more": {
@@ -1670,10 +1670,10 @@
         "take_profit": 33963.37726799775
       },
       "Found_Managment": {
-        "entry_liquidity": 238700.853455,
-        "closing_liquidity": 228972.38338964802,
+        "entry_liquidity": 325200.816607,
+        "closing_liquidity": 311946.961524382,
         "ratio": 3.023634200397359,
-        "profit/loss": -4.0755908177705775
+        "profit/loss": -4.075590959734608
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1685,7 +1685,7 @@
     "direction": "long",
     "entry_price": 37300.0,
     "closing price": 39250.0,
-    "volume": 4.910935836782842,
+    "volume": 6.690551453597855,
     "leverage": 3.046838238816903,
     "result": "WIN",
     "more": {
@@ -1698,10 +1698,10 @@
         "take_profit": 38377.31351083297
       },
       "Found_Managment": {
-        "entry_liquidity": 228972.38339,
-        "closing_liquidity": 248947.54333899997,
+        "entry_liquidity": 311946.961524,
+        "closing_liquidity": 339160.6793099999,
         "ratio": 3.046838238816903,
-        "profit/loss": 8.72382933402804
+        "profit/loss": 8.72382845245512
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1713,7 +1713,7 @@
     "direction": "short",
     "entry_price": 37749.76,
     "closing price": 36670.39,
-    "volume": 5.275743068861894,
+    "volume": 7.187556780440458,
     "leverage": 3.135520607559036,
     "result": "WIN",
     "more": {
@@ -1726,10 +1726,10 @@
         "take_profit": 36690.29355223007
       },
       "Found_Managment": {
-        "entry_liquidity": 248947.543339,
-        "closing_liquidity": 270659.7818315648,
+        "entry_liquidity": 339160.67931,
+        "closing_liquidity": 368740.9586683152,
         "ratio": 3.135520607559036,
-        "profit/loss": 8.721611871059329
+        "profit/loss": 8.721612251306476
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1741,7 +1741,7 @@
     "direction": "short",
     "entry_price": 32776.44,
     "closing price": 31276.53,
-    "volume": 6.606203280942042,
+    "volume": 9.000146658221576,
     "leverage": 1.9231604003725893,
     "result": "WIN",
     "more": {
@@ -1754,10 +1754,10 @@
         "take_profit": 31276.6552085488
       },
       "Found_Managment": {
-        "entry_liquidity": 270659.781832,
-        "closing_liquidity": 294347.7110826253,
+        "entry_liquidity": 368740.958668,
+        "closing_liquidity": 401012.877253715,
         "ratio": 1.9231604003725893,
-        "profit/loss": 8.75192061793966
+        "profit/loss": 8.751921322299154
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1769,7 +1769,7 @@
     "direction": "long",
     "entry_price": 33886.52,
     "closing price": 35162.99,
-    "volume": 6.949021878505082,
+    "volume": 9.46719526830138,
     "leverage": 2.4423307954604794,
     "result": "WIN",
     "more": {
@@ -1782,10 +1782,10 @@
         "take_profit": 35107.49046212684
       },
       "Found_Managment": {
-        "entry_liquidity": 294347.711083,
-        "closing_liquidity": 320070.58648861846,
+        "entry_liquidity": 401012.877254,
+        "closing_liquidity": 436057.15793465404,
         "ratio": 2.4423307954604794,
-        "profit/loss": 8.738941883045639
+        "profit/loss": 8.738941482534273
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1797,7 +1797,7 @@
     "direction": "short",
     "entry_price": 31423.32,
     "closing price": 32354.36,
-    "volume": 8.148612851576473,
+    "volume": 11.101491705777748,
     "leverage": 1.956162709398975,
     "result": "LOST",
     "more": {
@@ -1810,10 +1810,10 @@
         "take_profit": 30009.709492697355
       },
       "Found_Managment": {
-        "entry_liquidity": 320070.586489,
-        "closing_liquidity": 307111.235257402,
+        "entry_liquidity": 436057.157935,
+        "closing_liquidity": 418401.621461768,
         "ratio": 1.956162709398975,
-        "profit/loss": -4.048904141350516
+        "profit/loss": -4.0489041750494135
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1824,27 +1824,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 34700.34,
-    "closing price": 34902.66,
-    "volume": 7.080304925127536,
+    "closing price": 36301.84,
+    "volume": 9.646052377861428,
     "leverage": 2.2641106777573636,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "06/28/21 0:0",
-        "Closeing": "06/29/21 1:0"
+        "Closeing": "06/29/21 14:0"
       },
       "Risk_Managment": {
         "stop_loss": 34087.28975752031,
         "take_profit": 36049.050533455316
       },
       "Found_Managment": {
-        "entry_liquidity": 307111.235257,
-        "closing_liquidity": 310991.53905981145,
+        "entry_liquidity": 418401.621462,
+        "closing_liquidity": 454984.13582302496,
         "ratio": 2.2641106777573636,
-        "profit/loss": 1.263484808546411
+        "profit/loss": 8.743396890575253
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -1852,27 +1852,27 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 33348.3,
-    "closing price": 33452.22,
-    "volume": 7.460447196648704,
+    "closing price": 34499.54,
+    "volume": 10.914718551122546,
     "leverage": 3.0169643212561703,
     "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "07/01/21 8:0",
-        "Closeing": "07/02/21 22:0"
+        "Closeing": "07/03/21 8:0"
       },
       "Risk_Managment": {
         "stop_loss": 33790.44377697533,
         "take_profit": 32375.58369065429
       },
       "Found_Managment": {
-        "entry_liquidity": 310991.53906,
-        "closing_liquidity": 307833.19994779106,
+        "entry_liquidity": 454984.135823,
+        "closing_liquidity": 436441.60190131504,
         "ratio": 3.0169643212561703,
-        "profit/loss": -1.0155707521031887
+        "profit/loss": -4.07542427564957
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -1881,7 +1881,7 @@
     "direction": "long",
     "entry_price": 34499.98,
     "closing price": 35205.94,
-    "volume": 7.138165296281332,
+    "volume": 10.12039083851063,
     "leverage": 4.416808104993255,
     "result": "WIN",
     "more": {
@@ -1894,10 +1894,10 @@
         "take_profit": 35187.35381562215
       },
       "Found_Managment": {
-        "entry_liquidity": 307833.199948,
-        "closing_liquidity": 334582.61038973724,
+        "entry_liquidity": 436441.601901,
+        "closing_liquidity": 474366.5437723202,
         "ratio": 4.416808104993255,
-        "profit/loss": 8.689579436609108
+        "profit/loss": 8.689579936039843
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1909,7 +1909,7 @@
     "direction": "short",
     "entry_price": 33468.11,
     "closing price": 33982.02,
-    "volume": 7.9976457682253335,
+    "volume": 11.338950272889626,
     "leverage": 3.7348119227793575,
     "result": "LOST",
     "more": {
@@ -1922,10 +1922,10 @@
         "take_profit": 32679.531152953736
       },
       "Found_Managment": {
-        "entry_liquidity": 334582.61039,
-        "closing_liquidity": 320886.904796607,
+        "entry_liquidity": 474366.543772,
+        "closing_liquidity": 454948.965032275,
         "ratio": 3.7348119227793575,
-        "profit/loss": -4.093370416779541
+        "profit/loss": -4.0933701996188585
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1937,7 +1937,7 @@
     "direction": "long",
     "entry_price": 34853.85,
     "closing price": 34239.86,
-    "volume": 7.365313267762386,
+    "volume": 10.442438124499876,
     "leverage": 3.82914345627048,
     "result": "LOST",
     "more": {
@@ -1950,10 +1950,10 @@
         "take_profit": 35654.84866589677
       },
       "Found_Managment": {
-        "entry_liquidity": 320886.904797,
-        "closing_liquidity": 307744.2485847975,
+        "entry_liquidity": 454948.965032,
+        "closing_liquidity": 436315.49043998495,
         "ratio": 3.82914345627048,
-        "profit/loss": -4.095728437568007
+        "profit/loss": -4.095728537530445
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1965,7 +1965,7 @@
     "direction": "short",
     "entry_price": 33210.45,
     "closing price": 32392.49,
-    "volume": 7.413190693531706,
+    "volume": 10.510318058081118,
     "leverage": 3.8371192761913937,
     "result": "WIN",
     "more": {
@@ -1978,10 +1978,10 @@
         "take_profit": 32448.805810794383
       },
       "Found_Managment": {
-        "entry_liquidity": 307744.248585,
-        "closing_liquidity": 334530.5307210047,
+        "entry_liquidity": 436315.49044,
+        "closing_liquidity": 474292.70474364137,
         "ratio": 3.8371192761913937,
-        "profit/loss": 8.70407237801107
+        "profit/loss": 8.70407196988203
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -1992,27 +1992,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 33624.08,
-    "closing price": 33862.54,
-    "volume": 7.959308465147597,
+    "closing price": 33324.49,
+    "volume": 11.28459615237651,
     "leverage": 4.842998134082019,
-    "result": "WIN",
+    "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "07/10/21 11:0",
-        "Closeing": "07/10/21 16:0"
+        "Closeing": "07/10/21 21:0"
       },
       "Risk_Managment": {
         "stop_loss": 33346.367070371765,
         "take_profit": 34235.04844518213
       },
       "Found_Managment": {
-        "entry_liquidity": 334530.530721,
-        "closing_liquidity": 345615.3693893645,
+        "entry_liquidity": 474292.704744,
+        "closing_liquidity": 454746.74714709603,
         "ratio": 4.842998134082019,
-        "profit/loss": 3.313550677863036
+        "profit/loss": -4.1210748977161495
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -2021,7 +2021,7 @@
     "direction": "short",
     "entry_price": 33112.12,
     "closing price": 32352.61,
-    "volume": 8.350184026610195,
+    "volume": 10.986834963076962,
     "leverage": 4.891738210760369,
     "result": "WIN",
     "more": {
@@ -2034,10 +2034,10 @@
         "take_profit": 32516.44900648887
       },
       "Found_Managment": {
-        "entry_liquidity": 345615.369389,
-        "closing_liquidity": 375606.8568223888,
+        "entry_liquidity": 454746.747147,
+        "closing_liquidity": 494208.33551862196,
         "ratio": 4.891738210760369,
-        "profit/loss": 8.677706517048017
+        "profit/loss": 8.67770657386709
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2049,7 +2049,7 @@
     "direction": "short",
     "entry_price": 31866.76,
     "closing price": 31086.53,
-    "volume": 9.42943322313282,
+    "volume": 12.406867482455073,
     "leverage": 4.01751847434342,
     "result": "WIN",
     "more": {
@@ -2062,10 +2062,10 @@
         "take_profit": 31168.748304992598
       },
       "Found_Managment": {
-        "entry_liquidity": 375606.856822,
-        "closing_liquidity": 408283.0075772587,
+        "entry_liquidity": 494208.335519,
+        "closing_liquidity": 537202.2945934212,
         "ratio": 4.01751847434342,
-        "profit/loss": 8.699561832212213
+        "profit/loss": 8.699561699879144
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2077,7 +2077,7 @@
     "direction": "long",
     "entry_price": 32201.82,
     "closing price": 31886.18,
-    "volume": 10.143103901009322,
+    "volume": 13.345886526736686,
     "leverage": 4.76463842668194,
     "result": "LOST",
     "more": {
@@ -2090,10 +2090,10 @@
         "take_profit": 32796.568206732954
       },
       "Found_Managment": {
-        "entry_liquidity": 408283.007577,
-        "closing_liquidity": 391465.356882816,
+        "entry_liquidity": 537202.294593,
+        "closing_liquidity": 515074.308350623,
         "ratio": 4.76463842668194,
-        "profit/loss": -4.11911600093038
+        "profit/loss": -4.119116106743693
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2105,7 +2105,7 @@
     "direction": "short",
     "entry_price": 31365.6,
     "closing price": 31643.8,
-    "volume": 9.984578184584386,
+    "volume": 13.137304775958377,
     "leverage": 5.175060952521645,
     "result": "LOST",
     "more": {
@@ -2118,10 +2118,10 @@
         "take_profit": 30832.239557422974
       },
       "Found_Managment": {
-        "entry_liquidity": 391465.356883,
-        "closing_liquidity": 375300.27863596,
+        "entry_liquidity": 515074.308351,
+        "closing_liquidity": 493804.95041859994,
         "ratio": 5.175060952521645,
-        "profit/loss": -4.129376447446755
+        "profit/loss": -4.129376594319662
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2132,27 +2132,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 31933.0,
-    "closing price": 31913.64,
-    "volume": 9.402192807089845,
+    "closing price": 32761.16,
+    "volume": 12.371025595315192,
     "leverage": 4.089659582306537,
-    "result": "LOST",
+    "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "07/21/21 16:0",
-        "Closeing": "07/22/21 12:0"
+        "Closeing": "07/23/21 2:0"
       },
       "Risk_Managment": {
         "stop_loss": 31620.670825824676,
         "take_profit": 32620.124183185715
       },
       "Found_Managment": {
-        "entry_liquidity": 375300.278636,
-        "closing_liquidity": 373986.03323052905,
+        "entry_liquidity": 493804.950419,
+        "closing_liquidity": 536754.9139243803,
         "ratio": 4.089659582306537,
-        "profit/loss": -0.35018503323458117
+        "profit/loss": 8.697758795033689
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -2161,7 +2161,7 @@
     "direction": "long",
     "entry_price": 40668.56,
     "closing price": 42206.37,
-    "volume": 7.35675978162984,
+    "volume": 10.55862147907868,
     "leverage": 3.173495444219506,
     "result": "WIN",
     "more": {
@@ -2174,10 +2174,10 @@
         "take_profit": 41796.28598634694
       },
       "Found_Managment": {
-        "entry_liquidity": 373986.033231,
-        "closing_liquidity": 406600.0943798158,
+        "entry_liquidity": 536754.913924,
+        "closing_liquidity": 583563.4969068933,
         "ratio": 3.173495444219506,
-        "profit/loss": 8.720662872634888
+        "profit/loss": 8.720662218198349
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2189,7 +2189,7 @@
     "direction": "short",
     "entry_price": 39518.73,
     "closing price": 40269.0,
-    "volume": 8.23103565079141,
+    "volume": 11.813405884389503,
     "leverage": 2.947657074995474,
     "result": "LOST",
     "more": {
@@ -2202,10 +2202,10 @@
         "take_profit": 38338.92917801824
       },
       "Found_Managment": {
-        "entry_liquidity": 406600.09438,
-        "closing_liquidity": 390036.460491066,
+        "entry_liquidity": 583563.496907,
+        "closing_liquidity": 559790.9205306611,
         "ratio": 2.947657074995474,
-        "profit/loss": -4.073691599651723
+        "profit/loss": -4.073691466710669
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2217,7 +2217,7 @@
     "direction": "short",
     "entry_price": 38008.38,
     "closing price": 39002.78,
-    "volume": 8.209483497923353,
+    "volume": 11.782473665670572,
     "leverage": 3.9485703631324403,
     "result": "LOST",
     "more": {
@@ -2230,10 +2230,10 @@
         "take_profit": 37161.304442925066
       },
       "Found_Managment": {
-        "entry_liquidity": 390036.460491,
-        "closing_liquidity": 374049.981439163,
+        "entry_liquidity": 559790.920531,
+        "closing_liquidity": 536846.689599514,
         "ratio": 3.9485703631324403,
-        "profit/loss": -4.0987140104061845
+        "profit/loss": -4.098714375310308
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2245,7 +2245,7 @@
     "direction": "long",
     "entry_price": 40911.03,
     "closing price": 40061.99,
-    "volume": 7.3144084896224815,
+    "volume": 10.497837665783534,
     "leverage": 2.762050886580219,
     "result": "LOST",
     "more": {
@@ -2258,10 +2258,10 @@
         "take_profit": 42214.471097878355
       },
       "Found_Managment": {
-        "entry_liquidity": 374049.981439,
-        "closing_liquidity": 358829.696929228,
+        "entry_liquidity": 536846.6896,
+        "closing_liquidity": 515002.121851483,
         "ratio": 2.762050886580219,
-        "profit/loss": -4.069050999873954
+        "profit/loss": -4.069051401768582
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2272,27 +2272,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 45646.63,
-    "closing price": 45345.05,
-    "volume": 6.288826963637843,
+    "closing price": 44793.89,
+    "volume": 9.025895175192563,
     "leverage": 2.9549001998700555,
     "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "08/09/21 11:0",
-        "Closeing": "08/10/21 12:0"
+        "Closeing": "08/10/21 17:0"
       },
       "Risk_Managment": {
         "stop_loss": 45028.719046499675,
         "take_profit": 47006.034097700714
       },
       "Found_Managment": {
-        "entry_liquidity": 358829.696929,
-        "closing_liquidity": 351559.3482413775,
+        "entry_liquidity": 515002.121851,
+        "closing_liquidity": 494021.5924156574,
         "ratio": 2.9549001998700555,
-        "profit/loss": -2.0261279235929774
+        "profit/loss": -4.073872425988307
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -2301,7 +2301,7 @@
     "direction": "short",
     "entry_price": 44456.21,
     "closing price": 45833.34,
-    "volume": 6.326393513815057,
+    "volume": 8.890035248906734,
     "leverage": 3.669830028135614,
     "result": "LOST",
     "more": {
@@ -2314,10 +2314,10 @@
         "take_profit": 43390.180660764505
       },
       "Found_Managment": {
-        "entry_liquidity": 351559.348241,
-        "closing_liquidity": 337174.432442403,
+        "entry_liquidity": 494021.592416,
+        "closing_liquidity": 473807.4854669824,
         "ratio": 3.669830028135614,
-        "profit/loss": -4.091746065229342
+        "profit/loss": -4.091745636088707
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2329,7 +2329,7 @@
     "direction": "long",
     "entry_price": 46138.47,
     "closing price": 47588.0,
-    "volume": 5.8463045253472865,
+    "volume": 8.215400041951977,
     "leverage": 3.9696052911603874,
     "result": "WIN",
     "more": {
@@ -2342,10 +2342,10 @@
         "take_profit": 47161.288406918524
       },
       "Found_Managment": {
-        "entry_liquidity": 337174.432442,
-        "closing_liquidity": 366511.1725262186,
+        "entry_liquidity": 473807.485467,
+        "closing_liquidity": 515032.33680218016,
         "ratio": 3.9696052911603874,
-        "profit/loss": 8.700760574206646
+        "profit/loss": 8.700759823274556
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2357,7 +2357,7 @@
     "direction": "long",
     "entry_price": 47634.64,
     "closing price": 47131.01,
-    "volume": 6.155372183369078,
+    "volume": 8.649710996904775,
     "leverage": 3.9359437200163683,
     "result": "LOST",
     "more": {
@@ -2370,10 +2370,10 @@
         "take_profit": 48699.657342265906
       },
       "Found_Managment": {
-        "entry_liquidity": 366511.172526,
-        "closing_liquidity": 351490.084235776,
+        "entry_liquidity": 515032.336802,
+        "closing_liquidity": 493924.258749588,
         "ratio": 3.9359437200163683,
-        "profit/loss": -4.098398470829274
+        "profit/loss": -4.09839859444143
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2385,7 +2385,7 @@
     "direction": "short",
     "entry_price": 45757.1,
     "closing price": 46285.46,
-    "volume": 6.14532099693381,
+    "volume": 8.635586761398779,
     "leverage": 3.8989775652223484,
     "result": "LOST",
     "more": {
@@ -2398,10 +2398,10 @@
         "take_profit": 44724.36135694746
       },
       "Found_Managment": {
-        "entry_liquidity": 351490.084236,
-        "closing_liquidity": 337087.86787164496,
+        "entry_liquidity": 493924.25875,
+        "closing_liquidity": 473685.83793981496,
         "ratio": 3.8989775652223484,
-        "profit/loss": -4.0974744410385755
+        "profit/loss": -4.097474552354131
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2413,7 +2413,7 @@
     "direction": "long",
     "entry_price": 46591.72,
     "closing price": 47788.79,
-    "volume": 5.787944602551698,
+    "volume": 8.133390876147093,
     "leverage": 3.906252534290546,
     "result": "WIN",
     "more": {
@@ -2426,10 +2426,10 @@
         "take_profit": 47641.33758719079
       },
       "Found_Managment": {
-        "entry_liquidity": 337087.867872,
-        "closing_liquidity": 366422.4146740937,
+        "entry_liquidity": 473685.83794,
+        "closing_liquidity": 514907.6081799968,
         "ratio": 3.906252534290546,
-        "profit/loss": 8.702344284082256
+        "profit/loss": 8.702343819115443
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2441,7 +2441,7 @@
     "direction": "long",
     "entry_price": 49418.77,
     "closing price": 50394.85,
-    "volume": 5.931712418969554,
+    "volume": 8.335417626622435,
     "leverage": 4.799311034087857,
     "result": "WIN",
     "more": {
@@ -2454,10 +2454,10 @@
         "take_profit": 50324.910845865496
       },
       "Found_Managment": {
-        "entry_liquidity": 366422.414674,
-        "closing_liquidity": 398227.94113400637,
+        "entry_liquidity": 514907.60818,
+        "closing_liquidity": 559601.6792604045,
         "ratio": 4.799311034087857,
-        "profit/loss": 8.680016610966122
+        "profit/loss": 8.680017612942425
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2469,7 +2469,7 @@
     "direction": "short",
     "entry_price": 47950.37,
     "closing price": 48520.02,
-    "volume": 6.644001973440456,
+    "volume": 9.336348049201705,
     "leverage": 4.469990928227058,
     "result": "LOST",
     "more": {
@@ -2482,10 +2482,10 @@
         "take_profit": 47006.37869716449
       },
       "Found_Managment": {
-        "entry_liquidity": 398227.941134,
-        "closing_liquidity": 381853.80460170296,
+        "entry_liquidity": 559601.67926,
+        "closing_liquidity": 536592.258603322,
         "ratio": 4.469990928227058,
-        "profit/loss": -4.11174978974851
+        "profit/loss": -4.111749751556318
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2497,7 +2497,7 @@
     "direction": "short",
     "entry_price": 46789.99,
     "closing price": 47483.44,
-    "volume": 6.528811903605878,
+    "volume": 9.174479560316213,
     "leverage": 3.6196065143667093,
     "result": "LOST",
     "more": {
@@ -2510,10 +2510,10 @@
         "take_profit": 45652.43012887671
       },
       "Found_Managment": {
-        "entry_liquidity": 381853.804602,
-        "closing_liquidity": 366234.112057286,
+        "entry_liquidity": 536592.258603,
+        "closing_liquidity": 514643.00399844,
         "ratio": 3.6196065143667093,
-        "profit/loss": -4.090490223344538
+        "profit/loss": -4.090490358862822
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2524,27 +2524,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 48960.39,
-    "closing price": 48686.01,
-    "volume": 5.98416984925161,
+    "closing price": 48227.31,
+    "volume": 8.409132427221271,
     "leverage": 4.434158530100314,
     "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "08/27/21 22:0",
-        "Closeing": "08/28/21 23:0"
+        "Closeing": "08/29/21 4:0"
       },
       "Risk_Managment": {
         "stop_loss": 48518.72432956767,
         "take_profit": 49932.05447495113
       },
       "Found_Managment": {
-        "entry_liquidity": 366234.112057,
-        "closing_liquidity": 356727.3682385442,
+        "entry_liquidity": 514643.003998,
+        "closing_liquidity": 493486.7827464059,
         "ratio": 4.434158530100314,
-        "profit/loss": -2.5958105772998477
+        "profit/loss": -4.110853754397154
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -2553,7 +2553,7 @@
     "direction": "long",
     "entry_price": 49114.69,
     "closing price": 48400.01,
-    "volume": 5.810520123229933,
+    "volume": 8.038112959621653,
     "leverage": 5.396401369514636,
     "result": "LOST",
     "more": {
@@ -2566,10 +2566,10 @@
         "take_profit": 49915.611285139465
       },
       "Found_Managment": {
-        "entry_liquidity": 356727.368239,
-        "closing_liquidity": 341977.01280786,
+        "entry_liquidity": 493486.782746,
+        "closing_liquidity": 473081.54814597144,
         "ratio": 5.396401369514636,
-        "profit/loss": -4.134909946482592
+        "profit/loss": -4.134910055034082
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2581,7 +2581,7 @@
     "direction": "short",
     "entry_price": 47775.12,
     "closing price": 48167.47,
-    "volume": 5.726445276252577,
+    "volume": 7.9218061308229055,
     "leverage": 5.071909068450962,
     "result": "LOST",
     "more": {
@@ -2594,10 +2594,10 @@
         "take_profit": 46946.1992714815
       },
       "Found_Managment": {
-        "entry_liquidity": 341977.012808,
-        "closing_liquidity": 327864.31389798,
+        "entry_liquidity": 473081.548146,
+        "closing_liquidity": 453558.429894384,
         "ratio": 5.071909068450962,
-        "profit/loss": -4.126797527745952
+        "profit/loss": -4.126797658485486
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2609,7 +2609,7 @@
     "direction": "long",
     "entry_price": 48659.31,
     "closing price": 48150.0,
-    "volume": 5.3903651966787045,
+    "volume": 7.456882226961295,
     "leverage": 4.397676524452886,
     "result": "LOST",
     "more": {
@@ -2622,10 +2622,10 @@
         "take_profit": 49633.01037477523
       },
       "Found_Managment": {
-        "entry_liquidity": 327864.313898,
-        "closing_liquidity": 314389.28153474245,
+        "entry_liquidity": 453558.429894,
+        "closing_liquidity": 434917.44245084893,
         "ratio": 4.397676524452886,
-        "profit/loss": -4.109941763119022
+        "profit/loss": -4.109941787986965
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2637,7 +2637,7 @@
     "direction": "long",
     "entry_price": 50355.0,
     "closing price": 51636.29,
-    "volume": 4.994765668314964,
+    "volume": 6.90962077173667,
     "leverage": 6.384268789322849,
     "result": "WIN",
     "more": {
@@ -2650,10 +2650,10 @@
         "take_profit": 51049.08731778506
       },
       "Found_Managment": {
-        "entry_liquidity": 314389.281535,
-        "closing_liquidity": 341553.7536942998,
+        "entry_liquidity": 434917.442451,
+        "closing_liquidity": 472496.0211650497,
         "ratio": 6.384268789322849,
-        "profit/loss": 8.640393853972922
+        "profit/loss": 8.640393565793469
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2664,108 +2664,24 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 46656.07,
-    "closing price": 46200.19,
-    "volume": 5.856537058419194,
+    "closing price": 43933.32,
+    "volume": 8.101771472222156,
     "leverage": 1.7706459665320473,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "09/07/21 16:0",
-        "Closeing": "09/08/21 18:0"
+        "Closeing": "09/13/21 15:0"
       },
       "Risk_Managment": {
         "stop_loss": 47710.059806700425,
         "take_profit": 44337.29242525906
       },
       "Found_Managment": {
-        "entry_liquidity": 341553.753694,
-        "closing_liquidity": 347311.822085178,
+        "entry_liquidity": 472496.021165,
+        "closing_liquidity": 513866.5128229668,
         "ratio": 1.7706459665320473,
-        "profit/loss": 1.685845442745936
-      },
-      "close_via_span": 0,
-      "close_via_cross": 1
-    }
-  },
-  {
-    "mode": "future",
-    "Strategy": "Ichi_future",
-    "direction": "short",
-    "entry_price": 45914.88,
-    "closing price": 44592.91,
-    "volume": 6.051403328681247,
-    "leverage": 3.905619586589463,
-    "result": "WIN",
-    "more": {
-      "Date": {
-        "Entrance": "09/10/21 13:0",
-        "Closeing": "09/10/21 22:0"
-      },
-      "Risk_Managment": {
-        "stop_loss": 46385.12426196197,
-        "take_profit": 44880.342623683646
-      },
-      "Found_Managment": {
-        "entry_liquidity": 347311.822085,
-        "closing_liquidity": 377536.14382307057,
-        "ratio": 3.905619586589463,
-        "profit/loss": 8.702359037658548
-      },
-      "close_via_span": 0,
-      "close_via_cross": 0
-    }
-  },
-  {
-    "mode": "future",
-    "Strategy": "Ichi_future",
-    "direction": "long",
-    "entry_price": 46046.28,
-    "closing price": 45177.19,
-    "volume": 6.559246806873433,
-    "leverage": 4.615711465610474,
-    "result": "LOST",
-    "more": {
-      "Date": {
-        "Entrance": "09/13/21 1:0",
-        "Closeing": "09/13/21 2:0"
-      },
-      "Risk_Managment": {
-        "stop_loss": 45647.24049899939,
-        "take_profit": 46924.16690220134
-      },
-      "Found_Managment": {
-        "entry_liquidity": 377536.143823,
-        "closing_liquidity": 361999.048135602,
-        "ratio": 4.615711465610474,
-        "profit/loss": -4.115392907833029
-      },
-      "close_via_span": 0,
-      "close_via_cross": 0
-    }
-  },
-  {
-    "mode": "future",
-    "Strategy": "Ichi_future",
-    "direction": "short",
-    "entry_price": 44395.0,
-    "closing price": 44859.24,
-    "volume": 6.523239970915643,
-    "leverage": 3.8555445634078502,
-    "result": "LOST",
-    "more": {
-      "Date": {
-        "Entrance": "09/13/21 9:0",
-        "Closeing": "09/13/21 12:0"
-      },
-      "Risk_Managment": {
-        "stop_loss": 44855.583445683325,
-        "take_profit": 43381.716419496675
-      },
-      "Found_Managment": {
-        "entry_liquidity": 361999.048136,
-        "closing_liquidity": 347170.160279,
-        "ratio": 3.8555445634078502,
-        "profit/loss": -4.096388632333891
+        "profit/loss": 8.755733340560733
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2776,27 +2692,27 @@
     "Strategy": "Ichi_future",
     "direction": "short",
     "entry_price": 45055.36,
-    "closing price": 45603.52,
-    "volume": 6.164330464193384,
+    "closing price": 45720.02,
+    "volume": 9.124179903532012,
     "leverage": 2.997968140196107,
     "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "09/13/21 23:0",
-        "Closeing": "09/14/21 7:0"
+        "Closeing": "09/14/21 8:0"
       },
       "Risk_Managment": {
         "stop_loss": 45656.50528097757,
         "take_profit": 43732.84038184933
       },
       "Found_Managment": {
-        "entry_liquidity": 347170.160279,
-        "closing_liquidity": 334247.14444803726,
+        "entry_liquidity": 513866.512823,
+        "closing_liquidity": 492926.71323056007,
         "ratio": 2.997968140196107,
-        "profit/loss": -3.7223866880083487
+        "profit/loss": -4.074949246527885
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -2805,7 +2721,7 @@
     "direction": "long",
     "entry_price": 45720.02,
     "closing price": 46792.97,
-    "volume": 5.848591395156871,
+    "volume": 8.625135566099928,
     "leverage": 3.8514679719734284,
     "result": "WIN",
     "more": {
@@ -2818,10 +2734,10 @@
         "take_profit": 46764.65071983915
       },
       "Found_Managment": {
-        "entry_liquidity": 334247.144448,
-        "closing_liquidity": 363339.05565092043,
+        "entry_liquidity": 492926.71323056007,
+        "closing_liquidity": 535829.6432912196,
         "ratio": 3.8514679719734284,
-        "profit/loss": 8.703712712629128
+        "profit/loss": 8.703713738596319
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2833,7 +2749,7 @@
     "direction": "long",
     "entry_price": 48590.87,
     "closing price": 47974.02,
-    "volume": 5.982013586519443,
+    "volume": 8.82189832437246,
     "leverage": 4.814965378385708,
     "result": "LOST",
     "more": {
@@ -2846,10 +2762,10 @@
         "take_profit": 49478.93382267979
       },
       "Found_Managment": {
-        "entry_liquidity": 363339.055651,
-        "closing_liquidity": 348368.126146571,
+        "entry_liquidity": 535829.643291,
+        "closing_liquidity": 513751.458075697,
         "ratio": 4.814965378385708,
-        "profit/loss": -4.120374419316237
+        "profit/loss": -4.120373982988609
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2861,7 +2777,7 @@
     "direction": "short",
     "entry_price": 47325.46,
     "closing price": 47659.39,
-    "volume": 5.888891537823405,
+    "volume": 8.684567808972169,
     "leverage": 5.862780539201504,
     "result": "LOST",
     "more": {
@@ -2874,10 +2790,10 @@
         "take_profit": 46615.107556794406
       },
       "Found_Managment": {
-        "entry_liquidity": 348368.126147,
-        "closing_liquidity": 333922.798499804,
+        "entry_liquidity": 513751.458076,
+        "closing_liquidity": 492448.396272216,
         "ratio": 5.862780539201504,
-        "profit/loss": -4.14656983891246
+        "profit/loss": -4.146569604602971
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2889,7 +2805,7 @@
     "direction": "long",
     "entry_price": 44229.99,
     "closing price": 43648.15,
-    "volume": 6.039753542788501,
+    "volume": 8.907049651550906,
     "leverage": 3.1973666155017573,
     "result": "LOST",
     "more": {
@@ -2902,10 +2818,10 @@
         "take_profit": 45447.316502731745
       },
       "Found_Managment": {
-        "entry_liquidity": 333922.7985,
-        "closing_liquidity": 320298.967126337,
+        "entry_liquidity": 492448.396272,
+        "closing_liquidity": 472356.82512002497,
         "ratio": 3.1973666155017573,
-        "profit/loss": -4.079934474334187
+        "profit/loss": -4.079934324910989
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2917,7 +2833,7 @@
     "direction": "short",
     "entry_price": 41231.34,
     "closing price": 43251.33,
-    "volume": 6.214670047124348,
+    "volume": 9.165005553930579,
     "leverage": 3.42675963935003,
     "result": "LOST",
     "more": {
@@ -2930,10 +2846,10 @@
         "take_profit": 40172.50941312866
       },
       "Found_Managment": {
-        "entry_liquidity": 320298.967126,
-        "closing_liquidity": 307212.61164690997,
+        "entry_liquidity": 472356.82512,
+        "closing_liquidity": 453057.88784963795,
         "ratio": 3.42675963935003,
-        "profit/loss": -4.085668960007001
+        "profit/loss": -4.085669189909396
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -2944,27 +2860,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 43214.15,
-    "closing price": 43066.16,
-    "volume": 5.687259597090305,
+    "closing price": 42675.71,
+    "volume": 8.387213685332236,
     "leverage": 3.3718166841855863,
     "result": "LOST",
     "more": {
       "Date": {
         "Entrance": "09/26/21 17:0",
-        "Closeing": "09/27/21 17:0"
+        "Closeing": "09/27/21 21:0"
       },
       "Risk_Managment": {
         "stop_loss": 42701.49876124575,
         "take_profit": 44341.98272525936
       },
       "Found_Managment": {
-        "entry_liquidity": 307212.611647,
-        "closing_liquidity": 303406.2515222463,
+        "entry_liquidity": 453057.88785,
+        "closing_liquidity": 434553.664605195,
         "ratio": 3.3718166841855863,
-        "profit/loss": -1.2389986544977505
+        "profit/loss": -4.084295570399924
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -2973,7 +2889,7 @@
     "direction": "short",
     "entry_price": 41775.25,
     "closing price": 42300.38,
-    "volume": 5.810258495582912,
+    "volume": 8.321743895823484,
     "leverage": 3.426908539486959,
     "result": "LOST",
     "more": {
@@ -2986,10 +2902,10 @@
         "take_profit": 40702.49828875931
       },
       "Found_Managment": {
-        "entry_liquidity": 303406.251522,
-        "closing_liquidity": 291010.066149775,
+        "entry_liquidity": 434553.664605,
+        "closing_liquidity": 416799.2238822,
         "ratio": 3.426908539486959,
-        "profit/loss": -4.085672365035682
+        "profit/loss": -4.085672764706376
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3001,7 +2917,7 @@
     "direction": "long",
     "entry_price": 43591.23,
     "closing price": 43062.03,
-    "volume": 5.340708507651654,
+    "volume": 7.649230799534678,
     "leverage": 3.4750293596569133,
     "result": "LOST",
     "more": {
@@ -3014,10 +2930,10 @@
         "take_profit": 44695.11369218807
       },
       "Found_Managment": {
-        "entry_liquidity": 291010.06615,
-        "closing_liquidity": 279116.8452769666,
+        "entry_liquidity": 416799.223882,
+        "closing_liquidity": 399765.15709492355,
         "ratio": 3.4750293596569133,
-        "profit/loss": -4.086876110637059
+        "profit/loss": -4.086875841184145
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3029,7 +2945,7 @@
     "direction": "long",
     "entry_price": 49531.0,
     "closing price": 51190.11,
-    "volume": 4.5081560279744,
+    "volume": 6.456807366618886,
     "leverage": 3.4255388526988177,
     "result": "WIN",
     "more": {
@@ -3042,10 +2958,10 @@
         "take_profit": 50803.42112480084
       },
       "Found_Managment": {
-        "entry_liquidity": 279116.845277,
-        "closing_liquidity": 303440.0961109601,
+        "entry_liquidity": 399765.157095,
+        "closing_liquidity": 434602.13617187017,
         "ratio": 3.4255388526988177,
-        "profit/loss": 8.71436147460801
+        "profit/loss": 8.714361033868581
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3057,7 +2973,7 @@
     "direction": "long",
     "entry_price": 54979.26,
     "closing price": 54382.83,
-    "volume": 4.4153391094896515,
+    "volume": 6.323870291044296,
     "leverage": 4.491032527470859,
     "result": "LOST",
     "more": {
@@ -3070,10 +2986,10 @@
         "take_profit": 56056.55677983977
       },
       "Found_Managment": {
-        "entry_liquidity": 303440.096111,
-        "closing_liquidity": 290961.802740683,
+        "entry_liquidity": 434602.136172,
+        "closing_liquidity": 416730.09846539,
         "ratio": 4.491032527470859,
-        "profit/loss": -4.112275711167829
+        "profit/loss": -4.112275623867834
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3085,7 +3001,7 @@
     "direction": "long",
     "entry_price": 55144.99,
     "closing price": 56507.09,
-    "volume": 4.221044236163612,
+    "volume": 6.045591426746111,
     "leverage": 4.3746344561137365,
     "result": "WIN",
     "more": {
@@ -3098,10 +3014,10 @@
         "take_profit": 56254.28476935338
       },
       "Found_Managment": {
-        "entry_liquidity": 290961.802741,
-        "closing_liquidity": 316248.2270852118,
+        "entry_liquidity": 416730.098465,
+        "closing_liquidity": 452946.58411139017,
         "ratio": 4.3746344561137365,
-        "profit/loss": 8.690633652253144
+        "profit/loss": 8.690633525102076
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3113,7 +3029,7 @@
     "direction": "short",
     "entry_price": 55358.28,
     "closing price": 56168.85,
-    "volume": 4.570203078347088,
+    "volume": 6.545674238592674,
     "leverage": 3.4932776998186563,
     "result": "LOST",
     "more": {
@@ -3126,10 +3042,10 @@
         "take_profit": 53963.73623376782
       },
       "Found_Managment": {
-        "entry_liquidity": 316248.227085,
-        "closing_liquidity": 303322.112503298,
+        "entry_liquidity": 452946.584111,
+        "closing_liquidity": 434433.154370684,
         "ratio": 3.4932776998186563,
-        "profit/loss": -4.0873318724496155
+        "profit/loss": -4.087331793582765
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3140,27 +3056,27 @@
     "Strategy": "Ichi_future",
     "direction": "long",
     "entry_price": 56980.25,
-    "closing price": 58029.33,
-    "volume": 4.258628033439657,
+    "closing price": 59086.91,
+    "volume": 6.099420825580794,
     "leverage": 3.366795680235474,
     "result": "WIN",
     "more": {
       "Date": {
         "Entrance": "10/13/21 21:0",
-        "Closeing": "10/14/21 19:0"
+        "Closeing": "10/15/21 3:0"
       },
       "Risk_Managment": {
         "stop_loss": 56303.28287265695,
         "take_profit": 58469.57768015471
       },
       "Found_Managment": {
-        "entry_liquidity": 303322.112503,
-        "closing_liquidity": 321868.85157988826,
+        "entry_liquidity": 434433.154371,
+        "closing_liquidity": 472297.61112112756,
         "ratio": 3.366795680235474,
-        "profit/loss": 6.114535773155942
+        "profit/loss": 8.715830357135177
       },
       "close_via_span": 0,
-      "close_via_cross": 1
+      "close_via_cross": 0
     }
   },
   {
@@ -3169,7 +3085,7 @@
     "direction": "long",
     "entry_price": 62371.08,
     "closing price": 61245.6,
-    "volume": 4.12843711001958,
+    "volume": 6.0579051845310365,
     "leverage": 4.377887316841437,
     "result": "LOST",
     "more": {
@@ -3182,10 +3098,10 @@
         "take_profit": 63624.80231918476
       },
       "Found_Managment": {
-        "entry_liquidity": 321868.85158,
-        "closing_liquidity": 308641.821478862,
+        "entry_liquidity": 472297.611121,
+        "closing_liquidity": 452888.79083703004,
         "ratio": 4.377887316841437,
-        "profit/loss": -4.109447073306015
+        "profit/loss": -4.1094470577361335
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3197,7 +3113,7 @@
     "direction": "short",
     "entry_price": 60690.94,
     "closing price": 61552.23,
-    "volume": 4.068374244709342,
+    "volume": 5.9697713146245555,
     "leverage": 3.025703598291878,
     "result": "LOST",
     "more": {
@@ -3210,10 +3126,10 @@
         "take_profit": 58925.79594457597
       },
       "Found_Managment": {
-        "entry_liquidity": 308641.821479,
-        "closing_liquidity": 296062.684708982,
+        "entry_liquidity": 452888.790837,
+        "closing_liquidity": 434430.66336500295,
         "ratio": 3.025703598291878,
-        "profit/loss": -4.075642344818735
+        "profit/loss": -4.075642375225036
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3225,7 +3141,7 @@
     "direction": "long",
     "entry_price": 63337.76,
     "closing price": 62688.0,
-    "volume": 3.73947780545444,
+    "volume": 5.487161697729759,
     "leverage": 5.104452519911696,
     "result": "LOST",
     "more": {
@@ -3238,10 +3154,10 @@
         "take_profit": 64429.69353415626
       },
       "Found_Managment": {
-        "entry_liquidity": 296062.684709,
-        "closing_liquidity": 283842.367205816,
+        "entry_liquidity": 434430.663365,
+        "closing_liquidity": 416499.05316926393,
         "ratio": 5.104452519911696,
-        "profit/loss": -4.127611527672044
+        "profit/loss": -4.127611540318522
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3253,7 +3169,7 @@
     "direction": "short",
     "entry_price": 60328.81,
     "closing price": 61192.38,
-    "volume": 3.7639378891246165,
+    "volume": 5.523053455475088,
     "leverage": 4.0399691766916925,
     "result": "LOST",
     "more": {
@@ -3266,10 +3182,10 @@
         "take_profit": 59014.70708292095
       },
       "Found_Managment": {
-        "entry_liquidity": 283842.367206,
-        "closing_liquidity": 272201.993571091,
+        "entry_liquidity": 416499.053169,
+        "closing_liquidity": 399418.43161708344,
         "ratio": 4.0399691766916925,
-        "profit/loss": -4.1009993502699995
+        "profit/loss": -4.100998891103337
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3281,7 +3197,7 @@
     "direction": "long",
     "entry_price": 60940.91,
     "closing price": 62605.31,
-    "volume": 3.5733236483800455,
+    "volume": 5.24335368955928,
     "leverage": 3.307764853855348,
     "result": "WIN",
     "more": {
@@ -3294,10 +3210,10 @@
         "take_profit": 62562.186093356344
       },
       "Found_Managment": {
-        "entry_liquidity": 272201.993571,
-        "closing_liquidity": 295930.67629317247,
+        "entry_liquidity": 399418.431617,
+        "closing_liquidity": 434236.96009847545,
         "ratio": 3.307764853855348,
-        "profit/loss": 8.717306736397278
+        "profit/loss": 8.717306394829247
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3309,7 +3225,7 @@
     "direction": "long",
     "entry_price": 62375.29,
     "closing price": 61741.01,
-    "volume": 3.7954860175303393,
+    "volume": 5.569345939367978,
     "leverage": 5.195639463277439,
     "result": "LOST",
     "more": {
@@ -3322,10 +3238,10 @@
         "take_profit": 63431.757747386284
       },
       "Found_Managment": {
-        "entry_liquidity": 295930.676293,
-        "closing_liquidity": 283709.062022893,
+        "entry_liquidity": 434236.960098,
+        "closing_liquidity": 416303.446827323,
         "ratio": 5.195639463277439,
-        "profit/loss": -4.129890967439423
+        "profit/loss": -4.129891031530277
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3337,7 +3253,7 @@
     "direction": "short",
     "entry_price": 60501.62,
     "closing price": 62178.31,
-    "volume": 3.751424335718614,
+    "volume": 5.504691567954709,
     "leverage": 3.8340329133322237,
     "result": "LOST",
     "more": {
@@ -3350,10 +3266,10 @@
         "take_profit": 59112.96667324161
       },
       "Found_Managment": {
-        "entry_liquidity": 283709.062023,
-        "closing_liquidity": 272088.763111536,
+        "entry_liquidity": 416303.446827,
+        "closing_liquidity": 399252.27733598795,
         "ratio": 3.8340329133322237,
-        "profit/loss": -4.09585045631075
+        "profit/loss": -4.09585114439321
       },
       "close_via_span": 0,
       "close_via_cross": 0
@@ -3365,7 +3281,7 @@
     "direction": "long",
     "entry_price": 61945.09,
     "closing price": 61034.83,
-    "volume": 3.5139348492285674,
+    "volume": 5.1562088596335895,
     "leverage": 3.949362682984003,
     "result": "LOST",
     "more": {
@@ -3378,10 +3294,10 @@
         "take_profit": 63325.35521177368
       },
       "Found_Managment": {
-        "entry_liquidity": 272088.763112,
-        "closing_liquidity": 260936.56780669247,
+        "entry_liquidity": 399252.277336,
+        "closing_liquidity": 382887.98778561945,
         "ratio": 3.949362682984003,
-        "profit/loss": -4.098734243103218
+        "profit/loss": -4.098734178692937
       },
       "close_via_span": 0,
       "close_via_cross": 0

@@ -948,3 +948,9 @@ strategies = {'ichi_future': Ichi_future}
 # strategies = {"dummy_future" : Dummy_Strategy_Futures}
 # strategies = {'ichi_cross': ICHI_CROSS}
 # strategies = {'moving_average':Moving_average}
+if scenario.strtgg == 'ma':
+    strategies = {'moving_average' : Moving_average }
+elif scenario.strtgg == 'ichi':
+    strategies = {'ichi_cross' : ICHI_CROSS }
+elif scenario.strtgg == 'ichi_future':
+    strategies = {'ichi_future' : Ichi_future }

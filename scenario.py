@@ -3,13 +3,21 @@ from model.Position import Direction
 
 
 class Scenario:
-    mode = "future" # mode can be future or spot 
-    month = "jan20"
-    strtgg = "ichi"
+    month = "jan20" # choose your month . it is for final monhy test and it is sometimes automaticaly filled
+    asset = "ETH_USDT" # choose your asset . it is for final monhy test and it is sometimes automaticaly filled
+    # : ETH_USDT, BTC_USDT, EURO_USD, XAU_USD, BNB_USD
+    month_asset = f'{asset}/{month}'
+    strtgg = "ma" # choose your strategy . it is for final monhy test and it is sometimes automaticaly filled
+    # : ma, ichi_cross, ichi_future
+    if strtgg == "ichi_future":
+        mode = "future" # mode can be future or spot 
+    else :
+        mode = 'spot' 
+    # candles_data_csv_file_name = f'final_test//BTC.csv'
+    candles_data_csv_file_name = f'final_test/{month_asset}/{asset}.csv'
 
-    candles_data_csv_file_name = f'BTC_2021/BTC.csv'
-
-    moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
+    # moment_data_csv_file_name = f'BTC_2021/BTC_moment.csv'
+    moment_data_csv_file_name = f'final_test/{month_asset}/{asset}_moment.csv'
 
     """
         these are dictionaries like this:
@@ -18,12 +26,12 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "ICHI": f"BTC_2021/BTC_ICHI.csv",
-        "ATR" : f'BTC_2021/BTC_ATR.csv',
-        "cloud_number" : "BTC_2021/BTC_Cloud_num.csv"
-        # "ma9" : f'BTC_2021/BTC_MA9.csv',
-        # "ma26" : f'BTC_2021/BTC_MA26.csv'
-        # "ma26": f'jan20/BTC_jan20_MA26.csv'
+        "ICHI": f'final_test/{month_asset}/{asset}_ICHI.csv',
+        "ATR" : f'final_test/{month_asset}/{asset}_ATR.csv',
+        "cloud_number" : f'final_test/{month_asset}/{asset}_Cloud_num.csv',
+        "ma9" : f'final_test/{month_asset}/{asset}_MA9.csv',
+        "ma26" : f'final_test/{month_asset}/{asset}_MA26.csv',
+        "iscross" : f'final_test/{month_asset}/{asset}_ISCROSS.csv'
     }
     extra_moments_data_files = {
     }
@@ -43,21 +51,21 @@ class Scenario:
 
     number_of_moments_in_a_candle = 1
 
-    profit_loss_period_step = 24 * 30
+    profit_loss_period_step = 48
 
     periodical_profit_loss_limit = {"enable": 0, "options": {
         "profit_limit": 18, "loss_limit": -1.11}}
-    # periodical_profit_loss_limit_enable = 1
+    periodical_profit_loss_limit_enable = 1
 
     global_limit = 0
-    global_loss_limit = -1.0
-    global_profit_limit = 1.0
+    global_loss_limit = 0.0
+    global_profit_limit = 0.0
 
-    # periodical_profit_limit = 18.0
-    # periodical_loss_limit = -1.5
-    # periodical_profit_loss_limit['options']['loss_limit'] = periodical_loss_limit
-    # periodical_profit_loss_limit['options']['profit_limit'] = periodical_profit_limit
-    # periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
+    periodical_profit_limit = 18.0
+    periodical_loss_limit = -1.8
+    periodical_profit_loss_limit['options']['loss_limit'] = periodical_loss_limit
+    periodical_profit_loss_limit['options']['profit_limit'] = periodical_profit_limit
+    periodical_profit_loss_limit['enable'] = periodical_profit_loss_limit_enable
     # =====================================================================
     # strategy configuration
     # name : Moving_average
@@ -75,21 +83,21 @@ class Scenario:
     volume_buy_ma = 80
     # buy_method_line_to_line_options_line = [31, 52]
 
-    # buy_method_price_to_line_enable = 1
-    # buy_method_line_to_line_enable = 1
-    # buy_method_line_to_line_cross = 1
-    # sell_method_line_to_line_enable = 0
-    # sell_method_price_to_line_enable = 1
-    # sell_method_line_to_line_enable = 0
-    # sell_method_profit_loss_limit = 1
+    buy_method_price_to_line_enable = 1
+    buy_method_line_to_line_enable = 1
+    buy_method_line_to_line_cross = 1
+    sell_method_line_to_line_enable = 0
+    sell_method_price_to_line_enable = 1
+    sell_method_line_to_line_enable = 0
+    sell_method_profit_loss_limit = 1
     # buy_method['line_to_line']['options']['line'] = buy_method_line_to_line_options_line
-    # buy_method['price_to_line']['enable'] = buy_method_price_to_line_enable
-    # buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
-    # buy_method['line_to_line']['options']['cross'] = buy_method_line_to_line_cross
-    # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
-    # sell_method['price_to_line']['enable'] = sell_method_price_to_line_enable
-    # sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
-    # sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
+    buy_method['price_to_line']['enable'] = buy_method_price_to_line_enable
+    buy_method['line_to_line']['enable'] = buy_method_line_to_line_enable
+    buy_method['line_to_line']['options']['cross'] = buy_method_line_to_line_cross
+    sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
+    sell_method['price_to_line']['enable'] = sell_method_price_to_line_enable
+    sell_method['line_to_line']['enable'] = sell_method_line_to_line_enable
+    sell_method['profit_loss_limit']['enable'] = sell_method_profit_loss_limit
     # per_profit_limit = 20
     # per_loss_limit = -1.6
     # peridical_profit_loss_limit['options']['profit_limit'] = per_profit_limit
@@ -126,7 +134,16 @@ class Scenario:
             "total_risk" : 4
         }
     }
-     
+    ichi_future_total_risk = 4 
+    ichi_future_sl = 1 
+    ichi_future_r2r = 2.2 
+    ichi_future_span_close_signal = 0
+    ichi_cross_close_signal = 0 
+    ichi_future["close_conditions"]['based_on_atr']['options']['sl'] = ichi_future_sl
+    ichi_future["close_conditions"]['based_on_atr']['options']['r2r'] = ichi_future_r2r 
+    ichi_future["close_conditions"]['span_close_signal']['enable'] = ichi_future_span_close_signal 
+    ichi_future["close_conditions"]['cross_close_signal']['enable'] = ichi_cross_close_signal
+    ichi_future['found_management']['total_risk'] = ichi_future_total_risk
 # =======================================================================
     # strategy configuration
     # name : ichi_cross

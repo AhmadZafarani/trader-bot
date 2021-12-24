@@ -4,8 +4,9 @@ from hourly_data import h
 from ichimoku_bemola import ichi
 from ma import ma
 from span_cross_calc import iscross
+from cloud_number import cloud_number_generateor 
 
-months = []
+months = ['jan20', 'feb20', ...]
 
 def get_month_name(month_name: int):
 
@@ -36,4 +37,5 @@ for month in months:
     ma(9, month+'/BTC_'+month, month+'/BTC_'+month)
     ma(26, month+'/BTC_'+month, month+'/BTC_'+month)
     time += (24 * 60 * 60 * get_month_name(i % 12))
+
     i += 1

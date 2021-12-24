@@ -185,11 +185,12 @@ async def month(strtgg: Strategy, month: str, profit_loss_period_step: int = 48,
     return {"profit": result.stdout}
 
 
-@app.get("/all_month")
-async def all_month(profit_loss_period_step: int = 48, periodical_profit_loss_limit_enable: int = 1, periodical_profit_limit: float = 18, periodical_loss_limit: float = -1.8,
+@app.get("/all_month_spot")
+async def all_month(strtgg: Strategy, profit_loss_period_step: int = 48, periodical_profit_loss_limit_enable: int = 1, periodical_profit_limit: float = 18, periodical_loss_limit: float = -1.8,
                     buy_method_line_to_line_enable: int = 1, buy_method_line_to_line_cross: int = 1, volume_buy_ma: int = 80, sell_method_line_to_line_enable: int = 0,
                     global_limit: int = 0, global_loss_limit: float = 0, global_profit_limit: float = 0, token: str = Depends(oauth2_scheme)):
     sed_str = f'sed -i "s/\\(profit_loss_period_step = \\).*/\\1{profit_loss_period_step}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(strtgg = \\).*/\\1\\"{strtgg}\\"/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(periodical_profit_loss_limit_enable = \\).*/\\1{periodical_profit_loss_limit_enable}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(periodical_profit_limit = \\).*/\\1{periodical_profit_limit}/" scenario.py'
     sed_str = f'{sed_str};sed -i "s/\\(periodical_loss_limit = \\).*/\\1{periodical_loss_limit}/" scenario.py'
@@ -205,6 +206,29 @@ async def all_month(profit_loss_period_step: int = 48, periodical_profit_loss_li
                    stderr=subprocess.PIPE, text=True)
     subprocess.run(["python", "analyze_output/analyze.py", "only-print-profit"],
                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    subprocess.run(["bash", "all-parameters-test/all-parameters-test.sh", "1"])
+    subprocess.run(["python", "all-parameters-test/join.py"])
+
+    return FileResponse('all-parameters-test/final.csv', media_type='application/octet-stream', filename='final.csv')
+@app.get("/all_month_future")
+async def all_month_spot(ichi_future_total_risk: int = 4, ichi_future_sl: int = 1, ichi_future_r2r: float = 2.2, ichi_future_span_close_signal: int = 0,
+                    ichi_cross_close_signal: int = 0, global_limit: int = 0, global_loss_limit: float = 0, global_profit_limit: float = 0, token: str = Depends(oauth2_scheme)):
+    sed_str = f'sed -i "s/\\(ichi_future_total_risk = \\).*/\\1{ichi_future_total_risk}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(ichi_future_sl = \\).*/\\1{ichi_future_sl}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(ichi_future_r2r = \\).*/\\1{ichi_future_r2r}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(ichi_future_span_close_signal = \\).*/\\1{ichi_future_span_close_signal}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(ichi_cross_close_signal = \\).*/\\1{ichi_cross_close_signal}/" scenario.py'
+    strtgg = 'ichi_future'
+    sed_str = f'{sed_str};sed -i "s/\\(strtgg = \\).*/\\1\\"{strtgg}\\"/" scenario.py'
+
+    sed_str = f'{sed_str};sed -i "s/\\(global_limit = \\).*/\\1{global_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_profit_limit = \\).*/\\1{global_profit_limit}/" scenario.py'
+    sed_str = f'{sed_str};sed -i "s/\\(global_loss_limit = \\).*/\\1{global_loss_limit}/" scenario.py'
+    os.system(sed_str)
+    # subprocess.run(["python", "main.py"], stdout=subprocess.PIPE,
+    #                stderr=subprocess.PIPE, text=True)
+    # subprocess.run(["python", "analyze_output/analyze.py", "only-print-profit"],
+    #                stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     subprocess.run(["bash", "all-parameters-test/all-parameters-test.sh", "1"])
     subprocess.run(["python", "all-parameters-test/join.py"])
 
