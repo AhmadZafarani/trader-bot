@@ -29,7 +29,7 @@ def get_month_name(month_name: int):
 time = 1577836800
 
 i = 1
-pair = "TSLA_"
+pair = "AAPL_"
 base_time = datetime.strptime("01.01.2020 00:00:00", '%m.%d.%Y %H:%M:%S').replace(tzinfo=timezone.utc)
 
 for month in months:
@@ -38,11 +38,11 @@ for month in months:
         os.mkdir("data/final_test/" + pair + "USDT/" + month + "/")
     except:
         pass
-    data_folder = 'final_test/TSLA_USDT/' + month + "/"
-    output_folder = 'final_test/TSLA_USDT/' + month + "/"
+    data_folder = 'final_test/' + pair + 'USDT/' + month + "/"
+    output_folder = 'final_test/' + pair + 'USDT/' + month + "/"
     
     # generating a specific month data in data/..
-    forex_data('TSLA.us', base_time+relativedelta(months=1), base_time, data_folder + pair + 'USDT')
+    forex_data('AAPL.us', base_time+relativedelta(months=1), base_time, data_folder + pair + 'USDT')
     base_time += relativedelta(months=1)
 
     # generating andicator data : input1: data folder input2: output folder
