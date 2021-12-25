@@ -36,38 +36,41 @@ def rma(l: int, price: list):
     return out
 
 
-fd = pd.read_csv('data/fameli-time.csv')
-data0 = fd.values
-data = []
-for i in range(len(data0)):
-    data.append(data0[i][4])
+def rsi(input: str, output: str):
+    fd = pd.read_csv('data/' + input + '-time.csv')
+    data0 = fd.values
+    data = []
+    for i in range(len(data0)):
+        data.append(data0[i][4])
 
-l = int(input("len: "))
+    l = int(input("len: "))
 
-up_data = []
-down_data = []
-up_data.append(data[0])
-down_data.append(data[0])
+    up_data = []
+    down_data = []
+    up_data.append(data[0])
+    down_data.append(data[0])
 
-for i in range(1, len(data)):
-    up_data.append(max(data[i] - data[i - 1], 0.0))
-    down_data.append(-min(data[i] - data[i - 1], 0.0))
+    for i in range(1, len(data)):
+        up_data.append(max(data[i] - data[i - 1], 0.0))
+        down_data.append(-min(data[i] - data[i - 1], 0.0))
 
-up = rma(l, up_data)
-down = rma(l, down_data)
+    up = rma(l, up_data)
+    down = rma(l, down_data)
 
-rsi = []
-for i in range(len(data)):
-    if down[i] == 0.0:
-        rsi.append(100.0)
-    else:
-        if up[i] == 0.0:
-            rsi.append(0.0)
-        else:
-            rsi.append(100 - (100.0 / (1.0 + up[i] / down[i])))
-
-with open('data/Fameli_RSI.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['rsi'])
+    rsi = []
     for i in range(len(data)):
-        writer.writerow([round(rsi[i], 3)])
+        if down[i] == 0.0:
+            rsi.append(100.0)
+        else:
+            if up[i] == 0.0:
+                rsi.append(0.0)
+            else:
+                rsi.append(100 - (100.0 / (1.0 + up[i] / down[i])))
+
+    with open('data/' + output + '-rsi.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['rsi'])
+        for i in range(len(data)):
+            writer.writerow([round(rsi[i], 3)])
+
+
