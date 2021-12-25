@@ -1,10 +1,10 @@
 # YA BAGHER
 class Scenario:
-    stock = 'فملي'
+    stock = "خساپا"
 
-    candles_data_csv_file_name = stock + '.csv'
+    candles_data_csv_file_name = 'tse_data/' + stock + '.csv'
 
-    moment_data_csv_file_name = stock + '-moment.csv'
+    moment_data_csv_file_name = 'tse_data/' + stock + '-moment.csv'
 
     """
         these are dictionaries like this:
@@ -14,7 +14,8 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "BUP": stock + "_BB.csv", "SAR": stock + "_P_SAR.csv", "rsi": stock + "_RSI.csv"}
+        "BUP": 'tse/' + stock + '/' + stock + "-bb.csv", "SAR": 'tse/' + stock + '/' + stock + "_P_SAR.csv", 
+        "rsi": 'tse/' + stock + '/' + stock + "-rsi.csv"}
 
     extra_moments_data_files = {}
 

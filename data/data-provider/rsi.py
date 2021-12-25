@@ -43,7 +43,7 @@ def rsi(input: str, output: str):
     for i in range(len(data0)):
         data.append(data0[i][4])
 
-    l = int(input("len: "))
+    l = 14
 
     up_data = []
     down_data = []

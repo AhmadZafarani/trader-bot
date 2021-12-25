@@ -4,21 +4,19 @@ import os
 import pandas as pd
 import time
 import datetime
-import scenario
-
-stock = scenario.scenario.stock
 
 def tse_data():
-    stocks = tse.download(symbols="فملی", write_to_csv=True)
+    stock = "خساپا"
+    stocks = tse.download(symbols="خساپا", write_to_csv=True)
     for flag in stocks.keys():
         fd = pd.read_csv("tickers_data/" + flag + ".csv")
         data = fd.values
-        try:
-            os.mkdir("data/tse/" + flag + "/")
-        except:
-            print("problem")
+        # try:
+        #     os.mkdir("data/tse/" + stock + "/")
+        # except:
+        #     pass
 
-        with open('data/tse/' + flag + '/' + flag + '.csv', 'w', newline='') as file:
+        with open('data/tse/' + flag + '.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['high', 'low', 'open', 'close', 'Volume'])
             for i in range(len(data)):
@@ -29,7 +27,7 @@ def tse_data():
                 writer.writerow([int(date)*1000, data[i][3], data[i]
                                 [4], data[i][2], data[i][10], data[i][6]])
 
-        with open('data/tse/' + flag + '/' + flag + '-time.csv', 'w', newline='') as file:
+        with open('data/tse/' + flag + '-time.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['date', 'high', 'low', 'open', 'close', 'Volume'])
             for i in range(len(data)):
@@ -40,7 +38,7 @@ def tse_data():
                 writer.writerow([int(date)*1000, data[i][3], data[i]
                                 [4], data[i][2], data[i][10], data[i][6]])
 
-        with open('data/tse/' + flag + '/' + flag + '-moment.csv', 'w', newline='') as file:
+        with open('data/tse/' + flag + '-moment.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['date', 'open', 'Volume'])
             for i in range(len(data)):
@@ -51,4 +49,3 @@ def tse_data():
                 writer.writerow([int(date)*1000, data[i][3], data[i]
                                 [4], data[i][2], data[i][10], data[i][6]])
 
-tse_data()
