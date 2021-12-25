@@ -36,7 +36,7 @@ def rma(l: int, price: list):
     return out
 
 
-fd = pd.read_csv("data/BTC_FULL_1h-time.csv")
+fd = pd.read_csv('data/fameli-time.csv')
 data0 = fd.values
 data = []
 for i in range(len(data0)):
@@ -66,7 +66,7 @@ for i in range(len(data)):
         else:
             rsi.append(100 - (100.0 / (1.0 + up[i] / down[i])))
 
-with open('data/BTC_FULL_RSI.csv', 'w', newline='') as file:
+with open('data/Fameli_RSI.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['rsi'])
     for i in range(len(data)):

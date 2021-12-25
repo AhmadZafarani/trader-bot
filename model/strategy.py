@@ -1,4 +1,5 @@
 # YA REZA
+import model.Moment
 from model.Moment import Moment
 from abc import ABC, abstractmethod
 import controller.controller as controller

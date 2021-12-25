@@ -1,8 +1,8 @@
 # YA BAGHER
 class Scenario:
-    candles_data_csv_file_name = 'BTC_FULL_1h.csv'
+    candles_data_csv_file_name = 'fameli.csv'
 
-    moment_data_csv_file_name = 'BTC_FULL_1h_moment.csv'
+    moment_data_csv_file_name = 'fameli-moment.csv'
 
     """
         these are dictionaries like this:
@@ -12,7 +12,7 @@ class Scenario:
         ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
     """
     extra_candles_data_files = {
-        "BB": "BTC_FULL_BB.csv", "ADX": "BTC_FULL_ADX.csv", "SAR": "BTC_FULL_P_SAR.csv" , "RSI":"BTC_FULL_RSI.csv"}
+        "BUP": "fameli_BB.csv", "SAR": "Fameli_FULL_P_SAR.csv" , "rsi":"Fameli_RSI.csv"}
 
     extra_moments_data_files = {}
 

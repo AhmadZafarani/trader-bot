@@ -5,7 +5,8 @@ iaf = 0.02 # float(input("enter start: "))  # usually 0.02
 step = 0.02 # float(input("enter step: "))  # usually 0.2
 maxaf = 0.2 # float(input("enter max: "))  # high or low or Open or close
 
-fd = pd.read_csv("data/BTC_FULL_1h-time.csv")
+fd = pd.read_csv('data/fameli-time.csv')
+
 data0 = fd.values
 low = []
 high = []
@@ -66,7 +67,7 @@ for i in range(2, length):
                 psar[i] = high[i - 2]
 
 
-with open('data/BTC_FULL_P_SAR.csv', 'w', newline='') as file:
+with open('data/Fameli_FULL_P_SAR.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['SAR'])
     for i in range(len(data0)):

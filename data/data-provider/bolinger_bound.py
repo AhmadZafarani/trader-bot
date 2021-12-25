@@ -27,7 +27,7 @@ length = 20 # int(input("enter lenght: "))  # usually 20
 sdev = 2 # int(input("enter standard dev: "))  # usually 2
 source = 3 # int(input("enter source: "))  # high or low or open or close
 
-fd = pd.read_csv("data/BTC_FULL_1h-time.csv")
+fd = pd.read_csv('data/fameli-time.csv')
 data0 = fd.values
 data = []
 for i in range(len(data0)):
@@ -58,7 +58,7 @@ for i in range(length - 1, len(data)):
     BUP.append(ma[i] + hold)
     BDOWN.append(ma[i] - hold)
 
-with open('data/BTC_FULL_BB.csv', 'w', newline='') as file:
+with open('data/fameli_BB.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(['time', 'BUP', 'MA', 'BDOWN'])
     for i in range(len(data)):
