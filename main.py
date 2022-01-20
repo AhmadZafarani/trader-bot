@@ -49,6 +49,7 @@ def main():
     print('total runtime : ', time() - start_time)
 
 
+
 def test():
     test_variables_size = len(test_variables_list)
     number_of_tests = 1

@@ -5,7 +5,7 @@ from rsi import rsi
 from P_SAR import P_SAR
 from span_cross_calc import iscross
 from bolinger_bound import BB
-stock = "خساپا"
+stock = "فملی"
 try:
     os.mkdir("data/tse/" + stock + "/")
 except:
@@ -19,4 +19,4 @@ rsi(data_folder + stock, output_folder + stock)
 BB(data_folder + stock, output_folder + stock)
 P_SAR(data_folder + stock, output_folder + stock)
 ma(9, data_folder + stock, output_folder + stock)
-ma(26, data_folder + stock, output_folder + stock)
+ma(200, data_folder + stock, output_folder + stock)

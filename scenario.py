@@ -1,21 +1,25 @@
 # YA BAGHER
 class Scenario:
-    stock = "خساپا"
+    stock = "فملی"
 
-    candles_data_csv_file_name = 'tse_data/' + stock + '.csv'
-
-    moment_data_csv_file_name = 'tse_data/' + stock + '-moment.csv'
-
-    """
-        these are dictionaries like this:
-        EXTRA_DATA_NAME: EXTRA_FILE_PATH
-
-        ** we assumed that the files are located some where in data/ directory. **
-        ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
-    """
+    candles_data_csv_file_name = 'BTC_FULL_1h.csv'
+    moment_data_csv_file_name = 'BTC_FULL_1h_moment.csv'
     extra_candles_data_files = {
-        "BUP": 'tse/' + stock + '/' + stock + "-bb.csv", "SAR": 'tse/' + stock + '/' + stock + "_P_SAR.csv", 
-        "rsi": 'tse/' + stock + '/' + stock + "-rsi.csv"}
+        "MA_200": 'BTC_MA200.csv'
+    }
+    # candles_data_csv_file_name = 'tse_data/' + stock + '.csv'
+
+    # moment_data_csv_file_name = 'tse_data/' + stock + '-moment.csv'
+
+    # """
+    #     these are dictionaries like this:
+    #     EXTRA_DATA_NAME: EXTRA_FILE_PATH
+
+    #     ** we assumed that the files are located some where in data/ directory. **
+    #     ** EXTRA_DATA_NAME would be also used in Candle Class and Moment Class; so be careful at choosing its name. **
+    # """
+    # extra_candles_data_files = {
+    #     "MA_200": 'tse/' + stock + '/' + stock + "_MA200.csv"}
 
     extra_moments_data_files = {}
 
@@ -74,8 +78,7 @@ class Scenario:
 
     # method 2 :
     # loss_limit
-    closing_conditions = {"bolling": {"use": 0}, "limit": {
-        "use": 1, "profit_limit": 7, "loss_limit": -2}}
+    closing_conditions = {"High price": {"use": 1}, "limit": {"use": 1, "profit_limit": 2, "loss_limit": -0.1}}
     # HDR Strategy :
 
 # =======================================================================
@@ -143,12 +146,12 @@ class Scenario:
     # profit limit
     # values : (0 , 100]
     # default : 10
-    profit_limit_per = 10
+    profit_limit_per = 10000
 
     # loss limit
     # values : (0 , 100]
     # default : 10
-    loss_limit_per = -5
+    loss_limit_per = -50000
 
     # 'intraction'
 
@@ -161,7 +164,7 @@ class Scenario:
     # volume_buy
     # value (percent) : ( 0  , 100]
     # default : 50
-    volume_buy = 90
+    volume_buy = 99
 
 
 scenario = Scenario()
